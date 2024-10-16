@@ -1,3 +1,8 @@
+For references
+
+layout.tsx
+
+```tsx
 import React, { useEffect, useState } from 'react';
 import { Inter } from 'next/font/google';
 import { usePathname } from 'next/navigation';
@@ -30,3 +35,4 @@ export default function layout({ children }) {
     </html>
   );
 }
+```
