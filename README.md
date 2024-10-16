@@ -55,11 +55,16 @@ for more details.
   - do you want to override button.tsx? Yes
 - fix errors between nextjs and shadcn (npm run build)
 - rm -rf .next/ (to remove all cache)
+- logoipsum (website for placeholder logos)
 
 ## Git
 
 - git checkout -b feature/add-shadcn-components
 - git push origin feature/add-shadcn-components
+
+## Notes
+
+- Export default for pages and layouts
 
 ## Test
 
