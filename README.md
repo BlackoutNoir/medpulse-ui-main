@@ -54,3 +54,9 @@ for more details.
     label, popover, scroll-area, select, separator, sheet, skeleton, sonner, table, tabs, textarea
   - do you want to override button.tsx? Yes
 - fix errors between nextjs and shadcn (npm run build)
+- git checkout -b feature/add-shadcn-components
+- git push origin feature/add-shadcn-components
+
+## Test
+
+- Test
