@@ -56,6 +56,7 @@ for more details.
 - fix errors between nextjs and shadcn (npm run build)
 - rm -rf .next/ (to remove all cache)
 - logoipsum (website for placeholder logos)
+- npm install react-icons
 
 ## Git
 
@@ -68,4 +69,4 @@ for more details.
 
 ## Test
 
-- Test
+- 1:34:20
