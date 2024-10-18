@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { columns, User } from './columns';
 import { DataTable } from '@/components/table/DataTable';
 
-import AddDoctorForm from '@/features/staffs/components/add-doctor-form';
+import { Button } from '@/components/ui/button';
 
 //.header: text-32-bold md:text-36-bold;
 //.admin-header: @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-dark-200 px-[5%] py-5 shadow-lg xl:px-12;
@@ -20,6 +20,7 @@ async function getUsers(): Promise<User[]> {
 
 const StaffsPage = async () => {
   const data = await getUsers();
+  //const currentUser = { name: 'Dr. Jane Smith', email: 'jane.smith@example.com' };
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
@@ -38,7 +39,10 @@ const StaffsPage = async () => {
         </section>
 
         {/* add section for StatCards here*/}
-        <AddDoctorForm />
+
+        <Link href="/dashtwo/staffs/register">
+          <Button variant="secondary">Add New Doctor</Button>
+        </Link>
 
         <DataTable columns={columns} data={data} />
       </main>
