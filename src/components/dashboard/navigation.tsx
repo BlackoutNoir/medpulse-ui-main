@@ -1,4 +1,4 @@
-import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill } from 'react-icons/go';
+import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill, GoCalendar, GoPulse } from 'react-icons/go';
 import { SettingsIcon, UsersIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -25,6 +25,36 @@ const routes = [
   {
     label: 'Members',
     href: '/members',
+    icon: UsersIcon,
+    activeIcon: UsersIcon,
+  },
+  {
+    label: 'Test',
+    href: '/dash/test',
+    icon: UsersIcon,
+    activeIcon: UsersIcon,
+  },
+  {
+    label: 'Reservations',
+    href: '/dash/reservations',
+    icon: GoCalendar,
+    activeIcon: GoCalendar,
+  },
+  {
+    label: 'Patients',
+    href: '/dash/patients',
+    icon: UsersIcon,
+    activeIcon: UsersIcon,
+  },
+  {
+    label: 'Treatments',
+    href: '/dash/treatments',
+    icon: GoPulse,
+    activeIcon: GoPulse,
+  },
+  {
+    label: 'Staff Members',
+    href: '/dash/staffs',
     icon: UsersIcon,
     activeIcon: UsersIcon,
   },

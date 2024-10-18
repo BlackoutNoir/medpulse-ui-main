@@ -1,9 +1,13 @@
 'use client';
 
-import { Sidebar } from '@/components/sidebar';
+// import { Sidebar } from '@/components/sidebar';
 
 const DashboardPage = () => {
-  return <Sidebar />;
+  return (
+    <>
+      <p>You are now in the main dashboard screen.</p>
+    </>
+  )
 };
 
 export default DashboardPage;
