@@ -2,21 +2,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 //import { StatCard}  from '@/components/StatCard';
-import { columns, User } from "./columns";
-import { DataTable } from "@/components/table/DataTable";
+import { columns, User } from './columns';
+import { DataTable } from '@/components/table/DataTable';
+
+import AddDoctorForm from '@/features/staffs/components/add-doctor-form';
 
 //.header: text-32-bold md:text-36-bold;
 //.admin-header: @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-dark-200 px-[5%] py-5 shadow-lg xl:px-12;
 //.admin-main: @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
 //.admin-stat: @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
 
-
 async function getUsers(): Promise<User[]> {
-  const res = await fetch(
-    'https://64a6f5fc096b3f0fcc80e3fa.mockapi.io/api/users'
-  )
-  const data = await res.json()
-  return data
+  const res = await fetch('https://64a6f5fc096b3f0fcc80e3fa.mockapi.io/api/users');
+  const data = await res.json();
+  return data;
 }
 
 const StaffsPage = async () => {
@@ -39,9 +38,9 @@ const StaffsPage = async () => {
         </section>
 
         {/* add section for StatCards here*/}
+        <AddDoctorForm />
 
         <DataTable columns={columns} data={data} />
-      
       </main>
     </div>
   );
