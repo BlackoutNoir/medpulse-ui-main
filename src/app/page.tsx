@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import MainSection from '@/components/home/MainSection';
+import Home from '@/features/home/components/Home';
 
 const Page = () => {
   return (
@@ -9,7 +9,7 @@ const Page = () => {
         <title>Home - MedPulse</title>
         <meta name="description" content="Medpulse Home Page" />
       </header>
-      <MainSection />
+      <Home />
     </>
   );
 };
