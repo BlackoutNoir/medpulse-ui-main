@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, CalendarCheck, Home, Inbox, Search, Settings, Stethoscope, Users, UsersRound } from "lucide-react"
 
 import {
   Sidebar,
@@ -40,10 +40,34 @@ const items = [
   },
 ]
 
+const clinicItems = [
+  {
+    title: "Reservations",
+    url: "#",
+    icon: CalendarCheck,
+  },
+  {
+    title: "Patients",
+    url: "#",
+    icon: UsersRound,
+  },
+  {
+    title: "Treatments",
+    url: "#",
+    icon: Stethoscope,
+  },
+  {
+    title: "Staffs",
+    url: "#",
+    icon: Users,
+  },
+]
+
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
+
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -61,6 +85,25 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        <SidebarGroup>
+          <SidebarGroupLabel>Clinic</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {clinicItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
       </SidebarContent>
     </Sidebar>
   )
