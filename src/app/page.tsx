@@ -2,6 +2,7 @@
 import React from 'react';
 // import MainSection from '@/components/home/MainSection';
 import ManageAppointments from '@/features/appointment-management/components/ManageAppointments';
+import ViewAppointments from '@/features/appointment-management/components/ViewAppointments';
 
 const Page = () => {
   return (
@@ -11,7 +12,8 @@ const Page = () => {
         <meta name="description" content="Medpulse Home Page" />
       </header>
       {/* <MainSection /> */}
-      <ManageAppointments />
+      {/* <ManageAppointments /> */}
+      <ViewAppointments />
     </>
   );
 };

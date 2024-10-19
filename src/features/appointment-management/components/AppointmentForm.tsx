@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react';
 
 const AppointmentForm: React.FC = () => {
-    return (
-        <div></div>
-    );
-}
+  return (
+    <div></div>
+  );
+};
 
 export default AppointmentForm;
