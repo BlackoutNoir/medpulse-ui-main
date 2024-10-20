@@ -12,7 +12,7 @@ const Page = () => {
         <meta name="description" content="Medpulse Home Page" />
       </header>
       {/* <MainSection /> */}
-      {/* <ManageAppointments /> */}
+      <ManageAppointments />
       <ViewAppointments />
     </>
   );
