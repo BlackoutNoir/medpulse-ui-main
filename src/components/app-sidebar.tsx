@@ -1,4 +1,4 @@
-import { Calendar, CalendarCheck, Home, Inbox, Search, Settings, Stethoscope, Users, UsersRound } from "lucide-react"
+import { Calendar, CalendarCheck, Home, Inbox, Search, Settings, Stethoscope, Users, UsersRound, FlaskConical } from "lucide-react"
 
 import {
   Sidebar,
@@ -15,7 +15,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/dashboard",
     icon: Home,
   },
   {
@@ -57,8 +57,13 @@ const clinicItems = [
     icon: Stethoscope,
   },
   {
-    title: "Staffs",
+    title: "Labs",
     url: "#",
+    icon: FlaskConical,
+  },
+  {
+    title: "Staffs",
+    url: "/dashboard/staffs",
     icon: Users,
   },
 ]
