@@ -5,7 +5,7 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 const ManageAppointments: React.FC = () => {
   const handleViewAppointments = () => {
     //
-    console.log('Viewing existing appointments');
+    console.log('Viewing appointments');
   };
 
   const handleRequestAppointment = () => {
@@ -15,7 +15,7 @@ const ManageAppointments: React.FC = () => {
 
   const handleVirtualConsultation = () => {
     //
-    console.log('Canceling an appointment');
+    console.log('Book Virtual Consultation');
   };
 
   return (

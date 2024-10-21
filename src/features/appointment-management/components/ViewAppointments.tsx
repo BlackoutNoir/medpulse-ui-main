@@ -9,9 +9,9 @@ interface Appointment {
   id: number;
   date: Date;
   time: string;
-  title: string; // New field for appointment title
-  description: string; // Updated description field
-  doctor: string; // Doctor's full name
+  title: string;
+  description: string;
+  doctor: string; 
 }
 
 const ViewAppointments: React.FC = () => {
@@ -74,7 +74,7 @@ const ViewAppointments: React.FC = () => {
 
   const confirmCancelAppointment = () => {
     if (reason.trim() === '') {
-      alert('Please provide a reason for cancellation.'); // Add your validation here
+      alert('Please provide a reason for cancellation.');
       return;
     }
 
@@ -89,7 +89,7 @@ const ViewAppointments: React.FC = () => {
         setSelectedAppointment(null); // Hide appointment details
       }
 
-      return updatedAppointments; // Return updated appointments
+      return updatedAppointments;
     });
 
     // Reset state
@@ -113,7 +113,7 @@ const ViewAppointments: React.FC = () => {
               mode="single"
               selected={selectedDate}
               onSelect={handleDateChange}
-              className="shadow transition-shadow border p-8 text-black"
+              className="shadow transition-shadow border p-8 text-black rounded"
               modifiers={{ booked: bookedDates }}
               modifiersStyles={{
                 booked: { color: 'red' },
