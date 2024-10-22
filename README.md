@@ -57,6 +57,7 @@ for more details.
 - rm -rf .next/ (to remove all cache)
 - logoipsum (website for placeholder logos)
 - npm install react-icons
+- npm install -D prettier prettier-plugin-tailwindcss
 
 ## Git
 
