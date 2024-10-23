@@ -2,8 +2,8 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
-import { ArrowUpDown } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
+import { ArrowUpDown } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,30 +17,34 @@ import {
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Doctor = {
   id: string;
-  amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
+  name: string;
+  speciality: string;
   email: string;
+  phoneNumber: string;
+  workingDays: string[];
+  assignedTreatment: string; //change to list later
+  type: 'FULL-TIME' | 'PART-TIME';
+  imageUrl: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Doctor>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={value => row.toggleSelected(!!value)}
         aria-label="Select row"
       />
     ),
@@ -48,35 +52,46 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
+    accessorKey: 'id',
+    header: 'ID',
+  },
+  {
+    accessorKey: 'name',
+    header: 'Name',
+  },
+  {
+    accessorKey: 'speciality',
+    header: 'Speciality',
   },
   {
     accessorKey: 'email',
     header: ({ column }) => {
       return (
-        <Button 
+        <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Email
-          <ArrowUpDown className="ml-2 h-4 w-4"/>
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
-    }
+      );
+    },
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: 'phoneNumber',
+    header: 'Number',
+  },
+  {
+    accessorKey: 'workingDays',
+    header: 'Working Days',
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'));
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+      const days = row.getValue('workingDays');
+      return Array.isArray(days) ? days.join(', ') : days;
     },
+  },
+  {
+    accessorKey: 'assignedTreatment',
+    header: 'Assigned Treatment',
   },
   {
     id: 'actions',
@@ -93,10 +108,10 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
-              Copy payment ID
+              Copy doctor ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View doctor</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
