@@ -66,6 +66,7 @@ for more details.
 ## Notes
 
 - Export default for pages and layouts
+- rafce for page
 
 ## Test
 
