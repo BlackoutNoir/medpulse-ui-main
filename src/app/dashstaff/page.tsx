@@ -27,7 +27,7 @@ async function getData(): Promise<Doctor[]> {
       workingDays: ['S', 'M', 'T', 'W', 'T', 'F'],
       assignedTreatment: 'Dental service',
       type: 'PART-TIME',
-      imageUrl: '/placeholder.svg?height=32&width=32',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: '2',
@@ -38,7 +38,7 @@ async function getData(): Promise<Doctor[]> {
       workingDays: ['M', 'T', 'W', 'T', 'F'],
       assignedTreatment: 'Cardiac care',
       type: 'FULL-TIME',
-      imageUrl: '/placeholder.svg?height=32&width=32',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: '3',
@@ -49,7 +49,7 @@ async function getData(): Promise<Doctor[]> {
       workingDays: ['M', 'T', 'W', 'F'],
       assignedTreatment: 'Child health',
       type: 'PART-TIME',
-      imageUrl: '/placeholder.svg?height=32&width=32',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: '4',
@@ -60,7 +60,7 @@ async function getData(): Promise<Doctor[]> {
       workingDays: ['T', 'W', 'T', 'F', 'S'],
       assignedTreatment: 'Skin care',
       type: 'FULL-TIME',
-      imageUrl: '/placeholder.svg?height=32&width=32',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
   ];
 }

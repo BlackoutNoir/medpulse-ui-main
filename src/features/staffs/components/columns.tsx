@@ -14,20 +14,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Doctor = {
   id: string;
   name: string;
+  avatar: string;
   speciality: string;
   email: string;
   phoneNumber: string;
   workingDays: string[];
   assignedTreatment: string; //change to list later
   type: 'FULL-TIME' | 'PART-TIME';
-  imageUrl: string;
 };
+
+const allDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export const columns: ColumnDef<Doctor>[] = [
   {
@@ -57,41 +61,91 @@ export const columns: ColumnDef<Doctor>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'speciality',
-    header: 'Speciality',
-  },
-  {
-    accessorKey: 'email',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Email
+          NAME
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: 'phoneNumber',
-    header: 'Number',
-  },
-  {
-    accessorKey: 'workingDays',
-    header: 'Working Days',
     cell: ({ row }) => {
-      const days = row.getValue('workingDays');
-      return Array.isArray(days) ? days.join(', ') : days;
+      const doctor = row.original
+      return (
+        <div className="flex items-center space-x-3">
+          <Avatar>
+            <AvatarImage src={doctor.avatar} alt={doctor.name} />
+            <AvatarFallback className="bg-gray-400">{doctor.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="font-medium">{doctor.name}</div>
+            <div className="text-sm">{doctor.speciality}</div>
+          </div>
+        </div>
+      )
+    }
+  },
+  {
+    accessorKey: 'speciality',
+    header: 'SPECIALITY',
+  },
+  {
+    accessorKey: 'email',
+    header: 'CONTACT',
+    cell: ({ row }) => {
+      const staff = row.original;
+      return (
+        <div>
+          <div>{staff.phoneNumber}</div>
+          <div className="text-sm text-blue-600">{staff.email}</div>
+        </div>
+      )
+    },
+  },
+  // {
+  //   accessorKey: 'phoneNumber',
+  //   header: 'Number',
+  // },
+  {
+    accessorKey: "workingDays",
+    header: "WORKING DAYS",
+    cell: ({ row }) => {
+      const staff = row.original
+      return (
+        <div className="flex space-x-1">
+          {allDays.map((day, index) => (
+            <span 
+              key={index} 
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs
+                ${staff.workingDays.includes(day) 
+                  ? 'bg-primary text-primary-foreground' 
+                  : 'bg-muted text-muted-foreground'}`}
+            >
+              {day}
+            </span>
+          ))}
+        </div>
+      )
     },
   },
   {
     accessorKey: 'assignedTreatment',
     header: 'Assigned Treatment',
+  },
+  {
+    accessorKey: "type",
+    header: "TYPE",
+    cell: ({ row }) => {
+      const type = row.getValue("type") as string
+      return (
+        <Badge variant={type === "FULL-TIME" ? "default" : "secondary"}>
+          {type}
+        </Badge>
+      )
+    },
   },
   {
     id: 'actions',
