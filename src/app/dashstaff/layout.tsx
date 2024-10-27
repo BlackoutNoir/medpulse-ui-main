@@ -8,7 +8,7 @@ interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const DashboardStaffLayout = ({ children }: AuthLayoutProps) => {
 
   return (
     <main className="bg-neutral-100 min-h-screen">
@@ -21,10 +21,13 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             </Link>
           </Button>
         </nav>
-        <div className="flex flex-col items-center justify-center pt-4 md:pt-14">{children}</div>
+        {/* <div className="flex flex-col items-center justify-center pt-4 md:pt-14">{children}</div> */}
+        <div className="pt-4">
+          {children}
+        </div>
       </div>
     </main>
   );
 };
 
-export default AuthLayout;
+export default DashboardStaffLayout;

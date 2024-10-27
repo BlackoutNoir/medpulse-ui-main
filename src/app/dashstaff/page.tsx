@@ -1,15 +1,20 @@
 import { Doctor, columns } from '@/features/staffs/components/columns';
 import { DataTable } from '@/features/staffs/components/data-table';
+import { UpperStats } from '@/features/staffs/components/upper-stats';
 
 export default async function CreationPage() {
   const data = await getData();
 
   return (
     <>
-      <p>Hello from Creation Page in dashstaff</p>
-      <p>Show List of Doctors here...</p>
-      <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={data} />
+      <div className="container">
+        <h2 className="text-3xl font-bold tracking-tight">Doctors List</h2>
+        <div className="container mx-auto">
+          <UpperStats />
+        </div>
+        <div className="container mx-auto py-10">
+          <DataTable columns={columns} data={data} />
+        </div>
       </div>
     </>
   );
