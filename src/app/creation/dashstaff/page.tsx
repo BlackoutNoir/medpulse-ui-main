@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { MainNav } from '@/features/dashboard/components/main-nav';
-import { Overview } from '@/features/dashboard/components/overview';
+import { Overview } from '@/features/dashboard/doctors/overview';
 import { Search } from '@/features/dashboard/components/search';
 import TeamSwitcher from '@/features/dashboard/components/team-switcher';
 //import { UpperStats } from '@/features/dashboard/components/upper-stats';

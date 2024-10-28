@@ -1,4 +1,4 @@
-import { Doctor, columns } from '@/features/dashboard/components/columns';
+import { Doctor, columns } from '@/features/dashboard/doctors/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
 import { UpperStats } from '@/features/dashboard/components/upper-stats';
 
