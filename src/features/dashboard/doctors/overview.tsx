@@ -1,7 +1,7 @@
 import { Doctor, columns } from '@/features/dashboard/doctors/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
 
-export async function Overview() {
+export async function DoctorOverview() {
   const data = await getData();
   return (
     <>
