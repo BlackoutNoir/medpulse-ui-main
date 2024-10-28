@@ -1,28 +1,13 @@
 import { Doctor, columns } from '@/features/dashboard/components/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
-import { UpperStats } from '@/features/dashboard/components/upper-stats';
 
-export default async function CreationPage() {
+export async function Overview() {
   const data = await getData();
-
   return (
     <>
-      <div className="container">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Doctors List</h2>
-          <p className="text-muted-foreground">
-            Here&apos;s the list of doctors for your organization!
-          </p>
-        </div>
-        <div className="container mx-auto">
-          <UpperStats />
-        </div>
-        <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={data} />
-        </div>
-      </div>
+      <DataTable columns={columns} data={data} />
     </>
-  );
+  )
 }
 
 async function getData(): Promise<Doctor[]> {
@@ -74,16 +59,3 @@ async function getData(): Promise<Doctor[]> {
     },
   ];
 }
-
-/*
-CSS (JSMastery Health platform):
-  .data-table {
-    @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
-  }
-
-  .table-actions {
-    @apply flex w-full items-center justify-between space-x-2 p-4;
-  }
-
-
-*/
