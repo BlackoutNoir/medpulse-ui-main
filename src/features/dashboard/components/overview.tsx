@@ -7,7 +7,7 @@ export async function Overview() {
     <>
       <DataTable columns={columns} data={data} />
     </>
-  )
+  );
 }
 
 async function getData(): Promise<Doctor[]> {

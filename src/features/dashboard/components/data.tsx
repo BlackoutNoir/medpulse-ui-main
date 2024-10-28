@@ -298,3 +298,83 @@ export const contacts = [
 ]
 
 export type Contact = (typeof contacts)[number]
+
+// DATA PART 2
+import {
+  CheckCircledIcon,
+  StopwatchIcon,
+} from "@radix-ui/react-icons"
+
+export const labels = [
+  {
+    value: "bug",
+    label: "Bug",
+  },
+  {
+    value: "feature",
+    label: "Feature",
+  },
+  {
+    value: "documentation",
+    label: "Documentation",
+  },
+]
+
+// export const statuses = [
+//   {
+//     value: "backlog",
+//     label: "Backlog",
+//     icon: QuestionMarkCircledIcon,
+//   },
+//   {
+//     value: "todo",
+//     label: "Todo",
+//     icon: CircleIcon,
+//   },
+//   {
+//     value: "in progress",
+//     label: "In Progress",
+//     icon: StopwatchIcon,
+//   },
+//   {
+//     value: "done",
+//     label: "Done",
+//     icon: CheckCircledIcon,
+//   },
+//   {
+//     value: "canceled",
+//     label: "Canceled",
+//     icon: CrossCircledIcon,
+//   },
+// ]
+
+// export const priorities = [
+//   {
+//     label: "Low",
+//     value: "low",
+//     icon: ArrowDownIcon,
+//   },
+//   {
+//     label: "Medium",
+//     value: "medium",
+//     icon: ArrowRightIcon,
+//   },
+//   {
+//     label: "High",
+//     value: "high",
+//     icon: ArrowUpIcon,
+//   },
+// ]
+
+export const employmentTypes = [
+  {
+    label: "Part Time",
+    value: "PART-TIME",
+    icon: StopwatchIcon,
+  },
+  {
+    label: "Full Time",
+    value: "FULL-TIME",
+    icon: CheckCircledIcon,
+  },
+]

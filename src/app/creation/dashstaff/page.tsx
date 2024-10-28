@@ -15,7 +15,7 @@ export default async function CreationPage() {
     <>
       <div className="flex-col md:flex"> {/*hidden*/}
         <div className="border-b">
-          <div className="flex h-16 items-center px-4">
+          <div className="hidden md:flex h-16 items-center px-4">
             <TeamSwitcher />
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
