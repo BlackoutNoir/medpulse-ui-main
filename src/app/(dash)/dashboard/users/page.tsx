@@ -91,15 +91,3 @@ export default async function CreationPage() {
     </>
   );
 }
-
-/*
-CSS (JSMastery Health platform):
-  .data-table {
-    @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
-  }
-
-  .table-actions {
-    @apply flex w-full items-center justify-between space-x-2 p-4;
-  }
-
-*/
