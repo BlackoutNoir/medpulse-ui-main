@@ -1,7 +1,7 @@
 const DashboardPage = () => {
   return (
     <>
-      <p>Hello from Dashboard</p>
+      <p>Hello from Dashboard Main Page</p>
     </>
   );
 };
