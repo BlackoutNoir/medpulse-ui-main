@@ -13,7 +13,28 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-export default function Page() {
+//import { DoctorOverview } from '@/features/dashboard/doctors/overview';
+
+import { Payment, columns } from "./columns"
+import { DataTable } from "./data-table"
+ 
+async function getData(): Promise<Payment[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    // ...
+  ]
+}
+
+
+
+export default async function Page() {
+  const data = await getData();
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -142,7 +163,11 @@ export default function Page() {
               <CardDescription>See list of Users.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="min-h-[100vh] flex-1 rounded-xl bg-orange-500 md:min-h-min" />
+              {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-orange-500 md:min-h-min" /> */}
+              {/* <DoctorOverview /> */}
+              <div className="container mx-auto py-10">
+                <DataTable columns={columns} data={data} />
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -150,3 +175,5 @@ export default function Page() {
     </SidebarProvider>
   );
 }
+
+
