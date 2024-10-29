@@ -4,7 +4,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { ArrowUpDown } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,20 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Doctor = {
-  id: string;
-  name: string;
-  avatar: string;
-  speciality: string;
-  email: string;
-  phoneNumber: string;
-  workingDays: string[];
-  assignedTreatment: string; //change to list later
-  type: 'FULL-TIME' | 'PART-TIME';
-};
+import { Doctor } from '@/utils/interfaces/interfaces';
 
 const allDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
