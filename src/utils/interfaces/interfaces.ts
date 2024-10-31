@@ -48,6 +48,7 @@ export interface Doctor extends User {
 // Patient Interface
 export interface Patient extends User {
   address: string;
+  lastVisitDate: string;
   medicalHistory?: string[];
 }
 // ========================== USERS ==========================

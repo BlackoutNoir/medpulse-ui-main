@@ -16,7 +16,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 //import { Badge } from '@/components/ui/badge';
 import { Patient } from '@/utils/interfaces/interfaces';
-
+import { formatDate } from '@/utils/DateFormatter';
 
 export const columns: ColumnDef<Patient>[] = [
   {
@@ -91,12 +91,24 @@ export const columns: ColumnDef<Patient>[] = [
     header: 'ADDRESS',
   },
   {
-    accessorKey: 'registerationDate',
+    accessorKey: 'createdAt',
     header: 'REGISTERED',
+    cell: ({ row }) => {
+      const patient = row.original;
+      return (
+        <div>{formatDate(patient.createdAt)}</div>
+      )
+    },
   },
   {
     accessorKey: 'lastVisitDate',
     header: 'LAST VISIT',
+    cell: ({ row }) => {
+      const patient = row.original;
+      return (
+        <div>{formatDate(patient.lastVisitDate)}</div>
+      )
+    },
   },
   {
     id: 'actions',
