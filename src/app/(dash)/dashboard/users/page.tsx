@@ -5,6 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MainNav } from '@/features/dashboard/components/main-nav';
 import { DoctorOverview } from '@/features/dashboard/doctors/overview';
 import { PatientOverview } from '@/features/dashboard/patients/overview';
+import { AppointmentOverview } from '@/features/dashboard/appointments/overview';
+
 import { Search } from '@/features/dashboard/components/search';
 import TeamSwitcher from '@/features/dashboard/components/team-switcher';
 import { UserNav } from '@/features/dashboard/components/user-nav';
@@ -94,7 +96,7 @@ export default async function CreationPage() {
                     <CardDescription>See list of Appointments.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <DoctorOverview />
+                    <AppointmentOverview />
                   </CardContent>
                 </Card>
               </div>

@@ -3,7 +3,7 @@ import { DataTable } from '@/features/dashboard/components/data-table';
 import { Appointment } from '@/utils/interfaces/interfaces';
 import DataFetcher from '@/utils/DataFetcher';
 
-export async function DoctorOverview() {
+export async function AppointmentOverview() {
   const data = await fetchAppointments();
   return (
     <>
