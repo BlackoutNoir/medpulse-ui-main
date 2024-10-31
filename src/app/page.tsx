@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import MainSection from '@/features/home/MainSection';
+import MainSection from '@/features/home/components/MainSection';
 
 const Page = () => {
   return (
