@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // import { Badge } from '@/components/ui/badge';
-import { formatDateTime } from '@/utils/dateFormatter';
+import { formatDateTime } from '@/utils/DateFormatter';
 import { Appointment } from '@/utils/interfaces/interfaces';
 
 

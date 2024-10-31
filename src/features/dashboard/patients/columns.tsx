@@ -16,7 +16,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 //import { Badge } from '@/components/ui/badge';
 import { Patient } from '@/utils/interfaces/interfaces';
-import { formatDateTime } from '@/utils/dateFormatter';
+import { formatDateTime } from '@/utils/DateFormatter';
 
 export const columns: ColumnDef<Patient>[] = [
   {
