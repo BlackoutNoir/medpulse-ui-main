@@ -1,4 +1,4 @@
-import { Doctor, Patient, Role, TreatmentService } from '@/utils/interfaces/interfaces';
+import { Doctor, Patient, Role, Appointment, TreatmentService } from '@/utils/interfaces/interfaces';
 
 export const mockRoles: Role[] = [
   { id: '1', name: 'Admin', description: 'Administrator with full access' },
@@ -87,4 +87,22 @@ export const mockPatients: Patient[] = [
     medicalHistory: ['No known allergies'],
   },
   // add more mock patients as needed
+];
+
+export const mockAppointments: Appointment[] = [
+  {
+    id: '1',
+    patient: mockPatients[0],
+    doctor: mockDoctors[0],
+    scheduledAt: '2024-11-01T09:00:00Z',
+    status: 'SCHEDULED',
+  },
+  {
+    id: '2',
+    patient: mockPatients[1],
+    doctor: mockDoctors[1],
+    scheduledAt: '2024-11-15T14:30:00Z',
+    status: 'COMPLETED',
+  },
+  // add more mock appointments as needed
 ];

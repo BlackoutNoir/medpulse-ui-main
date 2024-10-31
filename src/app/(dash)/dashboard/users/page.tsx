@@ -85,21 +85,23 @@ export default async function CreationPage() {
                 </Card>
               </div>
             </TabsContent>
+            <TabsContent value="staff" className="space-y-4">
+              <DoctorsStatCards />
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Overview</CardTitle>
+                    <CardDescription>See list of Appointments.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <DoctorOverview />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
       </div>
     </>
   );
 }
-
-/*
-CSS (JSMastery Health platform):
-  .data-table {
-    @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
-  }
-
-  .table-actions {
-    @apply flex w-full items-center justify-between space-x-2 p-4;
-  }
-
-*/
