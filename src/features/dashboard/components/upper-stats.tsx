@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Users,
-  UsersRound,
   Stethoscope
 } from 'lucide-react';
 import React from 'react';

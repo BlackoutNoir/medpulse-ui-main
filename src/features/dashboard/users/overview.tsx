@@ -1,4 +1,4 @@
-import { columns } from '@/features/dashboard/patients/columns';
+import { columns } from '@/features/dashboard/users/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
 import DataFetcher from '@/utils/DataFetcher';
 import { User } from '@/utils/interfaces/interfaces';
