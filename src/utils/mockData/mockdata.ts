@@ -106,3 +106,5 @@ export const mockAppointments: Appointment[] = [
   },
   // add more mock appointments as needed
 ];
+
+export const mockUsers = [...mockDoctors, ...mockPatients];
