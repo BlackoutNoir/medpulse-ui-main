@@ -15,9 +15,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Doctor } from '@/utils/interfaces/interfaces';
+import { Doctor, WorkingDays } from '@/utils/interfaces/interfaces';
 
-const allDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+const allDays: WorkingDays[] = [
+  'SUNDAY',
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY',
+];
 
 export const columns: ColumnDef<Doctor>[] = [
   {
@@ -59,7 +67,7 @@ export const columns: ColumnDef<Doctor>[] = [
       );
     },
     cell: ({ row }) => {
-      const doctor = row.original
+      const doctor = row.original;
       return (
         <div className="flex items-center space-x-3">
           <Avatar>
@@ -71,8 +79,8 @@ export const columns: ColumnDef<Doctor>[] = [
             <div className="text-sm">{doctor.speciality}</div>
           </div>
         </div>
-      )
-    }
+      );
+    },
   },
   {
     accessorKey: 'speciality',
@@ -82,13 +90,13 @@ export const columns: ColumnDef<Doctor>[] = [
     accessorKey: 'email',
     header: 'CONTACT',
     cell: ({ row }) => {
-      const staff = row.original;
+      const doctor = row.original;
       return (
         <div>
-          <div>{staff.phoneNumber}</div>
-          <div className="text-sm text-blue-600">{staff.email}</div>
+          <div>{doctor.phoneNumber}</div>
+          <div className="text-sm text-blue-600">{doctor.email}</div>
         </div>
-      )
+      );
     },
   },
   // {
@@ -96,41 +104,62 @@ export const columns: ColumnDef<Doctor>[] = [
   //   header: 'Number',
   // },
   {
-    accessorKey: "workingDays",
-    header: "WORKING DAYS",
+    accessorKey: 'workingDays',
+    header: 'WORKING DAYS',
     cell: ({ row }) => {
-      const staff = row.original
+      const doctor = row.original;
+      const workingDays = doctor.workingDays as WorkingDays[]; // Ensure it's treated as an array of WorkingDays
+
       return (
         <div className="flex space-x-1">
           {allDays.map((day, index) => (
-            <span 
-              key={index} 
+            <span
+              key={index}
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs
-                ${staff.workingDays.includes(day) 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted text-muted-foreground'}`}
+                ${
+                  workingDays.includes(day)
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground'
+                }`}
             >
-              {day}
+              {day.charAt(0)} {/* Display the first letter of the day */}
             </span>
           ))}
         </div>
-      )
+      );
     },
   },
   {
-    accessorKey: 'assignedTreatment',
-    header: 'Assigned Treatment',
+    accessorKey: 'assignedTreatmentServices',
+    header: 'ASSIGNED TREATMENT',
+    cell: ({ row }) => {
+      const doctor = row.original;
+      const services = doctor.assignedTreatmentServices || []; // Default to an empty array if undefined
+
+      return services.length === 0 ? (
+        <span className="text-gray-500">NONE</span> // Display "NONE" if no services are assigned
+      ) : (
+        <div className="flex flex-wrap">
+          {services.slice(0, 2).map((service, index) => (
+            <Badge key={index} variant="default" className="mr-2 mb-2">
+              {service.name} 
+            </Badge>
+          ))}
+          {services.length > 2 && ( // Check if there are more than 2 services
+            <Badge variant="secondary" className="mr-2 mb-2">
+              +{services.length - 2}
+            </Badge>
+          )}
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "type",
-    header: "TYPE",
+    accessorKey: 'employmentType',
+    header: 'TYPE',
     cell: ({ row }) => {
-      const type = row.getValue("type") as string
-      return (
-        <Badge variant={type === "FULL-TIME" ? "default" : "secondary"}>
-          {type}
-        </Badge>
-      )
+      const type = row.getValue('employmentType') as string;
+      return <Badge variant={type === 'FULL-TIME' ? 'default' : 'secondary'}>{type}</Badge>;
     },
   },
   {
