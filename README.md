@@ -66,6 +66,7 @@ for more details.
 ## Notes
 
 - Export default for pages and layouts
+- Most stable branch (Oct 21 at 1:00PM)
 
 ## Test
 
