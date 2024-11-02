@@ -1,98 +1,131 @@
-'use client';
-import { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { DoctorOverview } from '@/features/dashboard/doctors/overview';
+import { PatientOverview } from '@/features/dashboard/patients/overview';
+import { Search } from '@/features/dashboard/components/search';
+import { UserNav } from '@/features/dashboard/components/user-nav';
+import { AppointmentStatCards } from '@/features/managePatient/appointmentHistory/stat-cards';
+import { PatientsStatCards } from '@/features/managePatient/patients/stat-cards';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const tabItems = [
-  { value: 'patient-info', label: 'Patient Information' },
-  { value: 'appointment-history', label: 'Appointment History' },
-  { value: 'medical-record', label: 'Medical Record' },
-  { value: 'lab-results', label: 'Lab Results' },
-  { value: 'current-prescriptions', label: 'Current Prescriptions' },
-];
-
-const ManageMedicalPrescriptionPage = () => {
-  const [activeTab, setActiveTab] = useState(tabItems[0].value);
-
+export default async function ManagePatientPage() {
   return (
     <>
-      <div className="flex flex-col p-4 w-full sm:p-6 md:p-8 lg:flex-1">
-        <div className="flex items-center justify-between">
-          <div className="space-y-4 p-4">
-            <h2 className="text-2xl font-bold tracking-tight">My Profile</h2>
-            <div className="flex items-center space-x-4">
-              <Avatar className="w-16 h-16">
-                <AvatarImage src="https://github.com/shadcn.png" alt="John Doe" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <p className="text-lg font-semibold">John Doe</p>
-                <p className="text-sm text-muted-foreground">@johndoe</p>
-              </div>
+      <div className="flex-col md:flex">
+        <div className="border-b">
+          <div className="hidden md:flex h-16 items-center px-4">
+            <div className="ml-auto flex items-center space-x-4">
+              <Search />
+              <UserNav />
             </div>
           </div>
         </div>
-      </div>
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="flex items-center justify-between space-y-2">
+            <div>
+              <Avatar className="w-16 h-16">
+                <AvatarImage src={"https://github.com/shadcn.png"} alt={"John Doe"} />
+                <AvatarFallback>{"JD"}</AvatarFallback>
+                </Avatar>
+              <h2 className="text-3xl font-bold tracking-tight">My Profile</h2>
+              <p className="text-muted-foreground">
+                @JohnDoe
+              </p>
+            </div>
+          </div>
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="block md:hidden mb-6">
-          <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a tab" />
-            </SelectTrigger>
-            <SelectContent>
-              {tabItems.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="hidden md:flex w-full justify-start lg:justify-center flex-wrap">
-            {tabItems.map((item) => (
-              <TabsTrigger
-                key={item.value}
-                value={item.value}
-                className="flex-1 text-center min-w-[120px] lg:flex-initial lg:min-w-[150px]"
-              >
-                {item.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {tabItems.map((item) => (
-            <TabsContent key={item.value} value={item.value} className="mt-6">
-              <div className="p-6 bg-card text-card-foreground rounded-lg shadow">
-                <h3 className="text-lg font-semibold mb-4">{item.label}</h3>
-                <p className="text-muted-foreground">
-                  {item.value === 'patient-info' &&
-                    "View and update patient's personal and contact information here."}
-                  {item.value === 'appointment-history' &&
-                    'Review past appointments and schedule new ones.'}
-                  {item.value === 'medical-record' &&
-                    'Access comprehensive medical history and treatment plans.'}
-                  {item.value === 'lab-results' &&
-                    'View and interpret recent laboratory test results.'}
-                  {item.value === 'current-prescriptions' &&
-                    'Manage and review current medication prescriptions.'}
-                </p>
+          <Tabs>
+            <TabsList>
+              <TabsTrigger value="patient-info">My Information</TabsTrigger>
+              <TabsTrigger value="appointment-history">Appointment History</TabsTrigger>
+              <TabsTrigger value="medical-record">Medical Record</TabsTrigger>
+              <TabsTrigger value="lab-results">Lab Results</TabsTrigger>
+              <TabsTrigger value="current-prescriptions">Current Prescriptions</TabsTrigger>
+            </TabsList>
+            <TabsContent value="patient-info" className="space-y-4">
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Overview</CardTitle>
+                    <CardDescription>Here&apos;s your most relevant information!</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <PatientsStatCards />
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
-          ))}
-        </Tabs>
+            <TabsContent value="appointment-history" className="space-y-4">
+              <AppointmentStatCards />
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Appointment History</CardTitle>
+                    <CardDescription>View your past appointment&apos;s.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <DoctorOverview />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+            <TabsContent value="medical-record" className="space-y-4">
+              <PatientsStatCards />
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Medical Record</CardTitle>
+                    <CardDescription>View your medical record.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <PatientOverview />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+            <TabsContent value="lab-results" className="space-y-4">
+              <PatientsStatCards />
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Lab Results</CardTitle>
+                    <CardDescription>View your lab results.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <PatientOverview />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+            <TabsContent value="current-prescriptions" className="space-y-4">
+              <PatientsStatCards />
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Current Prescriptions</CardTitle>
+                    <CardDescription>View your currently prescribed medicine.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="mx-auto">
+                    <PatientOverview />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </>
   );
-};
+}
 
-export default ManageMedicalPrescriptionPage;
+/*
+CSS (JSMastery Health platform):
+  .data-table {
+    @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
+  }
+
+  .table-actions {
+    @apply flex w-full items-center justify-between space-x-2 p-4;
+  }
+
+*/
