@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import ChatNav from '@/features/chat/components/ChatNav';
+import TextBar from '@/features/chats/components/TextBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,10 +8,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
-      <ChatNav />
-      <main className="p-4">
-        {children}
-      </main>
+      <main className="p-4">{children}</main>
     </div>
   );
 };

@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { z } from 'zod';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-hot-toast';
 
 import { DottedSeparator } from '@/components/dotted-separator';
 import { Button } from '@/components/ui/button';
@@ -16,7 +19,9 @@ const formSchema = z.object({
   password: z.string().min(1, 'Required'),
 });
 
-export const SignInCard = () => {
+export const SignInCard = ({}) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,6 +33,18 @@ export const SignInCard = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log({ values });
   };
+
+  async function loginWithGoogle() {
+    setIsLoading(true);
+    try {
+      await signIn('google');
+    } catch (error) {
+      // display error message to user
+      toast.error('Something went wrong with your login.');
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -74,7 +91,13 @@ export const SignInCard = () => {
         <DottedSeparator />
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button disabled={false} variant="secondary" size="lg" className="w-full">
+        <Button
+          disabled={false}
+          variant="secondary"
+          size="lg"
+          className="w-full"
+          onClick={loginWithGoogle}
+        >
           <FcGoogle className="mr-2 size-5" />
           Login with Google
         </Button>
