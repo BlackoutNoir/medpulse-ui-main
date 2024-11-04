@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     }
 
     if (idToAdd === session.user.id) {
-      return new Response('You cannot add yourself as a friend', {
+      return new Response('You cannot add yourself as a contact', {
         status: 400,
       })
     }
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     // check if user is already added
     const isAlreadyContacts = (await fetchRedis(
       'sismember',
-      `user:${session.user.id}:friends`,
+      `user:${session.user.id}:contacts`,
       idToAdd
     )) as 0 | 1
 
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       return new Response('Already contacts with this user', { status: 400 })
     }
 
-    // valid request, send friend request
+    // valid request, send contact request
 
     // await pusherServer.trigger(
     //   toPusherKey(`user:${idToAdd}:incoming_contact_requests`),

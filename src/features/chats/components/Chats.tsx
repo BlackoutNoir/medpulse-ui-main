@@ -5,8 +5,9 @@ import ContactCard from '@/features/chats/components/ContactCard';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MessageCirclePlus } from 'lucide-react';
+import ChatsList from './ChatsList';
 
-const ChatsPage: React.FC = () => {
+const Chats = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const contacts = [
@@ -38,7 +39,7 @@ const ChatsPage: React.FC = () => {
   );
 
   return (
-    <div className="p-2">
+    <div>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Chat</h1>
         <Button
@@ -59,13 +60,9 @@ const ChatsPage: React.FC = () => {
           className="pl-10 pr-4 p-2 border rounded w-full text-sm focus:outline-none hover:bg-gray-50 transition-transform"
         />
       </div>
-      <div className="pt-2">
-        {filteredContacts.map((contact, index) => (
-          <ContactCard key={index} contact={contact} />
-        ))}
-      </div>
+      {/* <ChatsList contacts={contacts}/> */}
     </div>
   );
 };
 
-export default ChatsPage;
+export default Chats;
