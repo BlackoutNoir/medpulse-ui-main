@@ -98,7 +98,6 @@ export default async function ManagePatientPage() {
               </div>
             </TabsContent>
             <TabsContent value="current-prescriptions" className="space-y-4">
-              <PatientsStatCards />
               <div className="">
                 <Card className="">
                   <CardHeader>
