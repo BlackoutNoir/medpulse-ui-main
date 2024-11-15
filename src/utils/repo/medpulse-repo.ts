@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class MedpulseRepo {
@@ -70,6 +70,26 @@ class MedpulseRepo {
     return await prisma.working_days.findMany({
       include: { Staff: true },
     });
+  }
+
+  async getWorkingDaysByStaffId(staffId: string) {
+    try {
+      // Query the working_days table to get working days based on staffId
+      const workingDays = await prisma.working_days.findMany({
+        where: {
+          staffStaff_id: staffId, // Match the staffId field in the working_days model
+        },
+        include: {
+          Staff: true, // Optionally, you can include related data like Staff here if needed
+        },
+      });
+
+      // Return the working days found for the given staffId
+      return workingDays;
+    } catch (error) {
+      console.error('Error fetching working days:', error);
+      throw new Error('Could not fetch working days.');
+    }
   }
 
   async getWorkingDayByDay(day: string) {
@@ -427,38 +447,38 @@ class MedpulseRepo {
       where: { prescription_id: prescriptionId },
     });
   }
-    // Treatment Service methods
-    async getAllTreatmentServices() {
-        return await prisma.treatment_service.findMany({
-          include: { Doctor: true },
-        });
-      }
-    
-      async getTreatmentServiceById(treatmentServiceId: string) {
-        return await prisma.treatment_service.findUnique({
-          where: { treatment_service_id: treatmentServiceId },
-          include: { Doctor: true },
-        });
-      }
-    
-      async createTreatmentService(treatmentServiceData: any) {
-        return await prisma.treatment_service.create({
-          data: treatmentServiceData,
-        });
-      }
-    
-      async updateTreatmentService(treatmentServiceId: string, updateData: any) {
-        return await prisma.treatment_service.update({
-          where: { treatment_service_id: treatmentServiceId },
-          data: updateData,
-        });
-      }
-    
-      async deleteTreatmentService(treatmentServiceId: string) {
-        return await prisma.treatment_service.delete({
-          where: { treatment_service_id: treatmentServiceId },
-        });
-      }
+  // Treatment Service methods
+  async getAllTreatmentServices() {
+    return await prisma.treatment_service.findMany({
+      include: { Doctor: true },
+    });
+  }
+
+  async getTreatmentServiceById(treatmentServiceId: string) {
+    return await prisma.treatment_service.findUnique({
+      where: { treatment_service_id: treatmentServiceId },
+      include: { Doctor: true },
+    });
+  }
+
+  async createTreatmentService(treatmentServiceData: any) {
+    return await prisma.treatment_service.create({
+      data: treatmentServiceData,
+    });
+  }
+
+  async updateTreatmentService(treatmentServiceId: string, updateData: any) {
+    return await prisma.treatment_service.update({
+      where: { treatment_service_id: treatmentServiceId },
+      data: updateData,
+    });
+  }
+
+  async deleteTreatmentService(treatmentServiceId: string) {
+    return await prisma.treatment_service.delete({
+      where: { treatment_service_id: treatmentServiceId },
+    });
+  }
 }
 
 export default new MedpulseRepo();
