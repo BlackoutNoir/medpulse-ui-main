@@ -1,0 +1,10 @@
+[
+  {
+    "lab_test_id": "lt-1",
+    "patient_id": "patient-1",
+    "test_name": "Blood Test",
+    "date_requested": "2024-02-19T10:00:00Z",
+    "date_completed": "2024-02-20T10:00:00Z",
+    "results": "Normal"
+  }
+]

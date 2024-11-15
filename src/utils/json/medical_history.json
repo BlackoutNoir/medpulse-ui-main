@@ -1,0 +1,11 @@
+[
+  {
+    "history_id": "mh-1",
+    "patient_id": "patient-1",
+    "allergies": "Peanuts",
+    "surgeries": "Appendectomy",
+    "chronic_conditions": "None",
+    "medications": "None",
+    "notes": "Patient is in good health."
+  }
+]

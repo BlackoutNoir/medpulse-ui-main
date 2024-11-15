@@ -1,0 +1,10 @@
+[
+  {
+    "doctor_id": "staff-1",
+    "specializations": "Cardiology",
+    "qualifications": "MBBS, MD",
+    "years_of_experience": 10,
+    "enable_online_appointments": true,
+    "staff": { "staff_id": "staff-1" }
+  }
+]
