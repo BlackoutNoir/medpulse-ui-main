@@ -10,7 +10,7 @@ Table User {
   phone_no String
   first_name String [not null]
   last_name String [not null]
-  date_of_birth DateTime
+  date_of_birth DateTime [not null]
   gender String [not null]
   avatar String
   is_active Boolean [not null, default: true]
@@ -18,9 +18,9 @@ Table User {
   updated_at DateTime [not null]
   last_login DateTime
   user_type String [not null]
+  messages Message [not null]
   Staff Staff
   Patient Patient
-  messages Message [not null]
 }
 
 Table Staff {
@@ -56,7 +56,7 @@ Table DepartmentStaff {
   }
 }
 
-Table working_days {
+Table WorkingDays {
   id String [pk]
   day String [unique, not null]
   staffLinks StaffWorkingDays [not null]
@@ -67,7 +67,7 @@ Table StaffWorkingDays {
   staff_id String [not null]
   working_day_id String [not null]
   Staff Staff [not null]
-  working_days working_days [not null]
+  working_days WorkingDays [not null]
 
   indexes {
     (staff_id, working_day_id) [unique]
@@ -131,7 +131,7 @@ Table Insurance {
   insurance_id String [pk]
   company String [not null]
   details String
-  policy_no Int [not null]
+  policy_no Int [unique, not null]
   patient_id String [not null]
   patient Patient [not null]
 }
@@ -188,38 +188,38 @@ Table Message {
   chat Chat [not null]
 }
 
-Ref: Staff.staff_id - User.user_id
+Ref: Staff.staff_id - User.user_id [delete: Cascade]
 
-Ref: DepartmentStaff.staff_id > Staff.staff_id
+Ref: DepartmentStaff.staff_id > Staff.staff_id [delete: Cascade]
 
-Ref: DepartmentStaff.department_id > Department.dept_id
+Ref: DepartmentStaff.department_id > Department.dept_id [delete: Cascade]
 
-Ref: StaffWorkingDays.staff_id > Staff.staff_id
+Ref: StaffWorkingDays.staff_id > Staff.staff_id [delete: Cascade]
 
-Ref: StaffWorkingDays.working_day_id > working_days.id
+Ref: StaffWorkingDays.working_day_id > WorkingDays.id [delete: Cascade]
 
-Ref: Doctor.doctor_id - Staff.staff_id
+Ref: Doctor.doctor_id - Staff.staff_id [delete: Cascade]
 
-Ref: DoctorTreatmentService.doctor_id > Doctor.doctor_id
+Ref: DoctorTreatmentService.doctor_id > Doctor.doctor_id [delete: Cascade]
 
-Ref: DoctorTreatmentService.treatment_service_id > treatment_service.treatment_service_id
+Ref: DoctorTreatmentService.treatment_service_id > treatment_service.treatment_service_id [delete: Cascade]
 
-Ref: Patient.patient_id - User.user_id
+Ref: Patient.patient_id - User.user_id [delete: Cascade]
 
-Ref: MedicalHistory.patient_id - Patient.patient_id
+Ref: MedicalHistory.patient_id - Patient.patient_id [delete: Cascade]
 
-Ref: Insurance.patient_id > Patient.patient_id
+Ref: Insurance.patient_id > Patient.patient_id [delete: Cascade]
 
-Ref: Appointment.doctor_id > Doctor.doctor_id
+Ref: Appointment.doctor_id > Doctor.doctor_id [delete: Cascade]
 
-Ref: Appointment.patient_id > Patient.patient_id
+Ref: Appointment.patient_id > Patient.patient_id [delete: Cascade]
 
-Ref: LabTest.patient_id > Patient.patient_id
+Ref: LabTest.patient_id > Patient.patient_id [delete: Cascade]
 
-Ref: Prescription.doctor_id > Doctor.doctor_id
+Ref: Prescription.doctor_id > Doctor.doctor_id [delete: Cascade]
 
-Ref: Prescription.patient_id > Patient.patient_id
+Ref: Prescription.patient_id > Patient.patient_id [delete: Cascade]
 
-Ref: Message.sender_id > User.user_id
+Ref: Message.sender_id > User.user_id [delete: Cascade]
 
-Ref: Message.chat_id > Chat.chat_id
+Ref: Message.chat_id > Chat.chat_id [delete: Cascade]
