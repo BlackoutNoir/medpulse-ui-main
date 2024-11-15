@@ -70,3 +70,31 @@ for more details.
 ## Test
 
 - 1:34:20
+
+## Prisma
+
+- npm i prisma --save-dev
+- npx prisma init --datasource-provider sqlite
+
+## Hono
+
+- npm install hono
+
+```ts
+import { Hono } from 'hono';
+import { handle } from 'hono/vercel';
+
+const app = new Hono().basePath('/api');
+
+// /api/hello
+app.get('/hello', c => {
+  return c.json({ hello: 'world' });
+});
+
+// /api/project/123
+app.get('project/:projectId', c => {
+  return c.json({ project: 'projectId' });
+});
+
+export const GET = handle(app);
+```

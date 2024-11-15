@@ -2,19 +2,6 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table working_days {
-  day String [unique, not null]
-  Staff Staff
-  staffStaff_id String
-}
-
-Table treatment_service {
-  treatment_service_id String [pk]
-  description String [not null]
-  Doctor Doctor
-  doctorDoctor_id String
-}
-
 Table User {
   user_id String [pk]
   username String [unique, not null]
@@ -31,9 +18,90 @@ Table User {
   updated_at DateTime [not null]
   last_login DateTime
   user_type String [not null]
-  messages Message [not null]
   Staff Staff
   Patient Patient
+  messages Message [not null]
+}
+
+Table Staff {
+  staff_id String [pk]
+  employment_date DateTime [not null]
+  employed_until DateTime
+  role_id String [not null]
+  department_id String [not null]
+  employment_type String [not null]
+  user User [not null]
+  departmentLinks DepartmentStaff [not null]
+  workingLinks StaffWorkingDays [not null]
+  Doctor Doctor
+}
+
+Table Department {
+  dept_id String [pk]
+  name String [not null]
+  description String
+  default_appointment_time Int [not null]
+  staffLinks DepartmentStaff [not null]
+}
+
+Table DepartmentStaff {
+  id String [pk]
+  staff_id String [not null]
+  department_id String [not null]
+  staff Staff [not null]
+  department Department [not null]
+
+  indexes {
+    (staff_id, department_id) [unique]
+  }
+}
+
+Table working_days {
+  id String [pk]
+  day String [unique, not null]
+  staffLinks StaffWorkingDays [not null]
+}
+
+Table StaffWorkingDays {
+  id String [pk]
+  staff_id String [not null]
+  working_day_id String [not null]
+  Staff Staff [not null]
+  working_days working_days [not null]
+
+  indexes {
+    (staff_id, working_day_id) [unique]
+  }
+}
+
+Table Doctor {
+  doctor_id String [pk]
+  specializations String
+  qualifications String
+  years_of_experience Int [not null]
+  enable_online_appointments Boolean [not null, default: true]
+  staff Staff [not null]
+  assignedTreatmentLinks DoctorTreatmentService [not null]
+  appointments Appointment [not null]
+  Prescription Prescription [not null]
+}
+
+Table treatment_service {
+  treatment_service_id String [pk]
+  description String [not null]
+  doctorLinks DoctorTreatmentService [not null]
+}
+
+Table DoctorTreatmentService {
+  id String [pk]
+  doctor_id String [not null]
+  treatment_service_id String [not null]
+  doctor Doctor [not null]
+  treatment_service treatment_service [not null]
+
+  indexes {
+    (doctor_id, treatment_service_id) [unique]
+  }
 }
 
 Table Patient {
@@ -48,66 +116,6 @@ Table Patient {
   prescriptions Prescription [not null]
 }
 
-Table Staff {
-  staff_id String [pk]
-  employment_date DateTime [not null]
-  employed_until DateTime
-  role_id String [not null]
-  department_id String [not null]
-  employment_type String [not null]
-  working_days working_days [not null]
-  user User [not null]
-  department Department [not null]
-  Doctor Doctor
-}
-
-Table Doctor {
-  doctor_id String [pk]
-  specializations String
-  qualifications String
-  years_of_experience Int [not null]
-  enable_online_appointments Boolean [not null, default: true]
-  assigned_treatment_services treatment_service [not null]
-  appointments Appointment [not null]
-  staff Staff [not null]
-  Prescription Prescription [not null]
-}
-
-Table Chat {
-  chat_id String [pk]
-  name String [not null]
-  creation_date DateTime [default: `now()`, not null]
-  messages Message [not null]
-}
-
-Table Message {
-  message_id String [pk]
-  timestamp DateTime [default: `now()`, not null]
-  is_read Boolean [not null, default: false]
-  message_content String [not null]
-  sender_id String [not null]
-  chat_id String [not null]
-  sender User [not null]
-  chat Chat [not null]
-}
-
-Table Department {
-  dept_id String [pk]
-  name String [not null]
-  description String
-  default_appointment_time Int [not null]
-  staff Staff [not null]
-}
-
-Table Insurance {
-  insurance_id String [pk]
-  company String [not null]
-  details String
-  policy_no Int [not null]
-  patient_id String [not null]
-  patient Patient [not null]
-}
-
 Table MedicalHistory {
   history_id String [pk]
   patient_id String [unique, not null]
@@ -116,6 +124,15 @@ Table MedicalHistory {
   chronic_conditions String
   medications String
   notes String
+  patient Patient [not null]
+}
+
+Table Insurance {
+  insurance_id String [pk]
+  company String [not null]
+  details String
+  policy_no Int [not null]
+  patient_id String [not null]
   patient Patient [not null]
 }
 
@@ -149,29 +166,49 @@ Table Prescription {
   dosage String [not null]
   instructions String [not null]
   issue_date DateTime [default: `now()`, not null]
-  patient Patient [not null]
   doctor Doctor [not null]
+  patient Patient [not null]
 }
 
-Ref: working_days.staffStaff_id > Staff.staff_id
+Table Chat {
+  chat_id String [pk]
+  name String [not null]
+  creation_date DateTime [default: `now()`, not null]
+  messages Message [not null]
+}
 
-Ref: treatment_service.doctorDoctor_id > Doctor.doctor_id
-
-Ref: Patient.patient_id - User.user_id
+Table Message {
+  message_id String [pk]
+  timestamp DateTime [default: `now()`, not null]
+  is_read Boolean [not null, default: false]
+  message_content String [not null]
+  sender_id String [not null]
+  chat_id String [not null]
+  sender User [not null]
+  chat Chat [not null]
+}
 
 Ref: Staff.staff_id - User.user_id
 
-Ref: Staff.department_id > Department.dept_id
+Ref: DepartmentStaff.staff_id > Staff.staff_id
+
+Ref: DepartmentStaff.department_id > Department.dept_id
+
+Ref: StaffWorkingDays.staff_id > Staff.staff_id
+
+Ref: StaffWorkingDays.working_day_id > working_days.id
 
 Ref: Doctor.doctor_id - Staff.staff_id
 
-Ref: Message.sender_id > User.user_id
+Ref: DoctorTreatmentService.doctor_id > Doctor.doctor_id
 
-Ref: Message.chat_id > Chat.chat_id
+Ref: DoctorTreatmentService.treatment_service_id > treatment_service.treatment_service_id
 
-Ref: Insurance.patient_id > Patient.patient_id
+Ref: Patient.patient_id - User.user_id
 
 Ref: MedicalHistory.patient_id - Patient.patient_id
+
+Ref: Insurance.patient_id > Patient.patient_id
 
 Ref: Appointment.doctor_id > Doctor.doctor_id
 
@@ -179,6 +216,10 @@ Ref: Appointment.patient_id > Patient.patient_id
 
 Ref: LabTest.patient_id > Patient.patient_id
 
+Ref: Prescription.doctor_id > Doctor.doctor_id
+
 Ref: Prescription.patient_id > Patient.patient_id
 
-Ref: Prescription.doctor_id > Doctor.doctor_id
+Ref: Message.sender_id > User.user_id
+
+Ref: Message.chat_id > Chat.chat_id
