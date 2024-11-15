@@ -146,9 +146,13 @@ class MedpulseRepo {
   }
 
   async deletePatient(patientId: string) {
-    return await prisma.patient.delete({
-      where: { patient_id: patientId },
-    });
+    try {
+      return await prisma.patient.delete({
+        where: { patient_id: patientId },
+      });
+    } catch (error) {
+      return { error };
+    }
   }
 
   // Doctor methods
