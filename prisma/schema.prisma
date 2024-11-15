@@ -13,23 +13,23 @@ datasource db {
 
 model User {
   user_id       String    @id @default(uuid())
-  username      String    @unique
-  email         String    @unique
+  username      String    @unique 
+  email         String    @unique 
   password_hash String
-  phone_no      String?
+  phone_no      String?   // Optional phone number field
   first_name    String
   last_name     String
-  date_of_birth DateTime?
+  date_of_birth DateTime  // Made mandatory
   gender        String
-  avatar        String?
+  avatar        String?   // Optional avatar field
   is_active     Boolean   @default(true)
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
   last_login    DateTime?
   user_type     String
+  messages      Message[]
   Staff         Staff?
   Patient       Patient?
-  messages      Message[]
 }
 
 model Staff {
@@ -39,10 +39,12 @@ model Staff {
   role_id         String
   department_id   String
   employment_type String
-  user            User               @relation(fields: [staff_id], references: [user_id])
-  departmentLinks DepartmentStaff[] // Connects to DepartmentStaff
+  user            User               @relation(fields: [staff_id], references: [user_id], onDelete: Cascade)
+  departmentLinks DepartmentStaff[]  // Connects to DepartmentStaff
   workingLinks    StaffWorkingDays[] // Connects to StaffWorkingDays
   Doctor          Doctor?
+
+  // Removed direct Department[] relation, as it's managed by DepartmentStaff
 }
 
 model Department {
@@ -57,13 +59,13 @@ model DepartmentStaff {
   id            String     @id @default(uuid())
   staff_id      String
   department_id String
-  staff         Staff      @relation(fields: [staff_id], references: [staff_id])
-  department    Department @relation(fields: [department_id], references: [dept_id])
+  staff         Staff      @relation(fields: [staff_id], references: [staff_id], onDelete: Cascade)
+  department    Department @relation(fields: [department_id], references: [dept_id], onDelete: Cascade)
 
   @@unique([staff_id, department_id])
 }
 
-model working_days {
+model WorkingDays {  // Renamed from `working_days` to `WorkingDays`
   id         String             @id @default(uuid())
   day        String             @unique
   staffLinks StaffWorkingDays[] // Connects to StaffWorkingDays
@@ -73,8 +75,8 @@ model StaffWorkingDays {
   id             String       @id @default(uuid())
   staff_id       String
   working_day_id String
-  Staff          Staff        @relation(fields: [staff_id], references: [staff_id])
-  working_days   working_days @relation(fields: [working_day_id], references: [id])
+  Staff          Staff        @relation(fields: [staff_id], references: [staff_id], onDelete: Cascade)
+  working_days   WorkingDays  @relation(fields: [working_day_id], references: [id], onDelete: Cascade)
 
   @@unique([staff_id, working_day_id])
 }
@@ -85,7 +87,7 @@ model Doctor {
   qualifications             String?
   years_of_experience        Int
   enable_online_appointments Boolean                  @default(true)
-  staff                      Staff                    @relation(fields: [doctor_id], references: [staff_id])
+  staff                      Staff                    @relation(fields: [doctor_id], references: [staff_id], onDelete: Cascade)
   assignedTreatmentLinks     DoctorTreatmentService[] // Connects to DoctorTreatmentService
   appointments               Appointment[]
   Prescription               Prescription[]
@@ -101,8 +103,8 @@ model DoctorTreatmentService {
   id                   String            @id @default(uuid())
   doctor_id            String
   treatment_service_id String
-  doctor               Doctor            @relation(fields: [doctor_id], references: [doctor_id])
-  treatment_service    treatment_service @relation(fields: [treatment_service_id], references: [treatment_service_id])
+  doctor               Doctor            @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  treatment_service    treatment_service @relation(fields: [treatment_service_id], references: [treatment_service_id], onDelete: Cascade)
 
   @@unique([doctor_id, treatment_service_id])
 }
@@ -111,7 +113,7 @@ model Patient {
   patient_id      String          @id
   address         String?
   last_visit_date DateTime
-  user            User            @relation(fields: [patient_id], references: [user_id])
+  user            User            @relation(fields: [patient_id], references: [user_id], onDelete: Cascade)
   medical_history MedicalHistory?
   insurance       Insurance[]
   appointments    Appointment[]
@@ -127,16 +129,16 @@ model MedicalHistory {
   chronic_conditions String?
   medications        String?
   notes              String?
-  patient            Patient @relation(fields: [patient_id], references: [patient_id])
+  patient            Patient @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model Insurance {
   insurance_id String  @id @default(uuid())
   company      String
   details      String?
-  policy_no    Int
+  policy_no    Int     @unique  // Ensured unique constraint for policy_no
   patient_id   String
-  patient      Patient @relation(fields: [patient_id], references: [patient_id])
+  patient      Patient @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model Appointment {
@@ -147,8 +149,8 @@ model Appointment {
   time           DateTime
   status         String
   notes          String?
-  doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id])
-  patient        Patient  @relation(fields: [patient_id], references: [patient_id])
+  doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  patient        Patient  @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model LabTest {
@@ -158,7 +160,7 @@ model LabTest {
   date_requested DateTime
   date_completed DateTime?
   results        String?
-  patient        Patient   @relation(fields: [patient_id], references: [patient_id])
+  patient        Patient   @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model Prescription {
@@ -169,8 +171,8 @@ model Prescription {
   dosage          String
   instructions    String
   issue_date      DateTime @default(now())
-  doctor          Doctor   @relation(fields: [doctor_id], references: [doctor_id])
-  patient         Patient  @relation(fields: [patient_id], references: [patient_id])
+  doctor          Doctor   @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  patient         Patient  @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model Chat {
@@ -187,6 +189,6 @@ model Message {
   message_content String
   sender_id       String
   chat_id         String
-  sender          User     @relation(fields: [sender_id], references: [user_id])
-  chat            Chat     @relation(fields: [chat_id], references: [chat_id])
+  sender          User     @relation(fields: [sender_id], references: [user_id], onDelete: Cascade)
+  chat            Chat     @relation(fields: [chat_id], references: [chat_id], onDelete: Cascade)
 }
