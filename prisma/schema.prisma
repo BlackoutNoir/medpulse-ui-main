@@ -14,6 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model working_days {
+  day           String  @unique
+  Staff         Staff?  @relation(fields: [staffStaff_id], references: [staff_id])
+  staffStaff_id String?
+}
+
+model treatment_service {
+  treatment_service_id String  @id @default(uuid())
+  description          String
+  Doctor               Doctor? @relation(fields: [doctorDoctor_id], references: [doctor_id])
+  doctorDoctor_id      String?
+}
+
 model User {
   user_id       String    @id @default(uuid())
   username      String    @unique
@@ -23,6 +36,8 @@ model User {
   first_name    String
   last_name     String
   date_of_birth DateTime?
+  gender        String
+  avatar        String?
   is_active     Boolean   @default(true)
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
@@ -34,8 +49,9 @@ model User {
 }
 
 model Patient {
-  patient_id      String          @id 
+  patient_id      String          @id
   address         String?
+  last_visit_date DateTime
   user            User            @relation(fields: [patient_id], references: [user_id])
   medical_history MedicalHistory?
   insurance       Insurance[]
@@ -45,26 +61,28 @@ model Patient {
 }
 
 model Staff {
-  staff_id        String     @id 
+  staff_id        String         @id
   employment_date DateTime
   employed_until  DateTime?
   role_id         String
   department_id   String
-  user            User       @relation(fields: [staff_id], references: [user_id])
-  department      Department @relation(fields: [department_id], references: [dept_id])
+  employment_type String
+  working_days    working_days[]
+  user            User           @relation(fields: [staff_id], references: [user_id])
+  department      Department     @relation(fields: [department_id], references: [dept_id])
   Doctor          Doctor?
 }
 
 model Doctor {
-  doctor_id                  String        @id 
-  specializations            String?
-  qualifications             String?
-  years_of_experience        Int
-  enable_online_appointments Boolean       @default(true)
-  appointments               Appointment[]
-  staff                      Staff         @relation(fields: [doctor_id], references: [staff_id])
-
-  Prescription Prescription[]
+  doctor_id                   String              @id
+  specializations             String?
+  qualifications              String?
+  years_of_experience         Int
+  enable_online_appointments  Boolean             @default(true)
+  assigned_treatment_services treatment_service[]
+  appointments                Appointment[]
+  staff                       Staff               @relation(fields: [doctor_id], references: [staff_id])
+  Prescription                Prescription[]
 }
 
 model Chat {
@@ -119,7 +137,7 @@ model Appointment {
   doctor_id      String
   date           DateTime
   time           DateTime
-  status         String  
+  status         String
   notes          String?
   doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id])
   patient        Patient  @relation(fields: [patient_id], references: [patient_id])
@@ -146,5 +164,3 @@ model Prescription {
   patient         Patient  @relation(fields: [patient_id], references: [patient_id])
   doctor          Doctor   @relation(fields: [doctor_id], references: [doctor_id])
 }
-
-

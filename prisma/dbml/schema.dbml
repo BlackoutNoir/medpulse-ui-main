@@ -2,6 +2,19 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
+Table working_days {
+  day String [unique, not null]
+  Staff Staff
+  staffStaff_id String
+}
+
+Table treatment_service {
+  treatment_service_id String [pk]
+  description String [not null]
+  Doctor Doctor
+  doctorDoctor_id String
+}
+
 Table User {
   user_id String [pk]
   username String [unique, not null]
@@ -11,6 +24,8 @@ Table User {
   first_name String [not null]
   last_name String [not null]
   date_of_birth DateTime
+  gender String [not null]
+  avatar String
   is_active Boolean [not null, default: true]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
@@ -24,6 +39,7 @@ Table User {
 Table Patient {
   patient_id String [pk]
   address String
+  last_visit_date DateTime [not null]
   user User [not null]
   medical_history MedicalHistory
   insurance Insurance [not null]
@@ -38,6 +54,8 @@ Table Staff {
   employed_until DateTime
   role_id String [not null]
   department_id String [not null]
+  employment_type String [not null]
+  working_days working_days [not null]
   user User [not null]
   department Department [not null]
   Doctor Doctor
@@ -49,6 +67,7 @@ Table Doctor {
   qualifications String
   years_of_experience Int [not null]
   enable_online_appointments Boolean [not null, default: true]
+  assigned_treatment_services treatment_service [not null]
   appointments Appointment [not null]
   staff Staff [not null]
   Prescription Prescription [not null]
@@ -133,6 +152,10 @@ Table Prescription {
   patient Patient [not null]
   doctor Doctor [not null]
 }
+
+Ref: working_days.staffStaff_id > Staff.staff_id
+
+Ref: treatment_service.doctorDoctor_id > Doctor.doctor_id
 
 Ref: Patient.patient_id - User.user_id
 
