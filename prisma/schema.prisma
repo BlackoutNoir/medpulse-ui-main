@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id       String    @id @default(uuid())
+  username      String    @unique
+  email         String    @unique
+  password_hash String
+  phone_no      String?
+  first_name    String
+  last_name     String
+  date_of_birth DateTime?
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  last_login    DateTime?
+  user_type     String
+  chats         Chat[]    @relation("UserChats")
+  messages      Message[]
+  Staff         Staff?
+  Patient       Patient?
+}
+
+model Patient {
+  patient_id      String          @id 
+  address         String?
+  user            User            @relation(fields: [patient_id], references: [user_id])
+  medical_history MedicalHistory?
+  insurance       Insurance[]
+  appointments    Appointment[]
+  lab_tests       LabTest[]
+  prescriptions   Prescription[]
+}
+
+model Staff {
+  staff_id        String     @id 
+  employment_date DateTime
+  employed_until  DateTime
+  role_id         String
+  department_id   String
+  user            User       @relation(fields: [staff_id], references: [user_id])
+  department      Department @relation(fields: [department_id], references: [dept_id])
+  Doctor          Doctor?
+}
+
+model Doctor {
+  doctor_id                  String        @id @unique
+  specializations            String?
+  qualifications             String?
+  years_of_experience        Int
+  enable_online_appointments Boolean       @default(true)
+  appointments               Appointment[]
+  staff                      Staff         @relation(fields: [doctor_id], references: [staff_id])
+
+  Prescription Prescription[]
+}
+
+model Chat {
+  chat_id       String    @id @default(uuid())
+  name          String
+  creation_date DateTime  @default(now())
+  messages      Message[]
+  participants  User[]    @relation("UserChats")
+}
+
+model Message {
+  message_id      String   @id @default(uuid())
+  timestamp       DateTime @default(now())
+  is_read         Boolean  @default(false)
+  message_content String
+  sender_id       String
+  chat_id         String
+  sender          User     @relation(fields: [sender_id], references: [user_id])
+  chat            Chat     @relation(fields: [chat_id], references: [chat_id])
+}
+
+model Department {
+  dept_id                  String  @id @default(uuid())
+  name                     String
+  description              String?
+  default_appointment_time Int
+  staff                    Staff[]
+}
+
+model Insurance {
+  insurance_id String  @id @default(uuid())
+  company      String
+  details      String?
+  policy_no    Int
+  patient_id   String
+  patient      Patient @relation(fields: [patient_id], references: [patient_id])
+}
+
+model MedicalHistory {
+  history_id         String  @id @default(uuid())
+  patient_id         String  @unique
+  allergies          String?
+  surgeries          String?
+  chronic_conditions String?
+  medications        String?
+  notes              String?
+  patient            Patient @relation(fields: [patient_id], references: [patient_id])
+}
+
+model Appointment {
+  appointment_id String   @id @default(uuid())
+  patient_id     String
+  doctor_id      String
+  date           DateTime
+  time           DateTime
+  status         String   @default("Scheduled")
+  notes          String?
+  doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id])
+  patient        Patient  @relation(fields: [patient_id], references: [patient_id])
+}
+
+model LabTest {
+  lab_test_id    String    @id @default(uuid())
+  patient_id     String
+  test_name      String
+  date_requested DateTime
+  date_completed DateTime?
+  results        String?
+  patient        Patient   @relation(fields: [patient_id], references: [patient_id])
+}
+
+model Prescription {
+  prescription_id String   @id @default(uuid())
+  patient_id      String
+  doctor_id       String
+  medication      String
+  dosage          String
+  instructions    String
+  issue_date      DateTime @default(now())
+  patient         Patient  @relation(fields: [patient_id], references: [patient_id])
+  doctor          Doctor   @relation(fields: [doctor_id], references: [doctor_id])
+}
