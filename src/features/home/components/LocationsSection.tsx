@@ -16,31 +16,31 @@ const LocationsSection: React.FC = () => {
         <LocationsCard
           title="Mayo Clinic in Arizona"
           location="Phoenix & Scottsdale"
-          cardImage="./images/mayoclinic-arizona.jpg.webp"
+          cardImage="/images/mayoclinic-arizona.jpg.webp"
           link=""
         />
         <LocationsCard
           title="Mayo Clinic in Florida"
           location="Jacksonville"
-          cardImage="./images/mayoclinic-florida.jpeg"
+          cardImage="/images/mayoclinic-florida.jpeg"
           link=""
         />
         <LocationsCard
           title="Mayo Clinic in Minnesota"
           location="Rochester"
-          cardImage="./images/mayoclinic-minnesota.jpg.webp"
+          cardImage="/images/mayoclinic-minnesota.jpg.webp"
           link=""
         />
         <LocationsCard
           title="Mayo Clinic Health System"
           location="Iowa, Minnesota, Wisconsin"
-          cardImage="./images/mayoclinic-health-system.jpeg"
+          cardImage="/images/mayoclinic-health-system.jpeg"
           link=""
         />
         <LocationsCard
           title="Mayo Clinic Healthcare"
           location="London, United Kingdom"
-          cardImage="./images/mayoclinic-healthcare.avif"
+          cardImage="/images/mayoclinic-healthcare.avif"
           link=""
         />
       </div>
