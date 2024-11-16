@@ -4,10 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useEffect, useState } from 'react';
-
-//import { format } from 'date-fns';
+import { format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-//import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -27,8 +26,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-//import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-//import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
 import DataFetcher from '@/utils/DataFetcher';
 
 const appointmentFormSchema = z.object({
@@ -66,6 +65,12 @@ const appointmentFormSchema = z.object({
     }),
   selectedDoctor: z.string({ required_error: 'Please select a doctor.' }),
   selectedPatient: z.string({ required_error: 'Please select a patient.' }),
+  appointmentDate: z.date({
+    required_error: 'Please select a date for the appointment.',
+  }),
+  appointmentTime: z.string({
+    required_error: 'Please select a time for the appointment.',
+  }),
 });
 
 type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
@@ -75,6 +80,8 @@ const defaultValues: Partial<AppointmentFormValues> = {
   testHolder: 'Test',
   selectedDoctor: '',
   selectedPatient: '',
+  appointmentDate: undefined,
+  appointmentTime: '',
 };
 
 export function AppointmentForm() {
@@ -85,22 +92,18 @@ export function AppointmentForm() {
   });
 
   const [doctors, setDoctors] = useState<{ id: string; name: string }[]>([]);
-  useEffect(() => {
-    async function loadDoctors() {
-      const doctorList = await DataFetcher.fetchDoctors();
-      setDoctors(doctorList);
-    }
-    loadDoctors();
-  }, []);
-
-  
   const [patients, setPatients] = useState<{ id: string; name: string }[]>([]);
+
   useEffect(() => {
-    async function loadPatients() {
-      const patientList = await DataFetcher.fetchPatients();
+    async function loadData() {
+      const [doctorList, patientList] = await Promise.all([
+        DataFetcher.fetchDoctors(),
+        DataFetcher.fetchPatients(),
+      ]);
+      setDoctors(doctorList);
       setPatients(patientList);
     }
-    loadPatients();
+    loadData();
   }, []);
 
 
@@ -119,7 +122,7 @@ export function AppointmentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      <FormField
+        <FormField
           control={form.control}
           name="selectedPatient"
           render={({ field }) => (
@@ -139,14 +142,12 @@ export function AppointmentForm() {
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose a doctor for your appointment from the list.
-              </FormDescription>
+              <FormDescription>Choose a patient for your appointment from the list.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-      <FormField
+        <FormField
           control={form.control}
           name="selectedDoctor"
           render={({ field }) => (
@@ -166,8 +167,75 @@ export function AppointmentForm() {
                   ))}
                 </SelectContent>
               </Select>
+              <FormDescription>Choose a doctor for your appointment from the list.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="appointmentDate"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Appointment Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={`w-[240px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"}`}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <FormDescription>
-                Choose a doctor for your appointment from the list.
+                Select the date for your appointment.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="appointmentTime"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Appointment Time</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a time" />
+                    <Clock className="ml-auto h-4 w-4 opacity-50" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map((time) => (
+                    <SelectItem key={time} value={time}>
+                      {time}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Choose a time for your appointment.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -235,7 +303,7 @@ export function AppointmentForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Update profile</Button>
+        <Button type="submit">Submit Appointment Request</Button>
       </form>
     </Form>
   );
