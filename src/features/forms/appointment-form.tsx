@@ -29,16 +29,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import DataFetcher from '@/utils/DataFetcher';
+import DataSender from '@/utils/DataSender';
 
 const appointmentFormSchema = z.object({
-  testHolder: z
-    .string()
-    .min(2, {
-      message: 'Name must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Name must not be longer than 30 characters.',
-    }),
   medicalConcernDescription: z
     .string()
     .min(2, {
@@ -77,7 +70,6 @@ type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<AppointmentFormValues> = {
-  testHolder: 'Test',
   selectedDoctor: '',
   selectedPatient: '',
   appointmentDate: undefined,
@@ -106,7 +98,6 @@ export function AppointmentForm() {
     loadData();
   }, []);
 
-
   function onSubmit(data: AppointmentFormValues) {
     alert(JSON.stringify(data));
     toast({
@@ -117,6 +108,24 @@ export function AppointmentForm() {
         </pre>
       ),
     });
+
+    DataSender.requestAppointment(data)
+      .then(response => {
+        toast({
+          title: 'Appointment Requested',
+          description: 'Your appointment request has been sent.',
+        });
+        console.log('Appointment requested:', response);
+      })
+      .catch(error => {
+        console.error('Error requesting appointment:', error);
+        toast({
+          title: 'Error',
+          description: 'There was an error requesting your appointment.',
+          variant: 'destructive',
+        });
+        console.error('Error requesting appointment:', error);
+      });
   }
 
   return (
@@ -142,7 +151,9 @@ export function AppointmentForm() {
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription>Choose a patient for your appointment from the list.</FormDescription>
+              <FormDescription>
+                Choose a patient for your appointment from the list.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -182,14 +193,10 @@ export function AppointmentForm() {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={"outline"}
-                      className={`w-[240px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"}`}
+                      variant={'outline'}
+                      className={`w-[240px] pl-3 text-left font-normal ${!field.value && 'text-muted-foreground'}`}
                     >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
+                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -199,16 +206,15 @@ export function AppointmentForm() {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))
+                    disabled={date =>
+                      date < new Date() ||
+                      date > new Date(new Date().setMonth(new Date().getMonth() + 2))
                     }
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                Select the date for your appointment.
-              </FormDescription>
+              <FormDescription>Select the date for your appointment.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -227,16 +233,14 @@ export function AppointmentForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map((time) => (
+                  {['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map(time => (
                     <SelectItem key={time} value={time}>
                       {time}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose a time for your appointment.
-              </FormDescription>
+              <FormDescription>Choose a time for your appointment.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
