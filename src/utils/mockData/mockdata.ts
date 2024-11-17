@@ -1,50 +1,53 @@
-import { Doctor, Patient } from '@/utils/interfaces/interfaces';
+import { Doctor, Patient, Role, Appointment, TreatmentService } from '@/utils/interfaces/interfaces';
+
+export const mockRoles: Role[] = [
+  { id: '1', name: 'Admin', description: 'Administrator with full access' },
+  { id: '2', name: 'User', description: 'Regular user access' },
+];
+
+// Treatment Services
+export const treatmentServices: TreatmentService[] = [
+  { name: 'General Checkup', cost: 100, description: 'Routine checkup and consultation' },
+  { name: 'Dental Cleaning', cost: 150, description: 'Professional dental cleaning service' },
+  { name: 'Physical Therapy', cost: 200, description: 'Physical therapy sessions' },
+];
+
 
 // Mock Doctors
 export const mockDoctors: Doctor[] = [
   {
     id: '1',
     name: 'Ronald Richards',
-    speciality: 'Dentist',
+    username: 'ronaldrichards',
     email: 'ronaldrichards@example.com',
     phoneNumber: '209-555-0104',
-    workingDays: ['S', 'M', 'T', 'W', 'T', 'F'],
-    assignedTreatment: 'Dental service',
-    employmentType: 'PART-TIME',
+    gender: 'MALE',
+    dateOfBirth: new Date('1980-05-10'),
     avatar: '/placeholder.svg?height=32&width=32',
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date('2024-10-28T12:00:00Z').toISOString(),
+    isActive: true,
+    speciality: 'Dentist',
+    workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
+    assignedTreatmentServices: [treatmentServices[0], treatmentServices[1], treatmentServices[2]], // General Checkup, Dental Cleaning
+    employmentType: 'FULL-TIME',
   },
   {
     id: '2',
     name: 'Dorothy Spencer',
-    speciality: 'Cardiologist',
+    username: 'dorothyspencer',
     email: 'dorothyspencer@example.com',
     phoneNumber: '415-555-0198',
-    workingDays: ['M', 'T', 'W', 'T', 'F'],
-    assignedTreatment: 'Cardiac care',
-    employmentType: 'FULL-TIME',
+    gender: 'FEMALE',
+    dateOfBirth: new Date('1985-09-15'),
     avatar: '/placeholder.svg?height=32&width=32',
-  },
-  {
-    id: '3',
-    name: 'Michael Jordan',
-    speciality: 'Pediatrician',
-    email: 'michaeljordan@example.com',
-    phoneNumber: '213-555-0123',
-    workingDays: ['M', 'T', 'W', 'F'],
-    assignedTreatment: 'Child health',
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date('2024-10-27T09:00:00Z').toISOString(),
+    isActive: true,
+    speciality: 'Cardiologist',
+    workingDays: ['MONDAY', 'WEDNESDAY', 'FRIDAY'],
+    //assignedTreatmentServices: [treatmentServices[0]], // General Checkup
     employmentType: 'PART-TIME',
-    avatar: '/placeholder.svg?height=32&width=32',
-  },
-  {
-    id: '4',
-    name: 'Sarah Johnson',
-    speciality: 'Dermatologist',
-    email: 'sarahjohnson@example.com',
-    phoneNumber: '650-555-0143',
-    workingDays: ['T', 'W', 'T', 'F', 'S'],
-    assignedTreatment: 'Skin care',
-    employmentType: 'FULL-TIME',
-    avatar: '/placeholder.svg?height=32&width=32',
   },
   //add more mock doctors as needed
 ];
@@ -53,19 +56,55 @@ export const mockDoctors: Doctor[] = [
 export const mockPatients: Patient[] = [
   {
     id: '1',
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    phoneNumber: '000000000000',
+    name: 'Michael Johnson',
+    username: 'michaeljohnson',
+    email: 'michaeljohnson@example.com',
+    phoneNumber: '213-555-0123',
     gender: 'MALE',
+    dateOfBirth: new Date('1990-02-20'),
     avatar: '/placeholder.svg?height=32&width=32',
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date('2024-12-26T08:00:00Z').toISOString(),
+    lastVisitDate: new Date('2024-12-26T08:00:00Z').toISOString(),
+    isActive: true,
+    address: '123 Maple Street, Springfield',
+    medicalHistory: ['Allergy to penicillin', 'Asthma'],
   },
   {
     id: '2',
-    name: 'Jane Doe',
-    email: 'janedoe@example.com',
-    phoneNumber: '000000000000',
+    name: 'Sarah Connor',
+    username: 'sarahconnor',
+    email: 'sarahconnor@example.com',
+    phoneNumber: '650-555-0143',
     gender: 'FEMALE',
+    dateOfBirth: new Date('1988-11-30'),
     avatar: '/placeholder.svg?height=32&width=32',
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date('2024-12-27T10:00:00Z').toISOString(),
+    lastVisitDate: new Date('2024-12-27T10:00:00Z').toISOString(),
+    isActive: true,
+    address: '456 Elm Street, Metropolis',
+    medicalHistory: ['No known allergies'],
   },
   // add more mock patients as needed
 ];
+
+export const mockAppointments: Appointment[] = [
+  {
+    id: '1',
+    patient: mockPatients[0],
+    doctor: mockDoctors[0],
+    scheduledAt: '2024-11-01T09:00:00Z',
+    status: 'SCHEDULED',
+  },
+  {
+    id: '2',
+    patient: mockPatients[1],
+    doctor: mockDoctors[1],
+    scheduledAt: '2024-11-15T14:30:00Z',
+    status: 'COMPLETED',
+  },
+  // add more mock appointments as needed
+];
+
+export const mockUsers = [...mockDoctors, ...mockPatients];

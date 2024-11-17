@@ -14,9 +14,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+//import { Badge } from '@/components/ui/badge';
 import { Patient } from '@/utils/interfaces/interfaces';
-
+import { formatDateTime } from '@/utils/DateFormatter';
 
 export const columns: ColumnDef<Patient>[] = [
   {
@@ -74,7 +74,7 @@ export const columns: ColumnDef<Patient>[] = [
   },
   {
     accessorKey: 'phoneNumber',
-    header: 'NUMBER',
+    header: 'PHONE',
   },
   {
     accessorKey: 'email',
@@ -87,18 +87,26 @@ export const columns: ColumnDef<Patient>[] = [
     },
   },
   {
-    accessorKey: 'assignedTreatment',
-    header: 'Assigned Treatment',
+    accessorKey: 'address',
+    header: 'ADDRESS',
   },
   {
-    accessorKey: "type",
-    header: "TYPE",
+    accessorKey: 'createdAt',
+    header: 'REGISTERED',
     cell: ({ row }) => {
-      const type = row.getValue("type") as string
+      const patient = row.original;
       return (
-        <Badge variant={type === "FULL-TIME" ? "default" : "secondary"}>
-          {type}
-        </Badge>
+        <div>{formatDateTime(patient.createdAt).dateOnly}</div> // Date only
+      )
+    },
+  },
+  {
+    accessorKey: 'lastVisitDate',
+    header: 'LAST VISIT',
+    cell: ({ row }) => {
+      const patient = row.original;
+      return (
+        <div>{formatDateTime(patient.lastVisitDate).dateOnly}</div> // Date only
       )
     },
   },

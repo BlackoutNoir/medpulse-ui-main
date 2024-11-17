@@ -1,0 +1,9 @@
+[
+  {
+    "insurance_id": "ins-1",
+    "company": "HealthIns",
+    "details": "Premium plan",
+    "policy_no": 123456,
+    "patient_id": "patient-1"
+  }
+]

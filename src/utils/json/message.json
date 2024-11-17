@@ -1,0 +1,18 @@
+[
+  {
+    "message_id": "msg-1",
+    "timestamp": "2024-02-01T10:10:00Z",
+    "is_read": true,
+    "message_content": "Hello, how can I help you today?",
+    "sender_id": "user-1",
+    "chat_id": "chat-1"
+  },
+  {
+    "message_id": "msg-2",
+    "timestamp": "2024-02-01T10:15:00Z",
+    "is_read": false,
+    "message_content": "I need help with a heart condition.",
+    "sender_id": "user-2",
+    "chat_id": "chat-1"
+  }
+]

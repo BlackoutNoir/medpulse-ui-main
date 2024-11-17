@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id       String    @id @default(uuid())
+  username      String    @unique
+  email         String    @unique
+  password_hash String
+  phone_no      String? // Optional phone number field
+  first_name    String
+  last_name     String
+  date_of_birth DateTime // Made mandatory
+  gender        String
+  avatar        String? // Optional avatar field
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  last_login    DateTime?
+  user_type     String
+  messages      Message[]
+  Staff         Staff?
+  Patient       Patient?
+}
+
+model Staff {
+  staff_id        String             @id
+  employment_date DateTime
+  employed_until  DateTime?
+  role_id         String
+  department_id   String
+  employment_type String
+  user            User               @relation(fields: [staff_id], references: [user_id], onDelete: Cascade)
+  departmentLinks DepartmentStaff[] // Connects to DepartmentStaff
+  workingLinks    StaffWorkingDays[] // Connects to StaffWorkingDays
+  Doctor          Doctor?
+
+  // Removed direct Department[] relation, as it's managed by DepartmentStaff
+}
+
+model Department {
+  dept_id                  String            @id @default(uuid())
+  name                     String
+  description              String?
+  default_appointment_time Int
+  staffLinks               DepartmentStaff[] // Connects to DepartmentStaff
+}
+
+model DepartmentStaff {
+  id            String     @id @default(uuid())
+  staff_id      String
+  department_id String
+  staff         Staff      @relation(fields: [staff_id], references: [staff_id], onDelete: Cascade)
+  department    Department @relation(fields: [department_id], references: [dept_id], onDelete: Cascade)
+
+  @@unique([staff_id, department_id])
+}
+
+model WorkingDays {
+  id         String             @id @default(uuid())
+  day        String             @unique
+  staffLinks StaffWorkingDays[] // Connects to StaffWorkingDays
+}
+
+model StaffWorkingDays {
+  id             String      @id @default(uuid())
+  staff_id       String
+  working_day_id String
+  Staff          Staff       @relation(fields: [staff_id], references: [staff_id], onDelete: Cascade)
+  working_days   WorkingDays @relation(fields: [working_day_id], references: [id], onDelete: Cascade)
+
+  @@unique([staff_id, working_day_id])
+}
+
+model Doctor {
+  doctor_id                  String                   @id
+  specializations            String?
+  qualifications             String?
+  years_of_experience        Int
+  enable_online_appointments Boolean                  @default(true)
+  staff                      Staff                    @relation(fields: [doctor_id], references: [staff_id], onDelete: Cascade)
+  assignedTreatmentLinks     DoctorTreatmentService[] // Connects to DoctorTreatmentService
+  appointments               Appointment[]
+  Prescription               Prescription[]
+}
+
+model treatment_service {
+  treatment_service_id String                   @id @default(uuid())
+  description          String
+  doctorLinks          DoctorTreatmentService[] // Connects to DoctorTreatmentService
+}
+
+model DoctorTreatmentService {
+  id                   String            @id @default(uuid())
+  doctor_id            String
+  treatment_service_id String
+  doctor               Doctor            @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  treatment_service    treatment_service @relation(fields: [treatment_service_id], references: [treatment_service_id], onDelete: Cascade)
+
+  @@unique([doctor_id, treatment_service_id])
+}
+
+model Patient {
+  patient_id      String          @id
+  address         String?
+  last_visit_date DateTime
+  user            User            @relation(fields: [patient_id], references: [user_id], onDelete: Cascade)
+  medical_history MedicalHistory?
+  insurance       Insurance[]
+  appointments    Appointment[]
+  lab_tests       LabTest[]
+  prescriptions   Prescription[]
+}
+
+model MedicalHistory {
+  history_id         String  @id @default(uuid())
+  patient_id         String  @unique
+  allergies          String?
+  surgeries          String?
+  chronic_conditions String?
+  medications        String?
+  notes              String?
+  patient            Patient @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+}
+
+model Insurance {
+  insurance_id String  @id @default(uuid())
+  company      String
+  details      String?
+  policy_no    Int     @unique // Ensured unique constraint for policy_no
+  patient_id   String
+  patient      Patient @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+}
+
+model Appointment {
+  appointment_id String   @id @default(uuid())
+  patient_id     String
+  doctor_id      String
+  date           DateTime
+  time           DateTime
+  status         String
+  notes          String?
+  doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  patient        Patient  @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+}
+
+model LabTest {
+  lab_test_id    String    @id @default(uuid())
+  patient_id     String
+  test_name      String
+  date_requested DateTime
+  date_completed DateTime?
+  results        String?
+  patient        Patient   @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+}
+
+model Prescription {
+  prescription_id String   @id @default(uuid())
+  patient_id      String
+  doctor_id       String
+  medication      String
+  dosage          String
+  instructions    String
+  issue_date      DateTime @default(now())
+  doctor          Doctor   @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  patient         Patient  @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+}
+
+model Chat {
+  chat_id       String    @id @default(uuid())
+  name          String
+  creation_date DateTime  @default(now())
+  messages      Message[]
+}
+
+model Message {
+  message_id      String   @id @default(uuid())
+  timestamp       DateTime @default(now())
+  is_read         Boolean  @default(false)
+  message_content String
+  sender_id       String
+  chat_id         String
+  sender          User     @relation(fields: [sender_id], references: [user_id], onDelete: Cascade)
+  chat            Chat     @relation(fields: [chat_id], references: [chat_id], onDelete: Cascade)
+}

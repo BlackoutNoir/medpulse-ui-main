@@ -1,0 +1,225 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  user_id String [pk]
+  username String [unique, not null]
+  email String [unique, not null]
+  password_hash String [not null]
+  phone_no String
+  first_name String [not null]
+  last_name String [not null]
+  date_of_birth DateTime [not null]
+  gender String [not null]
+  avatar String
+  is_active Boolean [not null, default: true]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  last_login DateTime
+  user_type String [not null]
+  messages Message [not null]
+  Staff Staff
+  Patient Patient
+}
+
+Table Staff {
+  staff_id String [pk]
+  employment_date DateTime [not null]
+  employed_until DateTime
+  role_id String [not null]
+  department_id String [not null]
+  employment_type String [not null]
+  user User [not null]
+  departmentLinks DepartmentStaff [not null]
+  workingLinks StaffWorkingDays [not null]
+  Doctor Doctor
+}
+
+Table Department {
+  dept_id String [pk]
+  name String [not null]
+  description String
+  default_appointment_time Int [not null]
+  staffLinks DepartmentStaff [not null]
+}
+
+Table DepartmentStaff {
+  id String [pk]
+  staff_id String [not null]
+  department_id String [not null]
+  staff Staff [not null]
+  department Department [not null]
+
+  indexes {
+    (staff_id, department_id) [unique]
+  }
+}
+
+Table WorkingDays {
+  id String [pk]
+  day String [unique, not null]
+  staffLinks StaffWorkingDays [not null]
+}
+
+Table StaffWorkingDays {
+  id String [pk]
+  staff_id String [not null]
+  working_day_id String [not null]
+  Staff Staff [not null]
+  working_days WorkingDays [not null]
+
+  indexes {
+    (staff_id, working_day_id) [unique]
+  }
+}
+
+Table Doctor {
+  doctor_id String [pk]
+  specializations String
+  qualifications String
+  years_of_experience Int [not null]
+  enable_online_appointments Boolean [not null, default: true]
+  staff Staff [not null]
+  assignedTreatmentLinks DoctorTreatmentService [not null]
+  appointments Appointment [not null]
+  Prescription Prescription [not null]
+}
+
+Table treatment_service {
+  treatment_service_id String [pk]
+  description String [not null]
+  doctorLinks DoctorTreatmentService [not null]
+}
+
+Table DoctorTreatmentService {
+  id String [pk]
+  doctor_id String [not null]
+  treatment_service_id String [not null]
+  doctor Doctor [not null]
+  treatment_service treatment_service [not null]
+
+  indexes {
+    (doctor_id, treatment_service_id) [unique]
+  }
+}
+
+Table Patient {
+  patient_id String [pk]
+  address String
+  last_visit_date DateTime [not null]
+  user User [not null]
+  medical_history MedicalHistory
+  insurance Insurance [not null]
+  appointments Appointment [not null]
+  lab_tests LabTest [not null]
+  prescriptions Prescription [not null]
+}
+
+Table MedicalHistory {
+  history_id String [pk]
+  patient_id String [unique, not null]
+  allergies String
+  surgeries String
+  chronic_conditions String
+  medications String
+  notes String
+  patient Patient [not null]
+}
+
+Table Insurance {
+  insurance_id String [pk]
+  company String [not null]
+  details String
+  policy_no Int [unique, not null]
+  patient_id String [not null]
+  patient Patient [not null]
+}
+
+Table Appointment {
+  appointment_id String [pk]
+  patient_id String [not null]
+  doctor_id String [not null]
+  date DateTime [not null]
+  time DateTime [not null]
+  status String [not null]
+  notes String
+  doctor Doctor [not null]
+  patient Patient [not null]
+}
+
+Table LabTest {
+  lab_test_id String [pk]
+  patient_id String [not null]
+  test_name String [not null]
+  date_requested DateTime [not null]
+  date_completed DateTime
+  results String
+  patient Patient [not null]
+}
+
+Table Prescription {
+  prescription_id String [pk]
+  patient_id String [not null]
+  doctor_id String [not null]
+  medication String [not null]
+  dosage String [not null]
+  instructions String [not null]
+  issue_date DateTime [default: `now()`, not null]
+  doctor Doctor [not null]
+  patient Patient [not null]
+}
+
+Table Chat {
+  chat_id String [pk]
+  name String [not null]
+  creation_date DateTime [default: `now()`, not null]
+  messages Message [not null]
+}
+
+Table Message {
+  message_id String [pk]
+  timestamp DateTime [default: `now()`, not null]
+  is_read Boolean [not null, default: false]
+  message_content String [not null]
+  sender_id String [not null]
+  chat_id String [not null]
+  sender User [not null]
+  chat Chat [not null]
+}
+
+Ref: Staff.staff_id - User.user_id [delete: Cascade]
+
+Ref: DepartmentStaff.staff_id > Staff.staff_id [delete: Cascade]
+
+Ref: DepartmentStaff.department_id > Department.dept_id [delete: Cascade]
+
+Ref: StaffWorkingDays.staff_id > Staff.staff_id [delete: Cascade]
+
+Ref: StaffWorkingDays.working_day_id > WorkingDays.id [delete: Cascade]
+
+Ref: Doctor.doctor_id - Staff.staff_id [delete: Cascade]
+
+Ref: DoctorTreatmentService.doctor_id > Doctor.doctor_id [delete: Cascade]
+
+Ref: DoctorTreatmentService.treatment_service_id > treatment_service.treatment_service_id [delete: Cascade]
+
+Ref: Patient.patient_id - User.user_id [delete: Cascade]
+
+Ref: MedicalHistory.patient_id - Patient.patient_id [delete: Cascade]
+
+Ref: Insurance.patient_id > Patient.patient_id [delete: Cascade]
+
+Ref: Appointment.doctor_id > Doctor.doctor_id [delete: Cascade]
+
+Ref: Appointment.patient_id > Patient.patient_id [delete: Cascade]
+
+Ref: LabTest.patient_id > Patient.patient_id [delete: Cascade]
+
+Ref: Prescription.doctor_id > Doctor.doctor_id [delete: Cascade]
+
+Ref: Prescription.patient_id > Patient.patient_id [delete: Cascade]
+
+Ref: Message.sender_id > User.user_id [delete: Cascade]
+
+Ref: Message.chat_id > Chat.chat_id [delete: Cascade]

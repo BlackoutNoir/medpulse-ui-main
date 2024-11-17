@@ -1,32 +1,65 @@
 //NOTE: Maybe modify to use Zod schema
 
-// Type (Union) Interfaces
-type employmentType = 'FULL-TIME' | 'PART-TIME';
-type genderType = 'MALE' | 'FEMALE';
+// ========================== TYPE (UNION) INTERFACES ==========================
+type EmploymentType = 'FULL-TIME' | 'PART-TIME';
+type Gender = 'MALE' | 'FEMALE';
+type AppointmentStatus = 'PENDING' | 'SCHEDULED' | 'CANCELLED' | 'COMPLETED';
+export type WorkingDays = 'SUNDAY' | 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY';
+// ========================== TYPE (UNION) INTERFACES ==========================
 
-// User Interface
-
-// Doctor Interface
-export interface Doctor {
+// ========================== ROLES AND SERVICES ==========================
+export interface Role {
   id: string;
   name: string;
-  avatar: string;
-  speciality: string;
+  description: string;
+}
+export interface TreatmentService {
+  name: string;
+  cost: number;
+  description: string;
+}
+// ========================== ROLES AND SERVICES ==========================
+
+
+// ========================== USERS ==========================
+// User Interface
+export interface User {
+  id: string;
+  name: string;
+  username?: string;
   email: string;
   phoneNumber: string;
-  workingDays: string[];
-  assignedTreatment: string; //change to list later
-  employmentType: employmentType;
+  gender: Gender;
+  dateOfBirth: Date; 
+  avatar?: string;
+  createdAt: string; //Store as ISO 8601 string (e.g., "2024-11-01T09:00:00Z")
+  lastLogin?: string;
+  isActive: boolean;
+}
+
+// Doctor Interface
+export interface Doctor extends User {
+  speciality: string;
+  workingDays?: WorkingDays[];
+  assignedTreatmentServices?: TreatmentService[]; 
+  employmentType: EmploymentType;
 }
 
 // Patient Interface
-export interface Patient {
-  id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  gender: genderType;
-  //dateOfBirth: Date;
-  avatar: string;
-  //assignedDoctor: Doctor;
+export interface Patient extends User {
+  address: string;
+  lastVisitDate: string;
+  medicalHistory?: string[];
 }
+// ========================== USERS ==========================
+
+
+// ========================== APPOINTMENTS ==========================
+export interface Appointment {
+  id: string;
+  patient: Patient;
+  doctor: Doctor;
+  scheduledAt: string; // Store as ISO 8601 string (e.g., "2024-11-01T09:00:00Z")
+  status: AppointmentStatus;
+}
+// ========================== APPOINTMENTS ==========================
