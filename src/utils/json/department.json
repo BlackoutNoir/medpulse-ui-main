@@ -1,0 +1,8 @@
+[
+  {
+    "dept_id": "dept-1",
+    "name": "Cardiology",
+    "description": "Heart-related treatments and care.",
+    "default_appointment_time": 30
+  }
+]
