@@ -1,19 +1,21 @@
 'use client';
 import React from 'react';
-// import MainSection from '@/components/home/MainSection';
-import ManageAppointments from '@/features/appointment-management/components/ManageAppointments';
-import ViewAppointments from '@/features/appointment-management/components/ViewAppointments';
+import Home from '@/features/home/components/Home';
+import HomeNav from '@/features/home/components/HomeNav';
+import HomeFooter from '@/features/home/components/HomeFooter';
 
 const Page = () => {
   return (
     <>
       <header>
+        <HomeNav />
         <title>Home - MedPulse</title>
         <meta name="description" content="Medpulse Home Page" />
       </header>
-      {/* <MainSection /> */}
-      <ManageAppointments />
-      <ViewAppointments />
+      <Home />
+      <footer>
+        <HomeFooter />
+      </footer>
     </>
   );
 };
