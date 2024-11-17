@@ -39,7 +39,7 @@ const SearchSection: React.FC = () => {
               className="w-full px-4 py-4 border border-black text-sm rounded-full pl-12"
             />
             <button className="absolute left-4 top-3 flex items-center">
-              <Search className="h-5 w-5 text-gray-400" />
+              <Search className="h-7 w-5" />
             </button>
           </div>
         </div>

@@ -1,10 +1,10 @@
-import React from "react";
-import FeaturedCategory from "./FeaturedCategory";
+import React from 'react';
+import FeaturedCategory from './FeaturedCategory';
 
 const FeaturedSection: React.FC = () => {
   return (
-    <section>
-      <div className="pt-10 mx-5 lg:mx-0">
+    <section className="pb-8 pt-10 mx-5 lg:mx-0">
+      <div>
         {/* Section Header */}
         <div className="pb-5 border-b-[1px] sm:mx-3">
           <h2 className="text-3xl font-semibold pb-3">Featured care areas</h2>

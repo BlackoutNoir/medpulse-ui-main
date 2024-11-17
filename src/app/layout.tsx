@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
-import HomeNav from '@/features/home/components/HomeNav';
 
 const inter = Inter({ subsets: ['latin'] });
 
