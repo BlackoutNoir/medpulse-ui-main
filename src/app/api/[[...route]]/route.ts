@@ -5,16 +5,6 @@ import MedpulseRepo from '@/utils/repo/medpulse-repo';
 
 const app = new Hono().basePath('/api');
 
-// /api/hello
-app.get('/hello', c => {
-  return c.json({ hello: 'world' });
-});
-
-// /api/project/123
-app.get('project/:projectId', c => {
-  return c.json({ project: 'projectId' });
-});
-
 // User Routes
 app.get('/users', async c => {
   const users = await MedpulseRepo.getAllUsers();

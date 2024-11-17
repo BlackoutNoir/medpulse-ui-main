@@ -106,7 +106,6 @@ export const columns: ColumnDef<Doctor>[] = [
             <span 
               key={index} 
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs
-                ${staff.workingDays.includes(day) 
                   ? 'bg-primary text-primary-foreground' 
                   : 'bg-muted text-muted-foreground'}`}
             >

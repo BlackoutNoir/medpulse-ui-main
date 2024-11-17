@@ -15,7 +15,7 @@ export async function DoctorOverview() {
 async function fetchDoctors(): Promise<Doctor[]> {
   // Fetch data from your API here.
   try {
-    const doctors = await DataFetcher.fetchDoctors();
+    const doctors = await DataFetcher.fetchPatients();
     return doctors;
   } catch (error) {
     console.error('Error fetching doctors:', error);

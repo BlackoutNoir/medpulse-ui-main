@@ -25,7 +25,7 @@ export interface TreatmentService {
 // User Interface
 export interface User {
   id: string;
-  name: string;
+  first_name: string;
   username?: string;
   email: string;
   phoneNumber: string;
