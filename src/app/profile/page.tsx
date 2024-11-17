@@ -7,19 +7,27 @@ import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
 import { PatientsStatCards } from '@/features/managePatient/patients/stat-cards';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
+import { Monitor, ClipboardMinus } from 'lucide-react';
 
 export default async function ManagePatientPage() {
   return (
     <>
       <div className="flex-col md:flex">
         <div className="border-b">
-          <div className="hidden md:flex h-16 items-center px-4">
-            <div className="ml-auto flex items-center space-x-4">
+          <div className="hidden md:flex h-16 items-center px-4 justify-between">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center space-x-2">
+                <span className="text-2xl font-bold whitespace-nowrap">MedPulse Clinic</span>
+              </Link>
+            </div>
+            <div className="flex items-center space-x-4">
               <Search />
               <UserNav />
             </div>
           </div>
         </div>
+
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
             <div>
@@ -31,8 +39,7 @@ export default async function ManagePatientPage() {
               <p className="text-muted-foreground">@JohnDoe</p>
             </div>
           </div>
-
-          <Tabs>
+          <Tabs defaultValue="patient-info">
             <TabsList>
               <TabsTrigger value="patient-info">My Information</TabsTrigger>
               <TabsTrigger value="medical-record">Medical Record</TabsTrigger>
@@ -40,7 +47,7 @@ export default async function ManagePatientPage() {
               <TabsTrigger value="current-prescriptions">Current Prescriptions</TabsTrigger>
               <TabsTrigger value="appointments">Appointments</TabsTrigger>
             </TabsList>
-            <TabsContent value="patient-info" className="space-y-4">
+            <TabsContent value="patient-info" className="space-y-4 mt-3">
               <div className="">
                 <Card className="">
                   <CardHeader>
@@ -53,7 +60,7 @@ export default async function ManagePatientPage() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="medical-record" className="space-y-4">
+            <TabsContent value="medical-record" className="space-y-4 mt-3">
               <PatientsStatCards />
               <div className="">
                 <Card className="">
@@ -67,7 +74,7 @@ export default async function ManagePatientPage() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="lab-results" className="space-y-4">
+            <TabsContent value="lab-results" className="space-y-4 mt-3">
               <PatientsStatCards />
               <div className="">
                 <Card className="">
@@ -82,7 +89,7 @@ export default async function ManagePatientPage() {
               </div>
             </TabsContent>
             <TabsContent value="current-prescriptions" className="space-y-4">
-              <div className="">
+              <div className="mt-3">
                 <Card className="">
                   <CardHeader>
                     <CardTitle>Current Prescriptions</CardTitle>
@@ -94,7 +101,36 @@ export default async function ManagePatientPage() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="appointments" className="space-y-4">
+            <TabsContent value="appointments" className="space-y-4 mt-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
+                <Link href="/request-appointment" passHref>
+                  <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                    <CardHeader className="flex justify-between items-center">
+                      <ClipboardMinus className="h-6 w-6 text-blue-600" />
+                      <div>
+                        <CardTitle>Request an Appointment</CardTitle>
+                        <CardDescription>
+                          Schedule an in-person visit with our experts.
+                        </CardDescription>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                </Link>
+                <Link href="/book-virtual-appointment" passHref>
+                  <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                    <CardHeader className="flex justify-between items-center">
+                      <Monitor className="h-6 w-6 text-blue-600" />
+                      <div>
+                        <CardTitle>Book a Virtual Consultation</CardTitle>
+                        <CardDescription>
+                          Connect with a specialist online at your convenience.
+                        </CardDescription>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              </div>
+
               <div className="">
                 <Card className="">
                   <CardHeader>

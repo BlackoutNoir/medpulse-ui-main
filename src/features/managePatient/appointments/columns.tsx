@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
+import { CircleX, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -38,6 +38,25 @@ export const columns: ColumnDef<any>[] = [
     header: 'Status',
   },
   {
+    id: 'action_icon',
+    cell: ({ row }) => {
+      const handleClick = () => {
+        console.log(`Action triggered for row ID: ${row.original.appointment_id}`);
+      };
+
+      return (
+        <Button
+          variant="ghost"
+          className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
+          onClick={handleClick}
+        >
+          <CircleX className="h-5 w-5" />
+        </Button>
+      );
+    },
+    header: 'Cancel',
+  },
+  {
     id: 'actions',
     cell: ({ row }) => {
       const patient = row.original;
@@ -52,11 +71,11 @@ export const columns: ColumnDef<any>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(patient.patient_id)}>
-              Copy patient ID
+              Copy appointment ID
             </DropdownMenuItem>
+            <DropdownMenuItem>View Appointment Details</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View patient details</DropdownMenuItem>
-            <DropdownMenuItem>View appointments</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-700">Cancel Appointment</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
