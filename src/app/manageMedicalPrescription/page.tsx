@@ -1,11 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DoctorOverview } from '@/features/dashboard/doctors/overview';
 import { PatientOverview } from '@/features/dashboard/patients/overview';
 import { PatientMedicalOverview } from '@/features/managePatient/medicalRecord/overview';
+import { PatientAppointmentOverview } from '@/features/managePatient/appointments/overview';
 import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
-import { AppointmentStatCards } from '@/features/managePatient/appointmentHistory/stat-cards';
 import { PatientsStatCards } from '@/features/managePatient/patients/stat-cards';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -36,7 +35,6 @@ export default async function ManagePatientPage() {
           <Tabs>
             <TabsList>
               <TabsTrigger value="patient-info">My Information</TabsTrigger>
-              <TabsTrigger value="appointment-history">Appointment History</TabsTrigger>
               <TabsTrigger value="medical-record">Medical Record</TabsTrigger>
               <TabsTrigger value="lab-results">Lab Results</TabsTrigger>
               <TabsTrigger value="current-prescriptions">Current Prescriptions</TabsTrigger>
@@ -51,20 +49,6 @@ export default async function ManagePatientPage() {
                   </CardHeader>
                   <CardContent className="mx-auto">
                     <PatientsStatCards />
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-            <TabsContent value="appointment-history" className="space-y-4">
-              <AppointmentStatCards />
-              <div className="">
-                <Card className="">
-                  <CardHeader>
-                    <CardTitle>Appointment History</CardTitle>
-                    <CardDescription>View your past appointment&apos;s.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
-                    <DoctorOverview />
                   </CardContent>
                 </Card>
               </div>
@@ -114,11 +98,11 @@ export default async function ManagePatientPage() {
               <div className="">
                 <Card className="">
                   <CardHeader>
-                    <CardTitle>Current Prescriptions</CardTitle>
-                    <CardDescription>View your currently prescribed medicine.</CardDescription>
+                    <CardTitle>Appointments Overview</CardTitle>
+                    <CardDescription>Manage your appointments.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <PatientOverview />
+                    <PatientAppointmentOverview />
                   </CardContent>
                 </Card>
               </div>

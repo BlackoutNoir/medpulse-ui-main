@@ -9,7 +9,7 @@ class DataFetcher {
       const response = await axios.get(`${this.baseURL}/api/doctors`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching doctors:", error);
+      console.error('Error fetching doctors:', error);
       throw error;
     }
   }
@@ -20,7 +20,7 @@ class DataFetcher {
       const response = await axios.get(`${this.baseURL}/api/patients`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching patients:", error);
+      console.error('Error fetching patients:', error);
       throw error;
     }
   }
@@ -29,7 +29,16 @@ class DataFetcher {
       const response = await axios.get(`${this.baseURL}/api/patients/user-2`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching patients:", error);
+      console.error('Error fetching patients:', error);
+      throw error;
+    }
+  }
+  static async fetchAppointments() {
+    try {
+      const response = await axios.get(`${this.baseURL}/api/appointments`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
       throw error;
     }
   }
