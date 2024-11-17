@@ -5,12 +5,14 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import SearchSection from './SearchSection';
+import HeroSection from './HeroSection';
 
 const MainSection: React.FC = () => {
   return (
+    <>
+    <HeroSection />
     <section className="md:mx-5 md:px-5 lg:mx-14 lg:px-14 xl:mx-18 xl:px-18">
       <SearchSection />
-
       {/* First Section */}
       <div className="pt-12 pb-6 mx-6 border-t-2 md:mx-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
@@ -91,6 +93,7 @@ const MainSection: React.FC = () => {
       <LocationsSection />
       <FeaturedSection />
     </section>
+    </>
   );
 };
 

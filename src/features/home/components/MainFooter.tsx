@@ -15,7 +15,7 @@ import {
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import FooterBottom from './FooterBottom';
 
-export default function HomeFooter() {
+export default function MainFooter() {
   const mainFooterItems = [
     {
       title: 'About MedPulse Clinic',
