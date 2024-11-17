@@ -24,6 +24,15 @@ class DataFetcher {
       throw error;
     }
   }
+  static async fetchPatient() {
+    try {
+      const response = await axios.get(`${this.baseURL}/api/patients/user-2`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+      throw error;
+    }
+  }
 }
 
 export default DataFetcher;

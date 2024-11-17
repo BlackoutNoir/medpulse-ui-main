@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DoctorOverview } from '@/features/dashboard/doctors/overview';
 import { PatientOverview } from '@/features/dashboard/patients/overview';
+import { PatientMedicalOverview } from '@/features/managePatient/medicalRecord/overview';
 import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
 import { AppointmentStatCards } from '@/features/managePatient/appointmentHistory/stat-cards';
@@ -77,7 +78,7 @@ export default async function ManagePatientPage() {
                     <CardDescription>View your medical record.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <PatientOverview />
+                    <PatientMedicalOverview />
                   </CardContent>
                 </Card>
               </div>

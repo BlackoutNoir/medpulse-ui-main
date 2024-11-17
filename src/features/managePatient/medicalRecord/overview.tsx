@@ -1,10 +1,9 @@
-import { columns } from '@/features/dashboard/doctors/columns';
+import { columns } from '@/features/managePatient/medicalRecord/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
-import { Doctor } from '@/utils/interfaces/interfaces';
 import DataFetcher from '@/utils/DataFetcher';
 
-export async function DoctorOverview() {
-  const data = await fetchDoctors();
+export async function PatientMedicalOverview() {
+  const data = await fetchPatient();
   return (
     <>
       <DataTable columns={columns} data={data} />
@@ -12,13 +11,14 @@ export async function DoctorOverview() {
   );
 }
 
-async function fetchDoctors(): Promise<Doctor[]> {
+async function fetchPatient(): Promise<any[]> {
   // Fetch data from your API here.
   try {
-    const doctors = await DataFetcher.fetchDoctors();
-    return doctors;
+    const patient = await DataFetcher.fetchPatient();
+    console.log(patient);
+    return [patient];
   } catch (error) {
-    console.error('Error fetching doctors:', error);
+    console.error('Error fetching patient:', error);
     throw error;
   }
 }
