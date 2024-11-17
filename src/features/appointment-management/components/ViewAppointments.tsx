@@ -100,7 +100,7 @@ const ViewAppointments: React.FC = () => {
 
   return (
     <MaxWidthWrapper>
-      <section className="p-5 border-b-2">
+      <section className="p-5">
         <div className="text-center">
           <h2 className="text-3xl font-semibold mb-2 text-black">View Appointments</h2>
           <p className="text-gray-600 mb-2">
