@@ -1,11 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PatientOverview } from '@/features/dashboard/patients/overview';
+import { PatientInfoOverview } from '@/features/managePatient/patientInfo/overview';
 import { PatientMedicalOverview } from '@/features/managePatient/medicalRecord/overview';
+import { PatientLabResultsOverview } from '@/features/managePatient/labResults/overview';
+import { PatientPrescriptionsOverview } from '@/features/managePatient/patientPrescriptions/overview';
 import { PatientAppointmentOverview } from '@/features/managePatient/appointments/overview';
 import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
-import { PatientsStatCards } from '@/features/managePatient/patients/stat-cards';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Monitor, ClipboardMinus } from 'lucide-react';
@@ -32,16 +33,16 @@ export default async function ManagePatientPage() {
           <div className="flex items-center justify-between space-y-2">
             <div>
               <Avatar className="w-16 h-16">
-                <AvatarImage src={'https://github.com/shadcn.png'} alt={'John Doe'} />
+                <AvatarImage src={'https://github.com/shadcn.png'} alt={'Jane Doe'} />
                 <AvatarFallback>{'JD'}</AvatarFallback>
               </Avatar>
-              <h2 className="text-3xl font-bold tracking-tight">My Profile</h2>
-              <p className="text-muted-foreground">@JohnDoe</p>
+              <h2 className="text-3xl font-bold tracking-tight">My Patient Profile</h2>
+              <p className="text-muted-foreground">@JaneDoe</p>
             </div>
           </div>
           <Tabs defaultValue="patient-info">
             <TabsList>
-              <TabsTrigger value="patient-info">My Information</TabsTrigger>
+              <TabsTrigger value="patient-info">About Me</TabsTrigger>
               <TabsTrigger value="medical-record">Medical Record</TabsTrigger>
               <TabsTrigger value="lab-results">Lab Results</TabsTrigger>
               <TabsTrigger value="current-prescriptions">Current Prescriptions</TabsTrigger>
@@ -51,17 +52,16 @@ export default async function ManagePatientPage() {
               <div className="">
                 <Card className="">
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                    <CardDescription>Here&apos;s your most relevant information!</CardDescription>
+                    <CardTitle>Personal Information</CardTitle>
+                    <CardDescription>View your personal information.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <PatientsStatCards />
+                    <PatientInfoOverview />
                   </CardContent>
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="medical-record" className="space-y-4 mt-3">
-              <PatientsStatCards />
+            <TabsContent value="medical-record" className="space-y-4">
               <div className="">
                 <Card className="">
                   <CardHeader>
@@ -74,8 +74,7 @@ export default async function ManagePatientPage() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="lab-results" className="space-y-4 mt-3">
-              <PatientsStatCards />
+            <TabsContent value="lab-results" className="space-y-4">
               <div className="">
                 <Card className="">
                   <CardHeader>
@@ -83,7 +82,7 @@ export default async function ManagePatientPage() {
                     <CardDescription>View your lab results.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <PatientOverview />
+                    <PatientLabResultsOverview />
                   </CardContent>
                 </Card>
               </div>
@@ -96,7 +95,7 @@ export default async function ManagePatientPage() {
                     <CardDescription>View your currently prescribed medicine.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <PatientOverview />
+                    <PatientPrescriptionsOverview />
                   </CardContent>
                 </Card>
               </div>

@@ -14,7 +14,6 @@ export async function PatientAppointmentOverview() {
 async function fetchAppointment(): Promise<any[]> {
   try {
     const appointments = await DataFetcher.fetchAppointments();
-    console.log(appointments);
     return appointments;
   } catch (error) {
     console.error('Error fetching appointment:', error);

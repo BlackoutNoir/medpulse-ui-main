@@ -1,8 +1,8 @@
-import { columns } from '@/features/managePatient/medicalRecord/columns';
+import { columns } from '@/features/managePatient/patientInfo/columns';
 import { DataTable } from '@/features/dashboard/components/data-table';
 import DataFetcher from '@/utils/DataFetcher';
 
-export async function PatientMedicalOverview() {
+export async function PatientInfoOverview() {
   const data = await fetchPatient();
   return (
     <>

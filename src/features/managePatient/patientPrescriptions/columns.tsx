@@ -14,24 +14,28 @@ import {
 
 export const columns: ColumnDef<any>[] = [
   {
-    accessorKey: 'medical_history.allergies',
-    header: 'Allergies',
+    accessorKey: 'prescription_id',
+    header: 'ID',
   },
   {
-    accessorKey: 'medical_history.surgeries',
-    header: 'Previous Surgeries',
+    accessorKey: 'medication',
+    header: 'Medication',
   },
   {
-    accessorKey: 'medical_history.chronic_conditions',
-    header: 'Chronic Conditions',
+    accessorKey: 'dosage',
+    header: 'Dosage',
   },
   {
-    accessorKey: 'medical_history.medications',
-    header: 'Medications',
+    accessorKey: 'instructions',
+    header: 'Instructions',
   },
   {
-    accessorKey: 'medical_history.notes',
-    header: 'Notes',
+    accessorKey: 'doctor_id',
+    header: 'Prescribed By',
+  },
+  {
+    accessorKey: 'issue_date',
+    header: 'Date Issued',
   },
   {
     id: 'actions',
