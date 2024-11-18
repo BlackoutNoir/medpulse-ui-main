@@ -26,6 +26,7 @@ import {
 
 import DataFetcher from '@/utils/DataFetcher';
 import DataSender from '@/utils/DataSender';
+import { Clock } from 'lucide-react';
 
 const staffFormSchema = z.object({
   selectedUser: z.string({ required_error: 'Please select a user.' }),
@@ -34,6 +35,12 @@ const staffFormSchema = z.object({
   }),
   workingDays: z.array(z.string()).refine(value => value.length > 0, {
     message: 'You have to select at least one working day.',
+  }),
+  workingHoursStartTime: z.string({
+    required_error: 'Please select a time for start hours.',
+  }),
+  workingHoursEndTime: z.string({
+    required_error: 'Please select a time for end hours.',
   }),
 });
 
@@ -120,7 +127,7 @@ export function StaffForm() {
                 <SelectContent>
                   {users.map(user => (
                     <SelectItem key={user.id} value={user.id}>
-                      {user.name}
+                      {user.name + " [UID:" + user.id + "]"}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -158,7 +165,7 @@ export function StaffForm() {
           render={() => (
             <FormItem>
               <div className="mb-4">
-                <FormLabel className="text-base">Working Days</FormLabel>
+                <FormLabel>Select employee working days</FormLabel>
                 <FormDescription>
                   Select the days this staff member is available to work.
                 </FormDescription>
@@ -190,6 +197,58 @@ export function StaffForm() {
                   }}
                 />
               ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="workingHoursStartTime"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Working Start Time</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a time" />
+                    <Clock className="ml-auto h-4 w-4 opacity-50" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map(time => (
+                    <SelectItem key={time} value={time}>
+                      {time}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>Choose when this employee starts their shift.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="workingHoursEndTime"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Working End Time</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a time" />
+                    <Clock className="ml-auto h-4 w-4 opacity-50" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'].map(time => (
+                    <SelectItem key={time} value={time}>
+                      {time}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>Choose when this employee ends their shift.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

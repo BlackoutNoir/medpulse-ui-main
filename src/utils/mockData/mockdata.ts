@@ -16,7 +16,7 @@ export const treatmentServices: TreatmentService[] = [
 // Mock Doctors
 export const mockDoctors: Doctor[] = [
   {
-    id: '1',
+    id: 'D1',
     name: 'Ronald Richards',
     username: 'ronaldrichards',
     email: 'ronaldrichards@example.com',
@@ -33,7 +33,7 @@ export const mockDoctors: Doctor[] = [
     employmentType: 'FULL-TIME',
   },
   {
-    id: '2',
+    id: 'D2',
     name: 'Dorothy Spencer',
     username: 'dorothyspencer',
     email: 'dorothyspencer@example.com',
@@ -55,7 +55,7 @@ export const mockDoctors: Doctor[] = [
 //Mock Patients
 export const mockPatients: Patient[] = [
   {
-    id: '1',
+    id: 'P1',
     name: 'Michael Johnson',
     username: 'michaeljohnson',
     email: 'michaeljohnson@example.com',
@@ -71,7 +71,7 @@ export const mockPatients: Patient[] = [
     medicalHistory: ['Allergy to penicillin', 'Asthma'],
   },
   {
-    id: '2',
+    id: 'P2',
     name: 'Sarah Connor',
     username: 'sarahconnor',
     email: 'sarahconnor@example.com',
