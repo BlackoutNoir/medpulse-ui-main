@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PatientOverview } from '@/features/dashboard/patients/overview';
 import { PatientInfoOverview } from '@/features/managePatient/patientInfo/overview';
 import { PatientMedicalOverview } from '@/features/managePatient/medicalRecord/overview';
 import { PatientLabResultsOverview } from '@/features/managePatient/labResults/overview';
@@ -8,7 +7,6 @@ import { PatientPrescriptionsOverview } from '@/features/managePatient/patientPr
 import { PatientAppointmentOverview } from '@/features/managePatient/appointments/overview';
 import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
-import { PatientsStatCards } from '@/features/managePatient/patients/stat-cards';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export default async function ManagePatientPage() {
