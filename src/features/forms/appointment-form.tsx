@@ -58,6 +58,7 @@ const appointmentFormSchema = z.object({
     }),
   selectedDoctor: z.string({ required_error: 'Please select a doctor.' }),
   selectedPatient: z.string({ required_error: 'Please select a patient.' }),
+  selectedTreatmentService: z.string({ required_error: 'Please select a treatment.' }),
   appointmentDate: z.date({
     required_error: 'Please select a date for the appointment.',
   }),
@@ -72,6 +73,7 @@ type AppointmentFormValues = z.infer<typeof appointmentFormSchema>;
 const defaultValues: Partial<AppointmentFormValues> = {
   selectedDoctor: '',
   selectedPatient: '',
+  selectedTreatmentService: '',
   appointmentDate: undefined,
   appointmentTime: '',
 };
@@ -85,15 +87,18 @@ export function AppointmentForm() {
 
   const [doctors, setDoctors] = useState<{ id: string; name: string }[]>([]);
   const [patients, setPatients] = useState<{ id: string; name: string }[]>([]);
+  const [treatmentServices, setTreatmentServices] = useState<{ id: string; name: string }[]>([]);
 
   useEffect(() => {
     async function loadData() {
-      const [doctorList, patientList] = await Promise.all([
+      const [doctorList, patientList, treatmentServicesList] = await Promise.all([
         DataFetcher.fetchDoctors(),
         DataFetcher.fetchPatients(),
+        DataFetcher.fetchTreatmentServices(),
       ]);
       setDoctors(doctorList);
       setPatients(patientList);
+      setTreatmentServices(treatmentServicesList);
     }
     loadData();
   }, []);
@@ -179,6 +184,31 @@ export function AppointmentForm() {
                 </SelectContent>
               </Select>
               <FormDescription>Choose a doctor for your appointment from the list.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="selectedTreatmentService"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Select a Treatment</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a treatment" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {treatmentServices.map(treatment => (
+                    <SelectItem key={treatment.id} value={treatment.id}>
+                      {treatment.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>Choose a treatment for your appointment from the list.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

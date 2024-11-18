@@ -14,10 +14,13 @@ export interface Role {
   description: string;
 }
 export interface TreatmentService {
+  id: string;
   name: string;
-  cost: number;
   description: string;
+  price: number;
+  duration: number;
 }
+
 // ========================== ROLES AND SERVICES ==========================
 
 
@@ -63,3 +66,4 @@ export interface Appointment {
   status: AppointmentStatus;
 }
 // ========================== APPOINTMENTS ==========================
+

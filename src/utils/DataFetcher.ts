@@ -1,8 +1,10 @@
 //Check reference-ui-main
 //import axios from 'axios'
-import { Doctor, Patient, Appointment, User } from "@/utils/interfaces/interfaces";
-import { mockDoctors, mockPatients, mockAppointments, mockUsers } from "@/utils/mockData/mockdata";
+import { Doctor, Patient, Appointment, User, TreatmentService } from "@/utils/interfaces/interfaces";
+import { mockDoctors, mockPatients, mockAppointments, mockUsers, mockTreatmentServices } from "@/utils/mockData/mockdata";
 //axios.defaults.withCredentials = true;
+
+
 
 export default class DataFetcher {
   static async fetchDoctors(): Promise<Doctor[]> {
@@ -38,9 +40,21 @@ export default class DataFetcher {
   static async fetchUsers(): Promise<User[]> {
     try {
       const data = mockUsers;
+      console.log(data)
       return data;
     } catch (error) {
       console.error('Error fetching mock users:', error);
+      throw error;
+    }
+  }
+
+  static async fetchTreatmentServices(): Promise<TreatmentService[]> {
+    try {
+      const data = mockTreatmentServices;
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.error('Error fetching mock treatment services:', error);
       throw error;
     }
   }

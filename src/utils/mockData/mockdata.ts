@@ -6,12 +6,36 @@ export const mockRoles: Role[] = [
 ];
 
 // Treatment Services
-export const treatmentServices: TreatmentService[] = [
-  { name: 'General Checkup', cost: 100, description: 'Routine checkup and consultation' },
-  { name: 'Dental Cleaning', cost: 150, description: 'Professional dental cleaning service' },
-  { name: 'Physical Therapy', cost: 200, description: 'Physical therapy sessions' },
-];
+// export const treatmentServices: TreatmentService[] = [
+//   { name: 'General Checkup', cost: 100, description: 'Routine checkup and consultation' },
+//   { name: 'Dental Cleaning', cost: 150, description: 'Professional dental cleaning service' },
+//   { name: 'Physical Therapy', cost: 200, description: 'Physical therapy sessions' },
+// ];
 
+export const mockTreatmentServices: TreatmentService[] = [
+  {
+    id: "T1",
+    name: 'General Checkup',
+    description: 'Description for Treatment Service 1',
+    price: 50.0,
+    duration: 60,
+  },
+  {
+    id: "T2",
+    name: 'Dental Cleaning',
+    description: 'Description for Treatment Service 2',
+    price: 75.0,
+    duration: 90,
+  },
+  {
+    id: "T3",
+    name: 'Physical Therapy',
+    description: 'Description for Treatment Service 3',
+    price: 100.0,
+    duration: 120,
+  },
+  // Add more mock treatment services as needed
+];
 
 // Mock Doctors
 export const mockDoctors: Doctor[] = [
@@ -29,7 +53,7 @@ export const mockDoctors: Doctor[] = [
     isActive: true,
     speciality: 'Dentist',
     workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
-    assignedTreatmentServices: [treatmentServices[0], treatmentServices[1], treatmentServices[2]], // General Checkup, Dental Cleaning
+    assignedTreatmentServices: [mockTreatmentServices[0], mockTreatmentServices[1], mockTreatmentServices[2]], // General Checkup, Dental Cleaning
     employmentType: 'FULL-TIME',
   },
   {
@@ -108,3 +132,5 @@ export const mockAppointments: Appointment[] = [
 ];
 
 export const mockUsers = [...mockDoctors, ...mockPatients];
+
+
