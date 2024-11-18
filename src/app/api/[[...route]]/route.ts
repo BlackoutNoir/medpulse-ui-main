@@ -338,6 +338,15 @@ app.get('/lab-tests/:labTestId', async c => {
   return c.notFound();
 });
 
+app.get('/lab-tests/patient/:patientId', async c => {
+  const { patientId } = c.req.param();
+  const labTests = await MedpulseRepo.getLabTestsByPatientId(patientId);
+  if (labTests && labTests.length > 0) {
+    return c.json(labTests);
+  }
+  return c.notFound();
+});
+
 app.post('/lab-tests', async c => {
   const labTestData = await c.req.json();
   const labTest = await MedpulseRepo.createLabTest(labTestData);
@@ -368,6 +377,15 @@ app.get('/prescriptions/:prescriptionId', async c => {
   const prescription = await MedpulseRepo.getPrescriptionById(prescriptionId);
   if (prescription) {
     return c.json(prescription);
+  }
+  return c.notFound();
+});
+
+app.get('/prescriptions/patient/:patientId', async c => {
+  const { patientId } = c.req.param();
+  const prescriptions = await MedpulseRepo.getPrescriptionsByPatientId(patientId);
+  if (prescriptions && prescriptions.length > 0) {
+    return c.json(prescriptions);
   }
   return c.notFound();
 });

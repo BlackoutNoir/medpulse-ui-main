@@ -400,6 +400,13 @@ class MedpulseRepo {
     });
   }
 
+  async getLabTestsByPatientId(patientId: string) {
+    return await prisma.labTest.findMany({
+      where: { patient_id: patientId },
+      include: { patient: true },
+    });
+  }
+
   async createLabTest(labTestData: any) {
     return await prisma.labTest.create({
       data: labTestData,
@@ -430,6 +437,13 @@ class MedpulseRepo {
     return await prisma.prescription.findUnique({
       where: { prescription_id: prescriptionId },
       include: { patient: true, doctor: true },
+    });
+  }
+
+  async getPrescriptionsByPatientId(patientId: string) {
+    return await prisma.prescription.findMany({
+      where: { patient_id: patientId },
+      include: { patient: true },
     });
   }
 

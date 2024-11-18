@@ -15,7 +15,6 @@ async function fetchAppointment(): Promise<any[]> {
   // Fetch data from your API here.
   try {
     const appointments = await DataFetcher.fetchAppointments();
-    console.log(appointments);
     return appointments;
   } catch (error) {
     console.error('Error fetching appointment:', error);

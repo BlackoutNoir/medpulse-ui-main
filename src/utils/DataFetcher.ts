@@ -42,6 +42,24 @@ class DataFetcher {
       throw error;
     }
   }
+  static async fetchLabResults() {
+    try {
+      const response = await axios.get(`${this.baseURL}/api/lab-tests/patient/user-2`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching labtest:', error);
+      throw error;
+    }
+  }
+  static async fetchPrescriptions() {
+    try {
+      const response = await axios.get(`${this.baseURL}/api/prescriptions/patient/user-2`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching prescriptions:', error);
+      throw error;
+    }
+  }
 }
 
 export default DataFetcher;
