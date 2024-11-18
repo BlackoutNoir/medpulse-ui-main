@@ -90,7 +90,7 @@ export const columns: ColumnDef<any>[] = [
         </Button>
       );
     },
-    header: 'Cancel',
+    header: '',
   },
   {
     id: 'actions',

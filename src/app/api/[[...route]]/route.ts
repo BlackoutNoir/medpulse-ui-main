@@ -467,10 +467,37 @@ app.put('/prescriptions/:prescriptionId', async c => {
   return c.json(updatedPrescription);
 });
 
-app.delete('/prescriptions/:prescriptionId', async c => {
-  const { prescriptionId } = c.req.param();
-  await MedpulseRepo.deletePrescription(prescriptionId);
-  return c.status(204); // No Content
+// app.delete('/prescriptions/:prescriptionId', async c => {
+//   const { prescriptionId } = c.req.param();
+//   await MedpulseRepo.deletePrescription(prescriptionId);
+//   return c.status(204); // No Content
+// });
+
+app.delete('/prescriptions/:prescriptionId', async (c) => {
+  try {
+    const prescriptionId = c.req.param('prescriptionId');
+
+    // Ensure `appointmentId` exists
+    if (!prescriptionId) {
+      return c.json({ error: 'Prescription ID is required' }, 400); // 400 Bad Request
+    }
+
+    // Attempt to delete the appointment
+    const deletedPrescription = await MedpulseRepo.deletePrescription(prescriptionId);
+
+    if (!deletedPrescription) {
+      // Handle case where appointment was not found
+      return c.json({ error: 'Prescription not found' }, 404); // 404 Not Found
+    }
+
+    // Successfully deleted
+    return c.body(null, 204); // No Content
+  } catch (error) {
+    console.error('Error purchasing prescription:', error);
+
+    // Internal server error
+    return c.json({ error: 'Failed to purchase prescription' }, 500); // 500 Internal Server Error
+  }
 });
 
 // Insurance Routes

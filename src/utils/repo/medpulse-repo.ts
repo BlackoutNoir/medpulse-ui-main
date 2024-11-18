@@ -502,11 +502,24 @@ class MedpulseRepo {
     });
   }
 
+  // async deletePrescription(prescriptionId: string) {
+  //   return await prisma.prescription.delete({
+  //     where: { prescription_id: prescriptionId },
+  //   });
+  // }
+
   async deletePrescription(prescriptionId: string) {
-    return await prisma.prescription.delete({
-      where: { prescription_id: prescriptionId },
-    });
+    try {
+      return await prisma.prescription.delete({
+        where: { prescription_id: prescriptionId },
+      });
+    } catch (error) {
+      console.error('Error purchasing prescription:', error);
+      return null;
+    }
   }
+
+
   // Treatment Service methods
   async getAllTreatmentServices() {
     return await prisma.treatment_service.findMany({
