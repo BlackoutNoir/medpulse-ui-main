@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 
 import { Separator } from "@/components/ui/separator"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Forms",
@@ -24,6 +25,7 @@ export default function FormsLayout({ children }: FormsLayoutProps) {
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <div className="flex-1 lg:max-w-2xl">{children}</div>
+          <Toaster />
         </div>
       </div>
     </>
