@@ -1,8 +1,9 @@
 // Check reference-ui-main
-//import axios from 'axios';
+// import axios from 'axios';
 // axios.defaults.withCredentials = true;
 
 export default class DataSender {
+  // ========================== TREATMENTS AND SERVICES ==========================
   // Appointments
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async requestAppointment(appointmentData: any): Promise<any> {
@@ -20,8 +21,9 @@ export default class DataSender {
       throw error;
     }
   }
+  // ========================== TREATMENTS AND SERVICES ==========================
 
-
+  // ========================== USERS AND ROLES ==========================
   // Users
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async createUser(user: any): Promise<any> {
@@ -90,10 +92,11 @@ export default class DataSender {
       throw error;
     }
   }
+
+  // ========================== USERS AND ROLES ==========================
 }
 
-
-
+// ========================== DRAFT ROUTES ==========================
 //   static async registerUser(user): Promise<any> {
 //     try {
 //       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, user);
