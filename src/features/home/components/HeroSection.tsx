@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 const HeroSection: React.FC = () => {
   return (
@@ -25,9 +26,11 @@ const HeroSection: React.FC = () => {
           <p className="flex items-center text-base sm:text-lg lg:text-xl">
             Learn how we drive innovation <ChevronRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6" />
           </p>
-          <button className="mt-2 sm:mt-0 py-2 px-6 border-2 rounded-3xl text-white sm:px-8 sm:py-2 sm:text-lg lg:px-10 lg:py-3 lg:text-xl lg:ml-2">
-            Request Appointment
-          </button>
+          <Link href="/request-appointment" passHref>
+            <button className="mt-2 sm:mt-0 py-2 px-6 border-2 rounded-3xl text-white sm:px-8 sm:py-2 sm:text-lg lg:px-10 lg:py-3 lg:text-xl lg:ml-2">
+              Request Appointment
+            </button>
+          </Link>
         </div>
       </div>
     </section>

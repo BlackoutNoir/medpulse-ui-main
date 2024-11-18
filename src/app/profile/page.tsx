@@ -104,7 +104,7 @@ export default async function ManagePatientPage() {
             <TabsContent value="appointments" className="space-y-4 mt-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
                 <Link href="/request-appointment" passHref>
-                  <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Card className="hover:shadow hover:border-blue-600 transition-all  cursor-pointer">
                     <CardHeader className="flex justify-between items-center">
                       <ClipboardMinus className="h-6 w-6 text-blue-600" />
                       <div>
@@ -117,7 +117,7 @@ export default async function ManagePatientPage() {
                   </Card>
                 </Link>
                 <Link href="/book-virtual-appointment" passHref>
-                  <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer">
                     <CardHeader className="flex justify-between items-center">
                       <Monitor className="h-6 w-6 text-blue-600" />
                       <div>

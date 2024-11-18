@@ -142,15 +142,15 @@ model Insurance {
 }
 
 model Appointment {
-  appointment_id String   @id @default(uuid())
+  appointment_id String    @id @default(uuid())
   patient_id     String
   doctor_id      String
   date           DateTime
-  time           DateTime
-  status         String
+  time           DateTime?
+  status         String    @default("Not Finished")
   notes          String?
-  doctor         Doctor   @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
-  patient        Patient  @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
+  doctor         Doctor    @relation(fields: [doctor_id], references: [doctor_id], onDelete: Cascade)
+  patient        Patient   @relation(fields: [patient_id], references: [patient_id], onDelete: Cascade)
 }
 
 model LabTest {

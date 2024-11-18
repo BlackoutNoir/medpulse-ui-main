@@ -137,6 +137,17 @@ app.post('/doctors', async c => {
   return c.json(doctor, 201);
 });
 
+app.get('/doctors', async (c) => {
+  try {
+    // Use the updated method from MedpulseRepo
+    const doctors = await MedpulseRepo.getAllDoctors();
+    return c.json(doctors);
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    return c.json({ error: "Failed to fetch doctors" }, 500);
+  }
+});
+
 app.put('/doctors/:doctorId', async c => {
   const { doctorId } = c.req.param();
   const updateData = await c.req.json();
@@ -310,6 +321,31 @@ app.post('/appointments', async c => {
   return c.json(appointment, 201);
 });
 
+app.post('/appointments', async (c) => {
+  try {
+    const { patientId, doctorId, date, notes } = await c.req.json();
+
+    const appointmentDate = new Date(date);
+    if (isNaN(appointmentDate.getTime())) {
+      return c.json({ message: 'Invalid date format' }, 400);
+    }
+
+    const newAppointment = await MedpulseRepo.createAppointment({
+      patient_id: patientId,
+      doctor_id: doctorId,
+      date: appointmentDate,
+      notes,
+    });
+
+    return c.json(newAppointment, 201);
+  } catch (error) {
+    console.error('Error creating appointment:', error);
+    return c.json({ message: 'Failed to create appointment', error }, 500);
+  }
+});
+
+
+
 app.put('/appointments/:appointmentId', async c => {
   const { appointmentId } = c.req.param();
   const updateData = await c.req.json();
@@ -317,11 +353,39 @@ app.put('/appointments/:appointmentId', async c => {
   return c.json(updatedAppointment);
 });
 
-app.delete('/appointments/:appointmentId', async c => {
-  const { appointmentId } = c.req.param();
-  await MedpulseRepo.deleteAppointment(appointmentId);
-  return c.status(204); // No Content
+// app.delete('/appointments/:appointmentId', async c => {
+//   const { appointmentId } = c.req.param();
+//   await MedpulseRepo.deleteAppointment(appointmentId);
+//   return c.status(204); // No Content
+// });
+
+app.delete('/appointments/:appointmentId', async (c) => {
+  try {
+    const appointmentId = c.req.param('appointmentId');
+
+    // Ensure `appointmentId` exists
+    if (!appointmentId) {
+      return c.json({ error: 'Appointment ID is required' }, 400); // 400 Bad Request
+    }
+
+    // Attempt to delete the appointment
+    const deletedAppointment = await MedpulseRepo.deleteAppointment(appointmentId);
+
+    if (!deletedAppointment) {
+      // Handle case where appointment was not found
+      return c.json({ error: 'Appointment not found' }, 404); // 404 Not Found
+    }
+
+    // Successfully deleted
+    return c.body(null, 204); // No Content
+  } catch (error) {
+    console.error('Error deleting appointment:', error);
+
+    // Internal server error
+    return c.json({ error: 'Failed to delete appointment' }, 500); // 500 Internal Server Error
+  }
 });
+
 
 // Lab Test Routes
 app.get('/lab-tests', async c => {

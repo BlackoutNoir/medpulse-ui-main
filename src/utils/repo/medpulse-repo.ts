@@ -156,9 +156,15 @@ class MedpulseRepo {
   }
 
   // Doctor methods
+  // async getAllDoctors() {
+  //   return await prisma.doctor.findMany({
+  //     include: { appointments: true, assigned_treatment_services: true, staff: {include: { user: true }} },
+  //   });
+  // }
+
   async getAllDoctors() {
     return await prisma.doctor.findMany({
-      include: { staff: true, appointments: true, assigned_treatment_services: true },
+      include: { appointments: true, staff: { include: { user: true } } },
     });
   }
 
@@ -356,7 +362,14 @@ class MedpulseRepo {
   // Appointment methods
   async getAllAppointments() {
     return await prisma.appointment.findMany({
-      include: { patient: true, doctor: true },
+      include: {
+        patient: true,
+        doctor: {
+          select: {
+            staff: { select: { user: { select: { first_name: true, last_name: true } } } },
+          },
+        },
+      },
     });
   }
 
@@ -367,9 +380,26 @@ class MedpulseRepo {
     });
   }
 
+  // async createAppointment(appointmentData: any) {
+  //   return await prisma.appointment.create({
+  //     data: appointmentData,
+  //   });
+  // }
+
   async createAppointment(appointmentData: any) {
+    const { doctorId, patientId, date, notes } = appointmentData;
+
     return await prisma.appointment.create({
-      data: appointmentData,
+      data: {
+        doctor: {
+          connect: { doctor_id: doctorId }, // Connect to an existing doctor
+        },
+        patient: {
+          connect: { patient_id: patientId }, // Connect to an existing patient
+        },
+        date,
+        notes,
+      },
     });
   }
 
@@ -380,11 +410,23 @@ class MedpulseRepo {
     });
   }
 
+  // async deleteAppointment(appointmentId: string) {
+  //   return await prisma.appointment.delete({
+  //     where: { appointment_id: appointmentId },
+  //   });
+  // }
+
   async deleteAppointment(appointmentId: string) {
-    return await prisma.appointment.delete({
-      where: { appointment_id: appointmentId },
-    });
+    try {
+      return await prisma.appointment.delete({
+        where: { appointment_id: appointmentId },
+      });
+    } catch (error) {
+      console.error('Error deleting appointment:', error);
+      return null;
+    }
   }
+  
 
   // Lab Test methods
   async getAllLabTests() {

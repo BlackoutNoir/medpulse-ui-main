@@ -20,6 +20,7 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import SearchDropdown from './SearchDropdown';
 
 export default function MainNav() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -173,21 +174,26 @@ export default function MainNav() {
 
         {/* Right Section: Buttons */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" className="hidden sm:inline-flex text-sm whitespace-nowrap">
-            Request Appointment
-          </Button>
+          <Link href="/request-appointment" passHref>
+            <Button variant="ghost" className="hidden sm:inline-flex text-sm whitespace-nowrap">
+              Request Appointment
+            </Button>
+          </Link>
 
           {/* User Icon */}
-          <Button variant="ghost" size="icon">
-            <User className="h-5 w-5" />
-            <span className="sr-only">User account</span>
-          </Button>
+          <Link href="/profile" passHref>
+            <Button variant="ghost" size="icon">
+              <User className="h-5 w-5" />
+              <span className="sr-only">User account</span>
+            </Button>
+          </Link>
 
           {/* Search Icon */}
-          <Button variant="ghost" size="icon">
+          {/* <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
-          </Button>
+          </Button> */}
+          <SearchDropdown />
 
           {/* Menu Button */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>

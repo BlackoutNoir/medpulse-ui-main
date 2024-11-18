@@ -3,6 +3,8 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleX, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,16 +20,26 @@ export const columns: ColumnDef<any>[] = [
     header: 'Appointment ID',
   },
   {
-    accessorKey: 'doctor_id',
-    header: 'Doctor ID',
+    accessorKey: 'doctor',
+    header: 'Doctor',
+    cell: ({ row }) => {
+      const doctor = row.original?.doctor?.staff?.user;
+      if (doctor) {
+        return `Dr. ${doctor.first_name} ${doctor.last_name}`;
+      }
+      return 'No Doctor Assigned';
+    },
   },
   {
     accessorKey: 'date',
     header: 'Date',
-  },
-  {
-    accessorKey: 'time',
-    header: 'Time',
+    cell: ({ row }) => {
+      const date = new Date(row.original.date);
+      if (!isNaN(date.getTime())) {
+        return `${format(date, 'dd/MM/yyyy')} at ${format(date, 'HH:mm')}`;
+      }
+      return 'Invalid Date';
+    },
   },
   {
     accessorKey: 'notes',
@@ -40,15 +52,39 @@ export const columns: ColumnDef<any>[] = [
   {
     id: 'action_icon',
     cell: ({ row }) => {
-      const handleClick = () => {
-        console.log(`Action triggered for row ID: ${row.original.appointment_id}`);
+      const handleDelete = async () => {
+        const appointmentId = row.original.appointment_id;
+        const confirmDelete = window.confirm(
+          `Are you sure you want to delete appointment ID: ${appointmentId}?`
+        );
+
+        if (confirmDelete) {
+          try {
+            const response = await fetch(`/api/appointments/${appointmentId}`, {
+              method: 'DELETE',
+            });
+
+            if (response.ok) {
+              alert('Appointment deleted successfully!');
+              // Reload the page after successful deletion
+              window.location.reload();
+            } else {
+              const errorData = await response.json();
+              console.error('Error deleting appointment:', errorData);
+              alert('Failed to delete appointment. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error deleting appointment:', error);
+            alert('An error occurred. Please try again.');
+          }
+        }
       };
 
       return (
         <Button
           variant="ghost"
           className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
-          onClick={handleClick}
+          onClick={handleDelete}
         >
           <CircleX className="h-5 w-5" />
         </Button>

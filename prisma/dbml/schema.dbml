@@ -141,8 +141,8 @@ Table Appointment {
   patient_id String [not null]
   doctor_id String [not null]
   date DateTime [not null]
-  time DateTime [not null]
-  status String [not null]
+  time DateTime
+  status String [not null, default: 'Not Finished']
   notes String
   doctor Doctor [not null]
   patient Patient [not null]

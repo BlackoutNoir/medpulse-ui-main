@@ -12,7 +12,6 @@ export async function PatientAppointmentOverview() {
 }
 
 async function fetchAppointment(): Promise<any[]> {
-  // Fetch data from your API here.
   try {
     const appointments = await DataFetcher.fetchAppointments();
     console.log(appointments);
