@@ -1,9 +1,15 @@
 'use client';
 
+import DataFetcher from '@/utils/DataFetcher';
+import DataSender from '@/utils/DataSender';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
 import { useEffect, useState } from 'react';
+
+import { Clock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,9 +30,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import DataFetcher from '@/utils/DataFetcher';
-import DataSender from '@/utils/DataSender';
-import { Clock } from 'lucide-react';
 
 const staffFormSchema = z.object({
   selectedUser: z.string({ required_error: 'Please select a user.' }),
@@ -90,22 +93,21 @@ export function StaffForm() {
       ),
     });
 
-    DataSender.requestAppointment(data)
+    DataSender.promoteToStaff(data)
       .then(response => {
         toast({
-          title: 'Appointment Requested',
-          description: 'Your appointment request has been sent.',
+          title: 'Promotion Successful',
+          description: 'The user has been successfully promoted to staff.',
         });
-        console.log('Appointment requested:', response);
+        console.log('User promoted to Staff successfully:', response);
       })
       .catch(error => {
-        console.error('Error requesting appointment:', error);
         toast({
           title: 'Error',
-          description: 'There was an error requesting your appointment.',
+          description: 'There was an error promoting user to staff.',
           variant: 'destructive',
         });
-        console.error('Error requesting appointment:', error);
+        console.error('Error promoting User to Staff:', error);
       });
   }
 

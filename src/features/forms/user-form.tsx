@@ -1,11 +1,14 @@
 'use client';
 
+import DataSender from '@/utils/DataSender';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+
 import { toast } from '@/hooks/use-toast';
 import { CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -30,7 +33,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 
-const profileFormSchema = z.object({
+const userFormSchema = z.object({
   name: z
     .string()
     .min(2, {
@@ -73,17 +76,17 @@ const profileFormSchema = z.object({
     .optional(),
 });
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
+type UserFormValues = z.infer<typeof userFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
+const defaultValues: Partial<UserFormValues> = {
   bio: 'I own a computer.',
   urls: [{ value: 'https://shadcn.com' }, { value: 'http://twitter.com/shadcn' }],
 };
 
-export function ProfileForm() {
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+export function UserForm() {
+  const form = useForm<UserFormValues>({
+    resolver: zodResolver(userFormSchema),
     defaultValues,
     mode: 'onChange',
   });
@@ -93,7 +96,7 @@ export function ProfileForm() {
     control: form.control,
   });
 
-  function onSubmit(data: ProfileFormValues) {
+  function onSubmit(data: UserFormValues) {
     alert(JSON.stringify(data));
     toast({
       title: 'You submitted the following values:',
@@ -103,6 +106,23 @@ export function ProfileForm() {
         </pre>
       ),
     });
+
+    DataSender.createUser(data)
+      .then(response => {
+        toast({
+          title: 'User Creation Successful',
+          description: 'The user has been successfully created.',
+        });
+        console.log('User created sucessfully:', response);
+      })
+      .catch(error => {
+        toast({
+          title: 'Error',
+          description: 'There was an error creating the user.',
+          variant: 'destructive',
+        });
+        console.error('Error creating User:', error);
+      });
   }
 
   return (
@@ -311,7 +331,7 @@ export function ProfileForm() {
                 <FormItem>
                   <FormLabel className={cn(index !== 0 && 'sr-only')}>URLs</FormLabel>
                   <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
+                    Add links to your website, blog, or social media users.
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
@@ -331,7 +351,7 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div>
-        <Button type="submit">Update profile</Button>
+        <Button type="submit">Update user</Button>
       </form>
     </Form>
   );

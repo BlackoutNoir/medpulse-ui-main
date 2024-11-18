@@ -1,10 +1,15 @@
 'use client';
 
+import DataFetcher from '@/utils/DataFetcher';
+import DataSender from '@/utils/DataSender';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
+
 import { toast } from '@/hooks/use-toast';
 import { CalendarIcon, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-//import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -28,8 +32,6 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import DataFetcher from '@/utils/DataFetcher';
-import DataSender from '@/utils/DataSender';
 
 const appointmentFormSchema = z.object({
   medicalConcernDescription: z

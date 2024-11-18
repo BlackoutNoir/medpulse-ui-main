@@ -1,5 +1,8 @@
 'use client';
 
+import DataFetcher from '@/utils/DataFetcher';
+import DataSender from '@/utils/DataSender';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -26,8 +29,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import DataFetcher from '@/utils/DataFetcher';
-import DataSender from '@/utils/DataSender';
 
 const doctorFormSchema = z.object({
   selectedUser: z.string({ required_error: 'Please select a user.' }),
@@ -60,8 +61,6 @@ export function DoctorForm() {
         DataFetcher.fetchUsers(),
         DataFetcher.fetchTreatmentServices(),
       ]);
-      console.log(userList);
-      console.log(treatmentList);
       setUsers(userList);
       setTreatmentServices(treatmentList);
     }
@@ -82,19 +81,18 @@ export function DoctorForm() {
     DataSender.promoteToDoctor(data)
       .then(response => {
         toast({
-          title: 'Appointment Requested',
-          description: 'Your appointment request has been sent.',
+          title: 'Promotion Successful',
+          description: 'The user has been successfully promoted to a doctor.',
         });
-        console.log('Appointment requested:', response);
+        console.log('User promoted to Doctor sucessfully:', response);
       })
       .catch(error => {
-        console.error('Error requesting appointment:', error);
         toast({
           title: 'Error',
-          description: 'There was an error requesting your appointment.',
+          description: 'There was an error promoting user to doctor.',
           variant: 'destructive',
         });
-        console.error('Error requesting appointment:', error);
+        console.error('Error promoting User to Doctor:', error);
       });
   }
 
