@@ -3,8 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
 import { useEffect, useState } from 'react';
+
 import { toast } from '@/hooks/use-toast';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -26,10 +29,11 @@ import {
 import DataFetcher from '@/utils/DataFetcher';
 import DataSender from '@/utils/DataSender';
 
-
 const doctorFormSchema = z.object({
   selectedUser: z.string({ required_error: 'Please select a user.' }),
-  selectedTreatmentService: z.string({ required_error: 'Please select a treatment.' }),
+  selectedTreatmentServices: z.array(z.string()).refine(value => value.some(item => item), {
+    message: 'You have to select at least one item.',
+  }),
 });
 
 type DoctorFormValues = z.infer<typeof doctorFormSchema>;
@@ -37,7 +41,7 @@ type DoctorFormValues = z.infer<typeof doctorFormSchema>;
 // This can come from your database or API.
 const defaultValues: Partial<DoctorFormValues> = {
   selectedUser: '',
-  selectedTreatmentService: '',
+  selectedTreatmentServices: [],
 };
 
 export function DoctorForm() {
@@ -49,7 +53,6 @@ export function DoctorForm() {
 
   const [users, setUsers] = useState<{ id: string; name: string }[]>([]);
   const [treatmentServices, setTreatmentServices] = useState<{ id: string; name: string }[]>([]);
-
 
   useEffect(() => {
     async function loadData() {
@@ -76,7 +79,7 @@ export function DoctorForm() {
       ),
     });
 
-    DataSender.requestAppointment(data)
+    DataSender.promoteToDoctor(data)
       .then(response => {
         toast({
           title: 'Appointment Requested',
@@ -125,25 +128,44 @@ export function DoctorForm() {
         />
         <FormField
           control={form.control}
-          name="selectedTreatmentService"
-          render={({ field }) => (
+          name="selectedTreatmentServices"
+          render={() => (
             <FormItem>
-              <FormLabel>Select a Treatment</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a treatment" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {treatmentServices.map(treatment => (
-                    <SelectItem key={treatment.id} value={treatment.id}>
-                      {treatment.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormDescription>Assign treatment services to this doctor.</FormDescription>
+              <div className="mb-4">
+                <FormLabel>Select Treatment Services</FormLabel>
+                <FormDescription>
+                  Select the treatment service you would like to assign to this doctor.
+                </FormDescription>
+              </div>
+              {treatmentServices.map(service => (
+                <FormField
+                  key={service.id}
+                  control={form.control}
+                  name="selectedTreatmentServices"
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={service.id}
+                        className="flex flex-row items-start space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(service.id)}
+                            onCheckedChange={checked => {
+                              return checked
+                                ? field.onChange([...field.value, service.id])
+                                : field.onChange(
+                                    field.value?.filter(value => value !== service.id),
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">{service.name}</FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
               <FormMessage />
             </FormItem>
           )}

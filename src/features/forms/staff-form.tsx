@@ -127,7 +127,7 @@ export function StaffForm() {
                 <SelectContent>
                   {users.map(user => (
                     <SelectItem key={user.id} value={user.id}>
-                      {user.name + " [UID:" + user.id + "]"}
+                      {user.name + ' [UID:' + user.id + ']'}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -154,7 +154,9 @@ export function StaffForm() {
                   <SelectItem value="fullTime">Full Time</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>Select whether this staff member is a full-time or part-time employee</FormDescription>
+              <FormDescription>
+                Select whether this staff member is a full-time or part-time employee
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
