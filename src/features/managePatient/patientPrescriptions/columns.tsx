@@ -31,8 +31,15 @@ export const columns: ColumnDef<any>[] = [
     header: 'Instructions',
   },
   {
-    accessorKey: 'doctor_id',
-    header: 'Prescribed By',
+    accessorKey: 'doctor',
+    header: 'Issued By',
+    cell: ({ row }) => {
+      const doctor = row.original?.doctor?.staff?.user;
+      if (doctor) {
+        return `Dr. ${doctor.first_name} ${doctor.last_name}`;
+      }
+      return 'No Doctor Assigned';
+    },
   },
   {
     accessorKey: 'issue_date',

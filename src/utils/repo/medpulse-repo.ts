@@ -469,9 +469,22 @@ class MedpulseRepo {
   }
 
   // Prescription methods
+  // async getAllPrescriptions() {
+  //   return await prisma.prescription.findMany({
+  //     include: { patient: true, doctor: true },
+  //   });
+  // }
+
   async getAllPrescriptions() {
     return await prisma.prescription.findMany({
-      include: { patient: true, doctor: true },
+      include: {
+        patient: true,
+        doctor: {
+          select: {
+            staff: { select: { user: { select: { first_name: true, last_name: true } } } },
+          },
+        },
+      },
     });
   }
 
@@ -482,10 +495,24 @@ class MedpulseRepo {
     });
   }
 
+  // async getPrescriptionsByPatientId(patientId: string) {
+  //   return await prisma.prescription.findMany({
+  //     where: { patient_id: patientId },
+  //     include: { patient: true },
+  //   });
+  // }
+
   async getPrescriptionsByPatientId(patientId: string) {
     return await prisma.prescription.findMany({
       where: { patient_id: patientId },
-      include: { patient: true },
+      include: {
+        patient: true,
+        doctor: {
+          select: {
+            staff: { select: { user: { select: { first_name: true, last_name: true } } } },
+          },
+        },
+      },
     });
   }
 

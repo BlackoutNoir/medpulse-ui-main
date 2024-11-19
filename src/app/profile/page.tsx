@@ -37,7 +37,7 @@ export default async function ManagePatientPage() {
                 <AvatarFallback>{'JD'}</AvatarFallback>
               </Avatar>
               <h2 className="text-3xl font-bold tracking-tight">My Patient Profile</h2>
-              <p className="text-muted-foreground">@JaneDoe</p>
+              <p className="text-muted-foreground">@JaneSmith</p>
             </div>
           </div>
           <Tabs defaultValue="patient-info">
