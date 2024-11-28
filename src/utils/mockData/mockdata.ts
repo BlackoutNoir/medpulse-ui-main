@@ -44,7 +44,7 @@ export const mockDoctors: Doctor[] = [
     isActive: true,
     speciality: 'Dentist',
     workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
-    assignedTreatmentServices: [mockTreatmentServices[0], mockTreatmentServices[1]],
+    assignedTreatmentServices: [mockTreatmentServices[0], mockTreatmentServices[1], mockTreatmentServices[2]],
     employmentType: 'FULL-TIME',
   },
   {
