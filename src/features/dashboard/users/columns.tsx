@@ -1,8 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
-//import { ArrowUpDown } from 'lucide-react';
+import { MoreHorizontal, ArrowUpDown, Mail, Phone, Calendar} from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,10 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-// import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { User } from '@/utils/interfaces/interfaces';
-
+import { formatDateTime } from '@/utils/DateFormatter';
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -41,13 +40,113 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
-    header: 'ID',
+    accessorKey: 'name',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          USER
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex items-center space-x-3">
+          <Avatar>
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="bg-primary">{user.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="font-medium">{user.name}</div>
+            <div className="text-sm text-muted-foreground">{user.username || 'N/A'}</div>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'email',
+    header: 'CONTACT',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <Mail className="mr-2 h-4 w-4 text-muted-foreground" />
+            <span className="text-sm">{user.email}</span>
+          </div>
+          <div className="flex items-center mt-1">
+            <Phone className="mr-2 h-4 w-4 text-muted-foreground" />
+            <span className="text-sm">{user.phoneNumber}</span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'gender',
+    header: 'GENDER',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Badge variant={user.gender === 'MALE' ? 'default' : 'secondary'}>
+          {user.gender}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: 'dateOfBirth',
+    header: 'AGE',
+    cell: ({ row }) => {
+      const user = row.original;
+      const age = new Date().getFullYear() - new Date(user.dateOfBirth).getFullYear();
+      return (
+        <div className="flex items-center">
+          <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
+          <span>{age} years</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: 'createdAt',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          JOINED
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const user = row.original;
+      return <div>{formatDateTime(user.createdAt).dateOnly}</div>;
+    },
+  },
+  {
+    accessorKey: 'isActive',
+    header: 'STATUS',
+    cell: ({ row }) => {
+      const user = row.original;
+      return (
+        <Badge variant={user.isActive ? 'default' : 'destructive'}>
+          {user.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      );
+    },
   },
   {
     id: 'actions',
     cell: ({ row }) => {
-      const payment = row.original;
+      const user = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -58,15 +157,19 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
-              Copy appointment ID
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>
+              Copy user ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View appointment</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>View user details</DropdownMenuItem>
+            <DropdownMenuItem>Edit user</DropdownMenuItem>
+            <DropdownMenuItem>
+              {user.isActive ? 'Deactivate user' : 'Activate user'}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
 ];
+

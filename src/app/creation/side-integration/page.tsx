@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { MainNav } from '@/features/dashboard/components/main-nav';
+import { UserOverview } from '@/features/dashboard/users/overview';
 import { DoctorOverview } from '@/features/dashboard/doctors/overview';
 import { PatientOverview } from '@/features/dashboard/patients/overview';
 import { AppointmentOverview } from '@/features/dashboard/appointments/overview';
@@ -43,7 +44,7 @@ export default async function CreationPage() {
               <TabsTrigger value="users">All</TabsTrigger>
               <TabsTrigger value="doctors">Doctors</TabsTrigger>
               <TabsTrigger value="patients">Patients</TabsTrigger>
-              <TabsTrigger value="staff">Appointments</TabsTrigger>
+              <TabsTrigger value="appointments">Appointments</TabsTrigger>
             </TabsList>
             <TabsContent value="users" className="space-y-4">
               <DoctorsStatCards />
@@ -54,7 +55,7 @@ export default async function CreationPage() {
                     <CardDescription>See list of Users.</CardDescription>
                   </CardHeader>
                   <CardContent className="mx-auto">
-                    <DoctorOverview />
+                    <UserOverview />
                   </CardContent>
                 </Card>
               </div>
@@ -87,7 +88,7 @@ export default async function CreationPage() {
                 </Card>
               </div>
             </TabsContent>
-            <TabsContent value="staff" className="space-y-4">
+            <TabsContent value="appointments" className="space-y-4">
               <DoctorsStatCards />
               <div className="">
                 <Card className="">
