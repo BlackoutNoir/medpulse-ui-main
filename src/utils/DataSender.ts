@@ -1,8 +1,41 @@
 // Check reference-ui-main
-// import axios from 'axios';
+import axios from 'axios';
 // axios.defaults.withCredentials = true;
 
+const API_URL = 'http://localhost:8000/api/v1';
+
+import {
+  // Doctor,
+  // Patient,
+  // Appointment,
+  User,
+  // TreatmentService,
+} from '@/utils/interfaces/actual';
+
 export default class DataSender {
+  // ========================== CALLING ACTUAL API  ==========================
+  static async createUser(user: any): Promise<any> {
+    try {
+      user = {
+        username: 'userone',
+        email: 'user@example.com',
+        firstname: 'string',
+        lastname: 'string',
+        phone_no: 'string',
+        date_of_birth: '2024-11-28',
+        user_type: 'admin',
+        gender: 'male',
+        password: 'string',
+      };
+      const response = await axios.post<User>(`${API_URL}/users/`, user, {});
+      return response;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
+  }
+  // ========================== CALLING ACTUAL API  ==========================
+
   // ========================== TREATMENTS AND SERVICES ==========================
   // Appointments
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,21 +59,21 @@ export default class DataSender {
   // ========================== USERS AND ROLES ==========================
   // Users
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async createUser(user: any): Promise<any> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
-      return response;
-    } catch (error) {
-      console.error('Error creating user:', error);
-      throw error;
-    }
-  }
+  // static async createUser(user: any): Promise<any> {
+  //   try {
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(user),
+  //     });
+  //     return response;
+  //   } catch (error) {
+  //     console.error('Error creating user:', error);
+  //     throw error;
+  //   }
+  // }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async promoteToPatient(patientData: any): Promise<any> {

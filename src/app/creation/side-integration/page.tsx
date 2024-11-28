@@ -43,7 +43,7 @@ export default async function CreationPage() {
               <TabsTrigger value="users">All</TabsTrigger>
               <TabsTrigger value="doctors">Doctors</TabsTrigger>
               <TabsTrigger value="patients">Patients</TabsTrigger>
-              <TabsTrigger value="staff">Staff</TabsTrigger>
+              <TabsTrigger value="staff">Appointments</TabsTrigger>
             </TabsList>
             <TabsContent value="users" className="space-y-4">
               <DoctorsStatCards />
