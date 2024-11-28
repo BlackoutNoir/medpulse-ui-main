@@ -1,4 +1,5 @@
 import * as React from "react"
+import { LucideIcon } from "lucide-react"
 
 import { SearchForm } from "@/components/search-form"
 import { VersionSwitcher } from "@/components/version-switcher"
@@ -15,7 +16,20 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
+// Import all icons you want to use
+import {
+  Bot,
+  Users,
+  UserPlus,
+  Stethoscope,
+  ClipboardList,
+  Calendar,
+  UserCircle,
+  User,
+  Briefcase,
+} from "lucide-react"
+
+// This is sample data with icons added.
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
@@ -24,127 +38,78 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Installation",
+          title: "Documentation",
           url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
+          icon: Bot,
         },
       ],
     },
     {
-      title: "Building Your Application",
+      title: "User Management",
       url: "#",
       items: [
         {
-          title: "Routing",
-          url: "#",
-        },
-        {
-          title: "Data Fetching",
-          url: "#",
+          title: "Users List",
+          url: "/dashboardd/users",
+          icon: Users,
           isActive: true,
         },
         {
-          title: "Rendering",
-          url: "#",
+          title: "Patients",
+          url: "/dashboardd/users",
+          icon: UserPlus,
         },
         {
-          title: "Caching",
-          url: "#",
+          title: "Treatments",
+          url: "/dashboardd/users",
+          icon: Stethoscope,
         },
         {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
+          title: "Staff List",
+          url: "/dashboardd/users",
+          icon: ClipboardList,
         },
       ],
     },
     {
-      title: "API Reference",
+      title: "Forms",
       url: "#",
       items: [
         {
-          title: "Components",
-          url: "#",
+          title: "Appointment",
+          url: "/formss/appointment",
+          icon: Calendar,
         },
         {
-          title: "File Conventions",
-          url: "#",
+          title: "User",
+          url: "/formss/profile/user",
+          icon: UserCircle,
         },
         {
-          title: "Functions",
-          url: "#",
+          title: "Patient",
+          url: "/formss/profile/patient",
+          icon: User,
         },
         {
-          title: "next.config.js Options",
-          url: "#",
+          title: "Staff",
+          url: "/formss/profile/staff",
+          icon: ClipboardList,
         },
         {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
+          title: "Doctor",
+          url: "/formss/profile/doctor",
+          icon: Briefcase,
         },
       ],
     },
   ],
+}
+
+interface NavItem {
+  title: string
+  url: string
+  icon?: LucideIcon
+  isActive?: boolean
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -158,16 +123,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SearchForm />
       </SidebarHeader>
       <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+        {data.navMain.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
+                {group.items.map((item: NavItem) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                      <a href={item.url} className="flex items-center gap-2">
+                        {item.icon && <item.icon className="h-4 w-4" />}
+                        <span>{item.title}</span>
+                      </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -180,3 +147,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+

@@ -3,6 +3,7 @@
 // axios.defaults.withCredentials = true;
 import axios from "axios";
 
+
 const API_URL = "http://localhost:8000/api/v1"; 
 
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInVzZXJfdWlkIjoiNGNhMmFkYTUtNDM1OC00YjhiLWE2NzMtNDViYmY5ZTZmMzI5IiwidXNlcl90eXBlIjoidXNlciJ9LCJleHAiOjE3MzI4MjM2NTUsImp0aSI6IjE1MGY3N2YyLWI5ODktNGQyNy05MzU5LWUzZDA3OTFjZjZiMSIsInJlZnJlc2giOmZhbHNlfQ.9n_6ny_BY_YN8xdSVNnlnmeaXSb5VIKJCDTbeJCzOW0"
@@ -37,6 +38,7 @@ export default class DataFetcher {
   }
 
   static async fetchUser(uid : string) : Promise<User>  {
+
     try {
       const response = await axios.get<User>(`${API_URL}/users/${uid}`,
         {headers: {Authorization: `Bearer ${token}`},},
