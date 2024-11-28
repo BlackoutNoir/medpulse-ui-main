@@ -50,23 +50,23 @@ const data = {
       items: [
         {
           title: "Users List",
-          url: "#",
+          url: "/dashboardd/users",
           icon: Users,
           isActive: true,
         },
         {
           title: "Patients",
-          url: "#",
+          url: "/dashboardd/users",
           icon: UserPlus,
         },
         {
           title: "Treatments",
-          url: "#",
+          url: "/dashboardd/users",
           icon: Stethoscope,
         },
         {
           title: "Staff List",
-          url: "#",
+          url: "/dashboardd/users",
           icon: ClipboardList,
         },
       ],
@@ -77,27 +77,27 @@ const data = {
       items: [
         {
           title: "Appointment",
-          url: "/forms/appointment",
+          url: "/formss/appointment",
           icon: Calendar,
         },
         {
           title: "User",
-          url: "/forms/profile/user",
+          url: "/formss/profile/user",
           icon: UserCircle,
         },
         {
           title: "Patient",
-          url: "/forms/profile/patient",
+          url: "/formss/profile/patient",
           icon: User,
         },
         {
           title: "Staff",
-          url: "/forms/profile/staff",
+          url: "/formss/profile/staff",
           icon: ClipboardList,
         },
         {
           title: "Doctor",
-          url: "/forms/profile/doctor",
+          url: "/formss/profile/doctor",
           icon: Briefcase,
         },
       ],
