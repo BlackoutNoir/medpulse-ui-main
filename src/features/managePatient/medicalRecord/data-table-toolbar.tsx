@@ -6,9 +6,9 @@ import { Table } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { employmentTypes } from '../components/data';
-import { DataTableFacetedFilter } from '../components/data-table-faceted-filter';
-import { DataTableViewOptions } from '../components/data-table-view-options';
+import { employmentTypes } from '@/features/dashboard/components/data';
+import { DataTableFacetedFilter } from '@/features/dashboard/components/data-table-faceted-filter';
+import { DataTableViewOptions } from '@/features/dashboard/components/data-table-view-options';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

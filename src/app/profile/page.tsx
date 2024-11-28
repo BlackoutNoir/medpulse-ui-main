@@ -9,7 +9,9 @@ import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-import { Monitor, ClipboardMinus } from 'lucide-react';
+import { Monitor, ClipboardMinus, User, Lock, Settings } from 'lucide-react';
+import CalendarSchedule from '@/features/managePatient/appointments/calendar-schedule';
+import AboutMe from '@/features/managePatient/patientInfo/AboutMe';
 
 export default async function ManagePatientPage() {
   return (
@@ -32,10 +34,10 @@ export default async function ManagePatientPage() {
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
             <div>
-              <Avatar className="w-16 h-16">
+              {/* <Avatar className="w-16 h-16">
                 <AvatarImage src={'https://github.com/shadcn.png'} alt={'Jane Doe'} />
                 <AvatarFallback>{'JD'}</AvatarFallback>
-              </Avatar>
+              </Avatar> */}
               <h2 className="text-3xl font-bold tracking-tight">My Patient Profile</h2>
               <p className="text-muted-foreground">@JaneSmith</p>
             </div>
@@ -49,16 +51,63 @@ export default async function ManagePatientPage() {
               <TabsTrigger value="appointments">Appointments</TabsTrigger>
             </TabsList>
             <TabsContent value="patient-info" className="space-y-4 mt-3">
-              <div className="">
-                <Card className="">
-                  <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                    <CardDescription>View your personal information.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
-                    <PatientInfoOverview />
-                  </CardContent>
-                </Card>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                {/* About Me Section */}
+                <div className="lg:col-span-2">
+                  <Card className="h-full">
+                    <CardContent className="mx-auto">
+                      <AboutMe />
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Button Cards Section */}
+                <div className="flex flex-col gap-4 h-full">
+                  <Link href="/profile/edit-profile" passHref>
+                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                      <CardHeader className="flex justify-between items-center">
+                        <User className="h-6 w-6 text-blue-600" />
+                        <div className="text-center">
+                          <CardTitle>Edit Profile</CardTitle>
+                          <CardDescription>Update your personal details.</CardDescription>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                  <Link href="/profile/change-password" passHref>
+                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                      <CardHeader className="flex justify-between items-center">
+                        <Lock className="h-6 w-6 text-blue-600" />
+                        <div className="text-center">
+                          <CardTitle>Change Password</CardTitle>
+                          <CardDescription>Secure your account.</CardDescription>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                  <Link href="/find-doctor" passHref>
+                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                      <CardHeader className="flex justify-between items-center">
+                        <Monitor className="h-6 w-6 text-blue-600" />
+                        <div className="text-center">
+                          <CardTitle>Find a Doctor</CardTitle>
+                          <CardDescription>Search for specialists.</CardDescription>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                  <Link href="/profile/settings" passHref>
+                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                      <CardHeader className="flex justify-between items-center">
+                        <Settings className="h-6 w-6 text-blue-600" />
+                        <div className="text-center">
+                          <CardTitle>Settings</CardTitle>
+                          <CardDescription>Manage your preferences.</CardDescription>
+                        </div>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                </div>
               </div>
             </TabsContent>
             <TabsContent value="medical-record" className="space-y-4">
@@ -132,12 +181,15 @@ export default async function ManagePatientPage() {
 
               <div className="">
                 <Card className="">
-                  <CardHeader>
-                    <CardTitle>Appointments Overview</CardTitle>
-                    <CardDescription>Manage your appointments.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
+                  {/* <CardHeader className="">
+                    <CardTitle className="text-center text-xl">Manage your appointments</CardTitle>
+                    <CardDescription></CardDescription>
+                  </CardHeader> */}
+                  {/* <CardContent className="mx-auto">
                     <PatientAppointmentOverview />
+                  </CardContent> */}
+                  <CardContent className="mx-auto">
+                    <CalendarSchedule />
                   </CardContent>
                 </Card>
               </div>

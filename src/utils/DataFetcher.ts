@@ -3,6 +3,17 @@ import axios from 'axios';
 class DataFetcher {
   private static baseURL = process.env.API_BASE_URL || 'http://localhost:3000';
 
+  // Fetch users data by id
+  static async fetchUserById(userId: string) {
+    try {
+      const response = await axios.get(`${this.baseURL}/api/users/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      throw error;
+    }
+  }
+
   // Fetch doctors data
   static async fetchDoctors() {
     try {
