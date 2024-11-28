@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { Monitor, ClipboardMinus, User, Lock, Settings } from 'lucide-react';
 import CalendarSchedule from '@/features/managePatient/appointments/calendar-schedule';
 import AboutMe from '@/features/managePatient/patientInfo/AboutMe';
+import MainFooter from '@/features/home/components/MainFooter';
 
 export default async function ManagePatientPage() {
   return (
@@ -31,19 +32,19 @@ export default async function ManagePatientPage() {
           </div>
         </div>
 
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4 p-8 pb-16 pt-6 bg-blue-50">
           <div className="flex items-center justify-between space-y-2">
             <div>
               {/* <Avatar className="w-16 h-16">
                 <AvatarImage src={'https://github.com/shadcn.png'} alt={'Jane Doe'} />
                 <AvatarFallback>{'JD'}</AvatarFallback>
               </Avatar> */}
-              <h2 className="text-3xl font-bold tracking-tight">My Patient Profile</h2>
+              <h2 className="text-3xl font-bold tracking-tight mb-2">My Profile</h2>
               <p className="text-muted-foreground">@JaneSmith</p>
             </div>
           </div>
           <Tabs defaultValue="patient-info">
-            <TabsList>
+            <TabsList className="bg-blue-100">
               <TabsTrigger value="patient-info">About Me</TabsTrigger>
               <TabsTrigger value="medical-record">Medical Record</TabsTrigger>
               <TabsTrigger value="lab-results">Lab Results</TabsTrigger>
@@ -54,19 +55,18 @@ export default async function ManagePatientPage() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* About Me Section */}
                 <div className="lg:col-span-2">
-                  <Card className="h-full">
+                  <Card className="h-full shadow-sm">
                     <CardContent className="mx-auto">
                       <AboutMe />
                     </CardContent>
                   </Card>
                 </div>
 
-                {/* Button Cards Section */}
                 <div className="flex flex-col gap-4 h-full">
                   <Link href="/profile/edit-profile" passHref>
-                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                    <Card className="hover:shadow-md shadow-sm hover:border-blue-700 transition-all cursor-pointer flex-1">
                       <CardHeader className="flex justify-between items-center">
-                        <User className="h-6 w-6 text-blue-600" />
+                        <User className="h-6 w-6 text-blue-700" />
                         <div className="text-center">
                           <CardTitle>Edit Profile</CardTitle>
                           <CardDescription>Update your personal details.</CardDescription>
@@ -75,9 +75,9 @@ export default async function ManagePatientPage() {
                     </Card>
                   </Link>
                   <Link href="/profile/change-password" passHref>
-                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                    <Card className="hover:shadow-md shadow-sm hover:border-blue-700 transition-all cursor-pointer flex-1">
                       <CardHeader className="flex justify-between items-center">
-                        <Lock className="h-6 w-6 text-blue-600" />
+                        <Lock className="h-6 w-6 text-blue-700" />
                         <div className="text-center">
                           <CardTitle>Change Password</CardTitle>
                           <CardDescription>Secure your account.</CardDescription>
@@ -86,9 +86,9 @@ export default async function ManagePatientPage() {
                     </Card>
                   </Link>
                   <Link href="/find-doctor" passHref>
-                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                    <Card className="hover:shadow-md shadow-sm hover:border-blue-700 transition-all cursor-pointer flex-1">
                       <CardHeader className="flex justify-between items-center">
-                        <Monitor className="h-6 w-6 text-blue-600" />
+                        <Monitor className="h-6 w-6 text-blue-700" />
                         <div className="text-center">
                           <CardTitle>Find a Doctor</CardTitle>
                           <CardDescription>Search for specialists.</CardDescription>
@@ -97,9 +97,9 @@ export default async function ManagePatientPage() {
                     </Card>
                   </Link>
                   <Link href="/profile/settings" passHref>
-                    <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer flex-1">
+                    <Card className="hover:shadow-md shadow-sm hover:border-blue-700 transition-all cursor-pointer flex-1">
                       <CardHeader className="flex justify-between items-center">
-                        <Settings className="h-6 w-6 text-blue-600" />
+                        <Settings className="h-6 w-6 text-blue-700" />
                         <div className="text-center">
                           <CardTitle>Settings</CardTitle>
                           <CardDescription>Manage your preferences.</CardDescription>
@@ -112,7 +112,7 @@ export default async function ManagePatientPage() {
             </TabsContent>
             <TabsContent value="medical-record" className="space-y-4">
               <div className="">
-                <Card className="">
+                <Card className="shadow-sm">
                   <CardHeader>
                     <CardTitle>Medical Record</CardTitle>
                     <CardDescription>View your medical record.</CardDescription>
@@ -125,7 +125,7 @@ export default async function ManagePatientPage() {
             </TabsContent>
             <TabsContent value="lab-results" className="space-y-4">
               <div className="">
-                <Card className="">
+                <Card className="shadow-sm">
                   <CardHeader>
                     <CardTitle>Lab Results</CardTitle>
                     <CardDescription>View your lab results.</CardDescription>
@@ -138,7 +138,7 @@ export default async function ManagePatientPage() {
             </TabsContent>
             <TabsContent value="current-prescriptions" className="space-y-4">
               <div className="mt-3">
-                <Card className="">
+                <Card className="shadow-sm">
                   <CardHeader>
                     <CardTitle>Current Prescriptions</CardTitle>
                     <CardDescription>View your currently prescribed medicine.</CardDescription>
@@ -152,9 +152,9 @@ export default async function ManagePatientPage() {
             <TabsContent value="appointments" className="space-y-4 mt-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
                 <Link href="/request-appointment" passHref>
-                  <Card className="hover:shadow hover:border-blue-600 transition-all  cursor-pointer">
+                  <Card className="hover:shadow shadow-sm hover:border-blue-700 transition-all  cursor-pointer">
                     <CardHeader className="flex justify-between items-center">
-                      <ClipboardMinus className="h-6 w-6 text-blue-600" />
+                      <ClipboardMinus className="h-6 w-6 text-blue-700" />
                       <div>
                         <CardTitle>Request an Appointment</CardTitle>
                         <CardDescription>
@@ -165,9 +165,9 @@ export default async function ManagePatientPage() {
                   </Card>
                 </Link>
                 <Link href="/book-virtual-appointment" passHref>
-                  <Card className="hover:shadow hover:border-blue-600 transition-all cursor-pointer">
+                  <Card className="hover:shadow shadow-sm hover:border-blue-700 transition-all cursor-pointer">
                     <CardHeader className="flex justify-between items-center">
-                      <Monitor className="h-6 w-6 text-blue-600" />
+                      <Monitor className="h-6 w-6 text-blue-700" />
                       <div>
                         <CardTitle>Book a Virtual Consultation</CardTitle>
                         <CardDescription>
@@ -180,7 +180,7 @@ export default async function ManagePatientPage() {
               </div>
 
               <div className="">
-                <Card className="">
+                <Card className="shadow-sm">
                   {/* <CardHeader className="">
                     <CardTitle className="text-center text-xl">Manage your appointments</CardTitle>
                     <CardDescription></CardDescription>
@@ -197,6 +197,7 @@ export default async function ManagePatientPage() {
           </Tabs>
         </div>
       </div>
+      <MainFooter />
     </>
   );
 }
