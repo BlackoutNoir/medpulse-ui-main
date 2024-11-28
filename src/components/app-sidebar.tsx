@@ -54,93 +54,31 @@ const data = {
           title: "Caching",
           url: "#",
         },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
       ],
     },
     {
-      title: "API Reference",
+      title: "Forms",
       url: "#",
       items: [
         {
-          title: "Components",
-          url: "#",
+          title: "Appointment",
+          url: "/forms/appointment",
         },
         {
-          title: "File Conventions",
-          url: "#",
+          title: "User",
+          url: "/forms/profile/user",
         },
         {
-          title: "Functions",
-          url: "#",
+          title: "Patient",
+          url: "/forms/profile/patient",
         },
         {
-          title: "next.config.js Options",
-          url: "#",
+          title: "Staff",
+          url: "/forms/profile/staff",
         },
         {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
+          title: "Doctor",
+          url: "/forms/profile/doctor",
         },
       ],
     },
