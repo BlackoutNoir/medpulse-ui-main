@@ -5,15 +5,16 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000/api/v1"; 
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInVzZXJfdWlkIjoiNGNhMmFkYTUtNDM1OC00YjhiLWE2NzMtNDViYmY5ZTZmMzI5IiwidXNlcl90eXBlIjoidXNlciJ9LCJleHAiOjE3MzI4MDgwNzAsImp0aSI6IjI0N2I4MjY4LWRiZDYtNDVkNi1iNWVmLTNiNjFlNmQyMDA5NyIsInJlZnJlc2giOmZhbHNlfQ.0hSMMqo1upVmCpy7ENTi6KMZ4jEWfFMbO1YbsSRwNZg"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInVzZXJfdWlkIjoiNGNhMmFkYTUtNDM1OC00YjhiLWE2NzMtNDViYmY5ZTZmMzI5IiwidXNlcl90eXBlIjoidXNlciJ9LCJleHAiOjE3MzI4MjM2NTUsImp0aSI6IjE1MGY3N2YyLWI5ODktNGQyNy05MzU5LWUzZDA3OTFjZjZiMSIsInJlZnJlc2giOmZhbHNlfQ.9n_6ny_BY_YN8xdSVNnlnmeaXSb5VIKJCDTbeJCzOW0"
 
 import {
   Doctor,
   Patient,
   Appointment,
   User,
-  TreatmentService,
-} from '@/utils/interfaces/interfaces';
+  Staff
+} from '@/utils/interfaces/backend_interfaces';
+
 import {
   mockDoctors,
   mockPatients,
@@ -23,125 +24,121 @@ import {
 } from '@/utils/mockData/mockdata';
 
 export default class DataFetcher {
-  // ========================== USERS AND ROLES ==========================
-  // static async fetchUsers(): Promise<User[]> {
-  //   console.log("fetch users called");
-  //   try {
-  //     const data = mockUsers;
-  //     return data;
-  //   } catch (error) {
-  //     console.error('Error fetching mock users:', error);
-  //     throw error;
-  //   }
-  // }
-
-  // static async fetchStaffMembers(): Promise<Staff[]> {
-  //   try {
-  //     const data = mockStaffMembers;
-  //     return data;
-  //   } catch (error) {
-  //     console.error('Error fetching mock staff members:', error);
-  //     throw error;
-  //   }
-  // }
-
   static async fetchUsers() : Promise<User[]>  {
-    console.log("fetch users called");
-
     try {
       const response = await axios.get<User[]>(`${API_URL}/users/`,
-        // { headers: { Authorization: `earer ${token}` } }
-      //    {
-      //     headers: {
-      //         Authorization: `Bearer ${token}`,
-      //     },
-      // }
-    );
-      console.log(response?.data)
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
       return response.data;
     } catch (error: any) {
-        
-        console.error("Error fetching users:", error.response?.data);
+
         throw error;
     }
   }
 
-  static async fetchDoctors(): Promise<Doctor[]> {
+  static async fetchUser(uid : string) : Promise<User>  {
     try {
-      const data = mockDoctors;
-      return data;
-    } catch (error) {
-      console.error('Error fetching mock doctors:', error);
+      const response = await axios.get<User>(`${API_URL}/users/${uid}`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data; 
+    } catch (error: any) {
       throw error;
     }
   }
 
-  static async fetchPatients(): Promise<Patient[]> {
-    try {
-      const data = mockPatients;
-      return data;
-    } catch (error) {
-      console.error('Error fetching mock patients:', error);
-      throw error;
-    }
-  }
-  // ========================== USERS AND ROLES ==========================
 
-  // ========================== TREATMENTS AND SERVICES ==========================
-
-  static async fetchTreatmentServices(): Promise<TreatmentService[]> {
+  static async fetchDoctors() : Promise<Doctor[]>  {
     try {
-      const data = mockTreatmentServices;
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error fetching mock treatment services:', error);
-      throw error;
+      const response = await axios.get<Doctor[]>(`${API_URL}/doctors/`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data;
+    } catch (error: any) {
+
+        throw error;
     }
   }
 
-  static async fetchAppointments(): Promise<Appointment[]> {
+  static async fetchDoctor(uid : string) : Promise<Doctor>  {
     try {
-      const data = mockAppointments;
-      return data;
-    } catch (error) {
-      console.error('Error fetching mock appointments:', error);
+      const response = await axios.get<Doctor>(`${API_URL}/doctors/${uid}`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data; 
+    } catch (error: any) {
       throw error;
     }
   }
 
-  // ========================== TREATMENTS AND SERVICES ==========================
-}
+  static async fetchPatients() : Promise<Patient[]>  {
+    try {
+      const response = await axios.get<Patient[]>(`${API_URL}/patients/`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data;
+    } catch (error: any) {
 
-// ========================== DRAFT ROUTES ==========================
-// static async fetchPatients(): Promise<Patient[]> {
-//   try {
-//     const data = mockPatients;
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching patients:', error);
-//     throw error;
-//   }
-// }
+        throw error;
+    }
+  }
 
-// static async fetchUsers(limit, page) {
-// 	try {
-// 		const response = await axios.get(
-// 			`${process.env.NEXT_PUBLIC_API_URL}/admin/users`,
-// 			{
-// 				params: {
-// 					limit: limit,
-// 					page: page,
-// 				},
-// 			},
-// 		)
-// 		return response.data
-// 	} catch (error) {
-// 		console.error('Error fetching users:', error);
-//     throw error;
-// 	}
-// }
+  static async fetchPatient(uid : string) : Promise<Patient>  {
+    try {
+      const response = await axios.get<Patient>(`${API_URL}/patients/${uid}`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data; 
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+  static async fetchStaffs() : Promise<Staff[]>  {
+    try {
+      const response = await axios.get<Staff[]>(`${API_URL}/staffs/`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data;
+    } catch (error: any) {
+
+        throw error;
+    }
+  }
+
+  static async fetchStaff(uid : string) : Promise<Staff>  {
+    try {
+      const response = await axios.get<Staff>(`${API_URL}/staffs/${uid}`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data; 
+    } catch (error: any) {
+      throw error;
+    }
+  }
 
 
+  static async fetchAppointments() : Promise<Appointment[]>  {
+    try {
+      const response = await axios.get<Appointment[]>(`${API_URL}/appointments/`,
+        {headers: {Authorization: `Bearer ${token}`},},
+      )
+      return response.data;
+    } catch (error: any) {
 
+        throw error;
+    }
+  }
 
+  static async fetchAppointment(uid : string) : Promise<Appointment>  {
+    try {
+      const response = await axios.get<Appointment>(`${API_URL}/appointments/${uid}`,
+        {headers: {Authorization: `Bearer ${token}`},}
+      )
+      return response.data; 
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
+} 

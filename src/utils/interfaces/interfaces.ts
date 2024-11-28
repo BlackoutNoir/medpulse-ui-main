@@ -67,3 +67,10 @@ export interface Appointment {
 }
 // ========================== APPOINTMENTS ==========================
 
+
+export interface Staff {
+  uid: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+}
