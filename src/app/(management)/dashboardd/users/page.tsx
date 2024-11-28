@@ -13,6 +13,8 @@ import TeamSwitcher from '@/features/dashboard/components/team-switcher';
 import { UserNav } from '@/features/dashboard/components/user-nav';
 import { DoctorsStatCards } from '@/features/dashboard/doctors/stat-cards';
 import { PatientsStatCards } from '@/features/dashboard/patients/stat-cards';
+import { AppointmentsStatCards } from '@/features/dashboard/appointments/stat-cards';
+import { UsersStatCards } from '@/features/dashboard/users/stat-cards';
 
 export default async function CreationPage() {
   return (
@@ -47,7 +49,7 @@ export default async function CreationPage() {
               <TabsTrigger value="appointments">Appointments</TabsTrigger>
             </TabsList>
             <TabsContent value="users" className="space-y-4">
-              <DoctorsStatCards />
+              <UsersStatCards />
               <div className="">
                 <Card className="">
                   <CardHeader>
@@ -89,7 +91,7 @@ export default async function CreationPage() {
               </div>
             </TabsContent>
             <TabsContent value="appointments" className="space-y-4">
-              <DoctorsStatCards />
+              <AppointmentsStatCards />
               <div className="">
                 <Card className="">
                   <CardHeader>
