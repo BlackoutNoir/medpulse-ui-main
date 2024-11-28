@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { User } from '@/utils/interfaces/interfaces';
+import { User } from '@/utils/interfaces/backend_interfaces';
 import { formatDateTime } from '@/utils/DateFormatter';
 
 export const columns: ColumnDef<User>[] = [
@@ -40,7 +40,7 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'firstname',
     header: ({ column }) => {
       return (
         <Button
@@ -57,11 +57,11 @@ export const columns: ColumnDef<User>[] = [
       return (
         <div className="flex items-center space-x-3">
           <Avatar>
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="bg-primary">{user.name.charAt(0)}</AvatarFallback>
+            <AvatarImage src={'/placeholder.svg?height=32&width=32'} alt={user.firstname} />
+            <AvatarFallback className="bg-primary">{user.firstname.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <div className="font-medium">{user.name}</div>
+            <div className="font-medium">{user.firstname}</div>
             <div className="text-sm text-muted-foreground">{user.username || 'N/A'}</div>
           </div>
         </div>
@@ -81,7 +81,7 @@ export const columns: ColumnDef<User>[] = [
           </div>
           <div className="flex items-center mt-1">
             <Phone className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span className="text-sm">{user.phoneNumber}</span>
+            <span className="text-sm">{user.phone_no}</span>
           </div>
         </div>
       );
@@ -100,11 +100,11 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: 'dateOfBirth',
+    accessorKey: 'date_of_birth',
     header: 'AGE',
     cell: ({ row }) => {
       const user = row.original;
-      const age = new Date().getFullYear() - new Date(user.dateOfBirth).getFullYear();
+      const age = new Date().getFullYear() - new Date(user.date_of_birth!).getFullYear();
       return (
         <div className="flex items-center">
           <Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -114,7 +114,7 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: 'createdAt',
+    accessorKey: 'created_at',
     header: ({ column }) => {
       return (
         <Button
@@ -128,17 +128,17 @@ export const columns: ColumnDef<User>[] = [
     },
     cell: ({ row }) => {
       const user = row.original;
-      return <div>{formatDateTime(user.createdAt).dateOnly}</div>;
+      return <div>{formatDateTime(user.created_at!).dateOnly}</div>;
     },
   },
   {
-    accessorKey: 'isActive',
+    accessorKey: 'is_active',
     header: 'STATUS',
     cell: ({ row }) => {
       const user = row.original;
       return (
-        <Badge variant={user.isActive ? 'default' : 'destructive'}>
-          {user.isActive ? 'Active' : 'Inactive'}
+        <Badge variant={user.is_active ? 'default' : 'destructive'}>
+          {user.is_active ? 'Active' : 'Inactive'}
         </Badge>
       );
     },
@@ -157,14 +157,14 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.uid!)}>
               Copy user ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View user details</DropdownMenuItem>
             <DropdownMenuItem>Edit user</DropdownMenuItem>
             <DropdownMenuItem>
-              {user.isActive ? 'Deactivate user' : 'Activate user'}
+              {user.is_active ? 'Deactivate user' : 'Activate user'}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
