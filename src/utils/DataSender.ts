@@ -5,177 +5,117 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api/v1';
 
 import {
-  // Doctor,
-  // Patient,
-  // Appointment,
-  User,
-  // TreatmentService,
-} from '@/utils/interfaces/actual';
+  Doctor,
+  Patient,
+  Appointment,
+  User,  
+  Staff
+} from '@/utils/interfaces/backend_interfaces';
 
 export default class DataSender {
   // ========================== CALLING ACTUAL API  ==========================
-  static async createUser(user: any): Promise<any> {
+  static async createUser(user: User): Promise<User> {
     try {
-      user = {
-        username: 'userone',
-        email: 'user@example.com',
-        firstname: 'string',
-        lastname: 'string',
-        phone_no: 'string',
-        date_of_birth: '2024-11-28',
-        user_type: 'admin',
-        gender: 'male',
-        password: 'string',
-      };
       const response = await axios.post<User>(`${API_URL}/users/`, user, {});
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Error creating user:', error);
       throw error;
     }
   }
-  // ========================== CALLING ACTUAL API  ==========================
 
-  // ========================== TREATMENTS AND SERVICES ==========================
-  // Appointments
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async requestAppointment(appointmentData: any): Promise<any> {
+  static async deleteUser(uid: String): Promise<boolean> {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointment/request`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(appointmentData),
-      });
-      return response;
+      const response = await axios.delete(`${API_URL}/users/${uid}`,{});
+      return true;
     } catch (error) {
-      console.error('Error requesting appointment:', error);
-      throw error;
-    }
-  }
-  // ========================== TREATMENTS AND SERVICES ==========================
-
-  // ========================== USERS AND ROLES ==========================
-  // Users
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // static async createUser(user: any): Promise<any> {
-  //   try {
-  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(user),
-  //     });
-  //     return response;
-  //   } catch (error) {
-  //     console.error('Error creating user:', error);
-  //     throw error;
-  //   }
-  // }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async promoteToPatient(patientData: any): Promise<any> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/promote-to-patient`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(patientData),
-      });
-      return response;
-    } catch (error) {
-      console.error('Error promoting user to patient:', error);
+      console.error('Error deleting user:', error);
       throw error;
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async promoteToStaff(staffData: any): Promise<any> {
+  static async createPatient(patient: Patient): Promise<Patient> {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/promote-to-staff`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(staffData),
-      });
-      return response;
+      const response = await axios.post<Patient>(`${API_URL}/patient/`, patient, {});
+      return response.data;
     } catch (error) {
-      console.error('Error promoting user to staff:', error);
+      console.error('Error creating patient:', error);
       throw error;
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static async promoteToDoctor(doctorData: any): Promise<any> {
+  static async deletePatient(uid: String): Promise<boolean> {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/promote-to-doctor`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(doctorData),
-      });
-      return response;
+      const response = await axios.delete(`${API_URL}/patients/${uid}`,{});
+      return true;
     } catch (error) {
-      console.error('Error promoting staff member to doctor:', error);
+      console.error('Error deleting patient:', error);
       throw error;
     }
   }
 
-  // ========================== USERS AND ROLES ==========================
+  static async createStaff(staff: Staff): Promise<Staff> {
+    try {
+      const response = await axios.post<Staff>(`${API_URL}/staffs/`, staff, {});
+      return response.data;
+    } catch (error) {
+      console.error('Error creating staff:', error);
+      throw error;
+    }
+  }
+
+  static async deleteStaff(uid: String): Promise<boolean> {
+    try {
+      const response = await axios.delete(`${API_URL}/staffs/${uid}`,{});
+      return true;
+    } catch (error) {
+      console.error('Error deleting staff:', error);
+      throw error;
+    }
+  }
+
+  static async createDoctor(doctor: Doctor): Promise<Doctor> {
+    try {
+      const response = await axios.post<Doctor>(`${API_URL}/doctors/`, doctor , {});
+      return response.data;
+    } catch (error) {
+      console.error('Error creating doctor:', error);
+      throw error;
+    }
+  }
+
+  static async deleteDoctor(uid: String): Promise<boolean> {
+    try {
+      const response = await axios.delete(`${API_URL}/doctors/${uid}`,{});
+      return true;
+    } catch (error) {
+      console.error('Error deleting doctor:', error);
+      throw error;
+    }
+  }
+
+  static async createAppointment(appointment: Appointment): Promise<Appointment> {
+    try {
+      const response = await axios.post<Appointment>(`${API_URL}/appointments/`, appointment , {});
+      return response.data;
+    } catch (error) {
+      console.error('Error creating doctor:', error);
+      throw error;
+    }
+  }
+
+  static async deleteAppointment(uid: String): Promise<boolean> {
+    try {
+      const response = await axios.delete(`${API_URL}/appointments/${uid}`,{});
+      return true;
+    } catch (error) {
+      console.error('Error deleting appointment:', error);
+      throw error;
+    }
+  }
+
+  
+  
+  
+
 }
-
-// ========================== DRAFT ROUTES ==========================
-//   static async registerUser(user): Promise<any> {
-//     try {
-//       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, user);
-//       return response;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-
-//   static async loginUser(username, password): Promise<any> {
-//     try {
-//       const response = axios.post(
-//         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-//         new URLSearchParams({
-//           username: username,
-//           password: password,
-//         }),
-//       );
-//       return response;
-//     } catch (error) {
-//       console.error('Error logging in:', error);
-//       throw error;
-//     }
-//   }
-
-//   static async logout(): Promise<any> {
-//     try {
-//       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`);
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error logging out:', error);
-//       throw error;
-//     }
-//   }
-
-//   static async validatePassword(userId, currentPassword) {
-//     try {
-//       const response = await axios.post(
-//         `${process.env.NEXT_PUBLIC_API_URL}/auth/validate-password`,
-//         {
-//           current_password: currentPassword,
-//         },
-//       );
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error validating password:', error);
-//       throw error;
-//     }
-//   }
