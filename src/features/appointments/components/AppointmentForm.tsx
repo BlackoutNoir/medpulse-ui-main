@@ -26,7 +26,7 @@ const AppointmentForm: React.FC = () => {
   const router = useRouter(); // Initialize router
   const patientId = 'user-2';
 
-  const times = Array.from({ length: 13 }, (_, i) => `${8 + i}:30`);
+  const times = Array.from({ length: 13 }, (_, i) => `${8 + i}:00`);
 
   // Generate a list of dates from today to one month later
   const generateDates = () => {
@@ -131,7 +131,7 @@ const AppointmentForm: React.FC = () => {
               {/* Doctor Selection */}
               <div className="space-y-2 ">
                 <label className="text-sm text-zinc-400">Doctor</label>
-                <Select onValueChange={(value) => setSelectedDoctor(value)}>
+                <Select onValueChange={value => setSelectedDoctor(value)}>
                   <SelectTrigger className="w-full hover:bg-gray-100 transition-all duration-300">
                     <div className="flex items-center gap-2">
                       <SelectValue placeholder="Select a doctor" />
@@ -139,7 +139,7 @@ const AppointmentForm: React.FC = () => {
                   </SelectTrigger>
                   <SelectContent>
                     {doctors.length > 0 ? (
-                      doctors.map((doctor) => (
+                      doctors.map(doctor => (
                         <SelectItem key={doctor.doctor_id} value={doctor.doctor_id}>
                           {`${doctor.staff.user.first_name} ${doctor.staff.user.last_name}`}
                         </SelectItem>
@@ -154,14 +154,14 @@ const AppointmentForm: React.FC = () => {
               {/* Date Selection */}
               <div className="space-y-2">
                 <label className="text-sm text-zinc-400">Appointment Date</label>
-                <Select onValueChange={(value) => setSelectedDate(value)}>
+                <Select onValueChange={value => setSelectedDate(value)}>
                   <SelectTrigger className="w-full hover:bg-gray-100 transition-all duration-300">
                     <div className="flex items-center gap-2">
                       <SelectValue placeholder="Select a date" />
                     </div>
                   </SelectTrigger>
                   <SelectContent className="absolute w-full mt-1 z-10 bg-white border border-gray-200 rounded-md shadow-lg max-h-40 overflow-y-scroll">
-                    {availableDates.map((date) => (
+                    {availableDates.map(date => (
                       <SelectItem
                         key={date}
                         value={date}
@@ -177,14 +177,14 @@ const AppointmentForm: React.FC = () => {
               {/* Time Selection */}
               <div className="space-y-2">
                 <label className="text-sm text-zinc-400">Time</label>
-                <Select onValueChange={(value) => setSelectedTime(value)}>
+                <Select onValueChange={value => setSelectedTime(value)}>
                   <SelectTrigger className="w-full hover:bg-gray-100 transition-all duration-300">
                     <div className="flex items-center gap-2">
                       <SelectValue placeholder="Select a time" />
                     </div>
                   </SelectTrigger>
                   <SelectContent className="absolute w-full mt-1 z-10 bg-white border border-gray-200 rounded-md shadow-lg max-h-40 overflow-y-scroll">
-                    {times.map((time) => (
+                    {times.map(time => (
                       <SelectItem
                         key={time}
                         value={time}
@@ -203,7 +203,7 @@ const AppointmentForm: React.FC = () => {
                 <Textarea
                   placeholder="Enter the reason"
                   value={reason}
-                  onChange={(e) => setReason(e.target.value)}
+                  onChange={e => setReason(e.target.value)}
                   className="min-h-[120px] resize-none focus:border-blue-700 hover:bg-gray-100 transition-all duration-300"
                 />
               </div>
