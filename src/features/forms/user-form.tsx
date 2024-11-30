@@ -34,7 +34,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 
 const userFormSchema = z.object({
-  name: z
+  firstname: z
     .string()
     .min(2, {
       message: 'Name must be at least 2 characters.',
@@ -42,7 +42,15 @@ const userFormSchema = z.object({
     .max(30, {
       message: 'Name must not be longer than 30 characters.',
     }),
-  dob: z.date({
+  lastname: z
+    .string()
+    .min(2, {
+      message: 'Name must be at least 2 characters.',
+    })
+    .max(30, {
+      message: 'Name must not be longer than 30 characters.',
+    }),
+  date_of_birth: z.date({
     required_error: 'A date of birth is required.',
   }),
   gender: z.string({
@@ -61,7 +69,28 @@ const userFormSchema = z.object({
       required_error: 'Please select an email to display.',
     })
     .email(),
-  phone: z.string().regex(/^\d{10,15}$/, { message: 'Invalid phone number.' }),
+  password: z
+    .string()
+    .min(8, {
+      message: 'Password must be at least 8 characters long.',
+    })
+    .max(128, {
+      message: 'Password must not be longer than 128 characters.',
+    })
+    .regex(/[A-Z]/, {
+      message: 'Password must contain at least one uppercase letter.',
+    })
+    .regex(/[a-z]/, {
+      message: 'Password must contain at least one lowercase letter.',
+    })
+    .regex(/[0-9]/, {
+      message: 'Password must contain at least one number.',
+    })
+    .regex(/[@$!%*?&]/, {
+      message: 'Password must contain at least one special character (@, $, !, %, *, ?, &).',
+    }),
+  
+  phone_no: z.string().regex(/^\d{10,15}$/, { message: 'Invalid phone number.' }),
   country: z.string().min(2, { message: 'Country is required.' }),
   city: z.string().min(2, { message: 'City is required.' }),
   street: z.string().min(5, { message: 'Street Address is required.' }),
@@ -106,7 +135,6 @@ export function UserForm() {
         </pre>
       ),
     });
-
     DataSender.createUser(data)
       .then(response => {
         toast({
@@ -130,12 +158,12 @@ export function UserForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="firstname"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input placeholder="John" {...field} />
               </FormControl>
               <FormDescription>Enter your name as it appears on your legal ID.</FormDescription>
               <FormMessage />
@@ -144,7 +172,21 @@ export function UserForm() {
         />
         <FormField
           control={form.control}
-          name="dob"
+          name="lastname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Doe" {...field} />
+              </FormControl>
+              <FormDescription>Enter your name as it appears on your legal ID.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="date_of_birth"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Date of birth</FormLabel>
@@ -233,7 +275,21 @@ export function UserForm() {
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Enter your password" {...field} />
+              </FormControl>
+              <FormDescription>Make sure your password is secure and memorable.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone_no"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone Number</FormLabel>

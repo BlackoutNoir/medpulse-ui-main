@@ -34,11 +34,11 @@ export type User = {
     firstname: string
     lastname: string
     phone_no: string
-    date_of_birth?: Date
+    date_of_birth?: Date | string
     is_verified?: boolean
     is_active?: boolean
     user_type?: string
-    gender?: Gender
+    gender?: string
     created_at?: Date
     last_login?: Date
     updated_at?: Date
