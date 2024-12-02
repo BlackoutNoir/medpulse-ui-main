@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { ArrowUpDown } from 'lucide-react';
@@ -14,11 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+//import { Badge } from '@/components/ui/badge';
+import { Patient } from '@/utils/interfaces/interfaces';
 import { formatDateTime } from '@/utils/DateFormatter';
-import DataFetcher from '@/utils/DataFetcher'; // Import DataFetcher
 
-export const columns: ColumnDef<any>[] = [
+export const columns: ColumnDef<Patient>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -58,18 +58,19 @@ export const columns: ColumnDef<any>[] = [
       );
     },
     cell: ({ row }) => {
-      const patient = row.original;
+      const patient= row.original
       return (
         <div className="flex items-center space-x-3">
           <Avatar>
-            {/* Add avatar image if available */}
+            <AvatarImage src={patient.avatar} alt={patient.name} />
+            <AvatarFallback className="bg-gray-400">{patient.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <div className="font-medium">{patient.first_name}</div>
+            <div className="font-medium">{patient.name}</div>
           </div>
         </div>
-      );
-    },
+      )
+    }
   },
   {
     accessorKey: 'phoneNumber',
@@ -80,7 +81,9 @@ export const columns: ColumnDef<any>[] = [
     header: 'EMAIL',
     cell: ({ row }) => {
       const patient = row.original;
-      return <div className="text-blue-600">{patient.email}</div>;
+      return (
+        <div className="text-blue-600">{patient.email}</div>
+      )
     },
   },
   {
@@ -94,7 +97,7 @@ export const columns: ColumnDef<any>[] = [
       const patient = row.original;
       return (
         <div>{formatDateTime(patient.createdAt).dateOnly}</div> // Date only
-      );
+      )
     },
   },
   {
@@ -104,7 +107,7 @@ export const columns: ColumnDef<any>[] = [
       const patient = row.original;
       return (
         <div>{formatDateTime(patient.lastVisitDate).dateOnly}</div> // Date only
-      );
+      )
     },
   },
   {
@@ -133,29 +136,3 @@ export const columns: ColumnDef<any>[] = [
     },
   },
 ];
-
-const PatientTable = () => {
-  const [patients, setPatients] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        // Fetching data via DataFetcher
-        const fetchedPatients = await DataFetcher.fetchDoctors(); // This could be your patient fetch method
-        setPatients(fetchedPatients);
-      } catch (error) {
-        console.error('Error fetching patients:', error);
-      }
-    };
-
-    fetchPatients();
-  }, []);
-
-  return (
-    <div>
-      {/* Render your table here using the `patients` state */}
-    </div>
-  );
-};
-
-export default PatientTable;
