@@ -41,7 +41,7 @@ export default async function CreationPage() {
             <Button>Download</Button>
           </div>
 
-          <Tabs>
+          <Tabs defaultValue="users">
             <TabsList>
               <TabsTrigger value="users">All</TabsTrigger>
               <TabsTrigger value="doctors">Doctors</TabsTrigger>
