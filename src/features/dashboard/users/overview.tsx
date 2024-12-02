@@ -15,7 +15,7 @@ export async function UserOverview() {
 async function fetchUsers(): Promise<User[]> {
   // Fetch data from your API here.
   try {
-    const users = await DataFetcher.fetchUsers()
+    const users = await DataFetcher.fetchUsersMock()
     return users;
   } catch (error) {
     console.error('Error fetching users:', error);

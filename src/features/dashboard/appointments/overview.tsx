@@ -15,7 +15,7 @@ export async function AppointmentOverview() {
 async function fetchAppointments(): Promise<Appointment[]> {
   // Fetch data from your API here.
   try {
-    const appointments = await DataFetcher.fetchAppointments();
+    const appointments = await DataFetcher.fetchAppointmentsMock();
     return appointments;
   } catch (error) {
     console.error('Error fetching appointments:', error);

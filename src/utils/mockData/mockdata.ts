@@ -5,18 +5,33 @@ export const mockRoles: Role[] = [
   { id: '2', name: 'User', description: 'Regular user access' },
 ];
 
-// Treatment Services
-export const treatmentServices: TreatmentService[] = [
-  { name: 'General Checkup', cost: 100, description: 'Routine checkup and consultation' },
-  { name: 'Dental Cleaning', cost: 150, description: 'Professional dental cleaning service' },
-  { name: 'Physical Therapy', cost: 200, description: 'Physical therapy sessions' },
+export const mockTreatmentServices: TreatmentService[] = [
+  {
+    id: "T1",
+    name: 'General Checkup',
+    description: 'Routine checkup and consultation',
+    price: 50.0,
+    duration: 60,
+  },
+  {
+    id: "T2",
+    name: 'Dental Cleaning',
+    description: 'Professional dental cleaning service',
+    price: 75.0,
+    duration: 90,
+  },
+  {
+    id: "T3",
+    name: 'Physical Therapy',
+    description: 'Physical therapy sessions',
+    price: 100.0,
+    duration: 120,
+  },
 ];
 
-
-// Mock Doctors
 export const mockDoctors: Doctor[] = [
   {
-    id: '1',
+    id: 'D1',
     name: 'Ronald Richards',
     username: 'ronaldrichards',
     email: 'ronaldrichards@example.com',
@@ -29,11 +44,11 @@ export const mockDoctors: Doctor[] = [
     isActive: true,
     speciality: 'Dentist',
     workingDays: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'],
-    assignedTreatmentServices: [treatmentServices[0], treatmentServices[1], treatmentServices[2]], // General Checkup, Dental Cleaning
+    assignedTreatmentServices: [mockTreatmentServices[0], mockTreatmentServices[1], mockTreatmentServices[2]],
     employmentType: 'FULL-TIME',
   },
   {
-    id: '2',
+    id: 'D2',
     name: 'Dorothy Spencer',
     username: 'dorothyspencer',
     email: 'dorothyspencer@example.com',
@@ -46,16 +61,14 @@ export const mockDoctors: Doctor[] = [
     isActive: true,
     speciality: 'Cardiologist',
     workingDays: ['MONDAY', 'WEDNESDAY', 'FRIDAY'],
-    //assignedTreatmentServices: [treatmentServices[0]], // General Checkup
+    assignedTreatmentServices: [mockTreatmentServices[0], mockTreatmentServices[2]],
     employmentType: 'PART-TIME',
   },
-  //add more mock doctors as needed
 ];
 
-//Mock Patients
 export const mockPatients: Patient[] = [
   {
-    id: '1',
+    id: 'P1',
     name: 'Michael Johnson',
     username: 'michaeljohnson',
     email: 'michaeljohnson@example.com',
@@ -71,7 +84,7 @@ export const mockPatients: Patient[] = [
     medicalHistory: ['Allergy to penicillin', 'Asthma'],
   },
   {
-    id: '2',
+    id: 'P2',
     name: 'Sarah Connor',
     username: 'sarahconnor',
     email: 'sarahconnor@example.com',
@@ -86,7 +99,6 @@ export const mockPatients: Patient[] = [
     address: '456 Elm Street, Metropolis',
     medicalHistory: ['No known allergies'],
   },
-  // add more mock patients as needed
 ];
 
 export const mockAppointments: Appointment[] = [
@@ -94,6 +106,7 @@ export const mockAppointments: Appointment[] = [
     id: '1',
     patient: mockPatients[0],
     doctor: mockDoctors[0],
+    treatmentService: mockTreatmentServices[0],
     scheduledAt: '2024-11-01T09:00:00Z',
     status: 'SCHEDULED',
   },
@@ -101,10 +114,11 @@ export const mockAppointments: Appointment[] = [
     id: '2',
     patient: mockPatients[1],
     doctor: mockDoctors[1],
+    treatmentService: mockTreatmentServices[2],
     scheduledAt: '2024-11-15T14:30:00Z',
     status: 'COMPLETED',
   },
-  // add more mock appointments as needed
 ];
 
 export const mockUsers = [...mockDoctors, ...mockPatients];
+
