@@ -13,6 +13,9 @@ import { Monitor, ClipboardMinus, User, Lock, Settings } from 'lucide-react';
 import CalendarSchedule from '@/features/managePatient/appointments/calendar-schedule';
 import AboutMe from '@/features/managePatient/patientInfo/AboutMe';
 import MainFooter from '@/features/home/components/MainFooter';
+import PatientRecord from '@/features/managePatient/medicalRecord/PatientRecord';
+import PatientResults from '@/features/managePatient/labResults/PatientResults';
+import PatientPrescriptions from '@/features/managePatient/patientPrescriptions/Prescriptions';
 
 export default async function ManagePatientPage() {
   return (
@@ -111,43 +114,34 @@ export default async function ManagePatientPage() {
               </div>
             </TabsContent>
             <TabsContent value="medical-record" className="space-y-4">
-              <div className="">
-                <Card className="shadow-sm">
-                  <CardHeader>
-                    <CardTitle>Medical Record</CardTitle>
-                    <CardDescription>View your medical record.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
-                    <PatientMedicalOverview />
-                  </CardContent>
-                </Card>
-              </div>
+                {/* Medical Record Section */}
+                <div className="lg:col-span-2">
+                  <Card className="h-full shadow-sm">
+                    <CardContent className="mx-auto">
+                      <PatientRecord />
+                    </CardContent>
+                  </Card>
+                </div>
             </TabsContent>
             <TabsContent value="lab-results" className="space-y-4">
-              <div className="">
-                <Card className="shadow-sm">
-                  <CardHeader>
-                    <CardTitle>Lab Results</CardTitle>
-                    <CardDescription>View your lab results.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
-                    <PatientLabResultsOverview />
-                  </CardContent>
-                </Card>
-              </div>
+                {/* Lab Results Section */}
+                <div className="lg:col-span-2">
+                  <Card className="h-full shadow-sm">
+                    <CardContent className="mx-auto">
+                      <PatientResults />
+                    </CardContent>
+                  </Card>
+                </div>
             </TabsContent>
             <TabsContent value="current-prescriptions" className="space-y-4">
-              <div className="mt-3">
-                <Card className="shadow-sm">
-                  <CardHeader>
-                    <CardTitle>Current Prescriptions</CardTitle>
-                    <CardDescription>View your currently prescribed medicine.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mx-auto">
-                    <PatientPrescriptionsOverview />
-                  </CardContent>
-                </Card>
-              </div>
+                {/* Prescriptions Section */}
+                <div className="lg:col-span-2">
+                  <Card className="h-full shadow-sm">
+                    <CardContent className="mx-auto">
+                      <PatientPrescriptions />
+                    </CardContent>
+                  </Card>
+                </div>
             </TabsContent>
             <TabsContent value="appointments" className="space-y-4 mt-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
