@@ -96,81 +96,83 @@ const PatientPrescriptions = () => {
       ) : user ? (
         <Card className="pt-8 border-none shadow-none">
           <h2 className="text-2xl font-semibold mb-6">Prescriptions Overview</h2>
-          {patientPrescription.map((prescription, index) => (
-            <Card className="w-[350px]" key={index}>
-              <CardHeader>
-                <CardTitle>{prescription.medication}</CardTitle>
-                <CardDescription>
-                  {prescription.dosage}
-                  <br />
-                  {prescription.instructions}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Prescribed By</Label>
-                      <CardDescription>
-                        {/* Access the doctor's first and last name */}
-                        {prescription.doctor?.staff?.user
-                          ? `Dr. ${prescription.doctor.staff.user.first_name} ${prescription.doctor.staff.user.last_name}`
-                          : 'No Doctor Assigned'}
-                      </CardDescription>
+          <div className="flex flex-col sm:flex-row gap-4 h-auto sm:h-full">
+            {patientPrescription.map((prescription, index) => (
+              <Card className="w-[350px]" key={index}>
+                <CardHeader>
+                  <CardTitle>{prescription.medication}</CardTitle>
+                  <CardDescription>
+                    {prescription.dosage}
+                    <br />
+                    {prescription.instructions}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form>
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Prescribed By</Label>
+                        <CardDescription>
+                          {/* Access the doctor's first and last name */}
+                          {prescription.doctor?.staff?.user
+                            ? `Dr. ${prescription.doctor.staff.user.first_name} ${prescription.doctor.staff.user.last_name}`
+                            : 'No Doctor Assigned'}
+                        </CardDescription>
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="framework">Payment Method</Label>
+                        <Select>
+                          <SelectTrigger id="payment">
+                            <SelectValue placeholder="Select method of payment" />
+                          </SelectTrigger>
+                          <SelectContent position="popper">
+                            <SelectItem value="next">Credit Card</SelectItem>
+                            <SelectItem value="sveltekit">Debit</SelectItem>
+                            <SelectItem value="astro">Apple Pay</SelectItem>
+                            <SelectItem value="nuxt">Paypal</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="framework">Payment Method</Label>
-                      <Select>
-                        <SelectTrigger id="payment">
-                          <SelectValue placeholder="Select method of payment" />
-                        </SelectTrigger>
-                        <SelectContent position="popper">
-                          <SelectItem value="next">Credit Card</SelectItem>
-                          <SelectItem value="sveltekit">Debit</SelectItem>
-                          <SelectItem value="astro">Apple Pay</SelectItem>
-                          <SelectItem value="nuxt">Paypal</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button variant="outline">Discard</Button>
-                <Button
-                  onClick={async () => {
-                    const prescriptionId = prescription.prescription_id; // Get the prescription ID
-                    const confirmPurchase = window.confirm(
-                      `Are you sure you want to purchase prescription ID: ${prescriptionId}?`,
-                    );
+                  </form>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline">Discard</Button>
+                  <Button
+                    onClick={async () => {
+                      const prescriptionId = prescription.prescription_id; // Get the prescription ID
+                      const confirmPurchase = window.confirm(
+                        `Are you sure you want to purchase prescription ID: ${prescriptionId}?`,
+                      );
 
-                    if (confirmPurchase) {
-                      try {
-                        const response = await fetch(`/api/prescriptions/${prescriptionId}`, {
-                          method: 'DELETE',
-                        });
+                      if (confirmPurchase) {
+                        try {
+                          const response = await fetch(`/api/prescriptions/${prescriptionId}`, {
+                            method: 'DELETE',
+                          });
 
-                        if (response.ok) {
-                          alert('Prescription purchased successfully!');
-                          // Reload the page after successful purchase
-                          window.location.reload();
-                        } else {
-                          const errorData = await response.json();
-                          console.error('Error purchasing prescription:', errorData);
-                          alert('Failed to purchase prescription. Please try again.');
+                          if (response.ok) {
+                            alert('Prescription purchased successfully!');
+                            // Reload the page after successful purchase
+                            window.location.reload();
+                          } else {
+                            const errorData = await response.json();
+                            console.error('Error purchasing prescription:', errorData);
+                            alert('Failed to purchase prescription. Please try again.');
+                          }
+                        } catch (error) {
+                          console.error('Error purchasing prescription:', error);
+                          alert('An error occurred. Please try again.');
                         }
-                      } catch (error) {
-                        console.error('Error purchasing prescription:', error);
-                        alert('An error occurred. Please try again.');
                       }
-                    }
-                  }}
-                >
-                  Purchase
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+                    }}
+                  >
+                    Purchase
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </Card>
       ) : (
         <p className="text-center text-muted-foreground">User not found.</p>
