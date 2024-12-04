@@ -9,13 +9,14 @@ import { Search } from '@/features/dashboard/components/search';
 import { UserNav } from '@/features/dashboard/components/user-nav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-import { Monitor, ClipboardMinus, User, Lock, Settings } from 'lucide-react';
+import { Monitor, ClipboardMinus, User, Lock, Settings, Gauge } from 'lucide-react';
 import CalendarSchedule from '@/features/managePatient/appointments/calendar-schedule';
 import AboutMe from '@/features/managePatient/patientInfo/AboutMe';
 import MainFooter from '@/features/home/components/MainFooter';
 import PatientRecord from '@/features/managePatient/medicalRecord/PatientRecord';
 import PatientResults from '@/features/managePatient/labResults/PatientResults';
 import PatientPrescriptions from '@/features/managePatient/patientPrescriptions/Prescriptions';
+import { Button } from '@/components/ui/button';
 
 export default async function ManagePatientPage() {
   return (
@@ -31,6 +32,13 @@ export default async function ManagePatientPage() {
             <div className="flex items-center space-x-4">
               <Search />
               <UserNav />
+              <Link href="/dashboardd/users">
+                <Button variant="ghost" asChild className="hover:bg-red-600 hover:text-white">
+                  <div>
+                    <Gauge />
+                  </div>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -114,34 +122,34 @@ export default async function ManagePatientPage() {
               </div>
             </TabsContent>
             <TabsContent value="medical-record" className="space-y-4">
-                {/* Medical Record Section */}
-                <div className="lg:col-span-2">
-                  <Card className="h-full shadow-sm">
-                    <CardContent className="mx-auto">
-                      <PatientRecord />
-                    </CardContent>
-                  </Card>
-                </div>
+              {/* Medical Record Section */}
+              <div className="lg:col-span-2">
+                <Card className="h-full shadow-sm">
+                  <CardContent className="mx-auto">
+                    <PatientRecord />
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
             <TabsContent value="lab-results" className="space-y-4">
-                {/* Lab Results Section */}
-                <div className="lg:col-span-2">
-                  <Card className="h-full shadow-sm">
-                    <CardContent className="mx-auto">
-                      <PatientResults />
-                    </CardContent>
-                  </Card>
-                </div>
+              {/* Lab Results Section */}
+              <div className="lg:col-span-2">
+                <Card className="h-full shadow-sm">
+                  <CardContent className="mx-auto">
+                    <PatientResults />
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
             <TabsContent value="current-prescriptions" className="space-y-4">
-                {/* Prescriptions Section */}
-                <div className="lg:col-span-2">
-                  <Card className="h-full shadow-sm">
-                    <CardContent className="mx-auto">
-                      <PatientPrescriptions />
-                    </CardContent>
-                  </Card>
-                </div>
+              {/* Prescriptions Section */}
+              <div className="lg:col-span-2">
+                <Card className="h-full shadow-sm">
+                  <CardContent className="mx-auto">
+                    <PatientPrescriptions />
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
             <TabsContent value="appointments" className="space-y-4 mt-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
